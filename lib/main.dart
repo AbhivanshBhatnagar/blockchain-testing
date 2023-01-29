@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.amber,
       ),
-      home: const Swap(),
+      home: Swap(),
     );
   }
 }

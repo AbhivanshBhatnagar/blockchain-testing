@@ -4,24 +4,20 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 import 'dart:developer' as dev;
 import 'package:http/http.dart' as http;
 import 'package:eth_sig_util/eth_sig_util.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  // static var rng = Random.secure();
+class KeySig extends StatefulWidget {
+  KeySig({super.key});
+// static var rng = Random.secure();
   // Credentials random = EthPrivateKey.createRandom(rng);
   static var mssg = "hello";
-  Credentials fromHex = EthPrivateKey.fromHex(
-      "e99c15b79e18f14a08fc209ac2b6a2f4c70ee878a6e421c667562a94d2aeef9f");
+  static String pvt_key =
+      "e99c15b79e18f14a08fc209ac2b6a2f4c70ee878a6e421c667562a94d2aeef9f";
+  static Credentials fromHex = EthPrivateKey.fromHex(pvt_key);
   static var httpClient = http.Client();
   static var url = Uri.parse("https://rpc.ankr.com/eth_goerli").toString();
   String trans = '';
@@ -86,23 +82,35 @@ class _HomeState extends State<Home> {
     });
   }
 
-  void sign() {
-    final sign = fromHex
-        .signPersonalMessageToUint8List(Uint8List.fromList(utf8.encode(mssg)));
-    final signed =
-        fromHex.signToEcSignature(Uint8List.fromList(utf8.encode(mssg)));
-    dev.log(sign.toString());
-    dev.log(signed.v.toString());
-    var xyz = EthSigUtil.signPersonalMessage(
-        message: Uint8List.fromList(utf8.encode(mssg)),
-        privateKey:
-            "e99c15b79e18f14a08fc209ac2b6a2f4c70ee878a6e421c667562a94d2aeef9f");
+  void sign_message() {
+    String xyz = EthSigUtil.signPersonalMessage(
+        message: Uint8List.fromList(utf8.encode(mssg)), privateKey: pvt_key);
     dev.log(xyz);
+
     String address = EthSigUtil.recoverPersonalSignature(
         signature: xyz, message: Uint8List.fromList(utf8.encode(mssg)));
     dev.log(address);
   }
 
+  String sign_transaction({required String transaction}) {
+    // ethClient.signTransaction(fromHex, transaction);
+    var trans_sig =
+        fromHex.signToUint8List(Uint8List.fromList(utf8.encode(transaction)));
+    dev.log(trans_sig.toString());
+    final sign = fromHex.signPersonalMessageToUint8List(
+        Uint8List.fromList(utf8.encode(transaction)));
+    final signed =
+        fromHex.signToEcSignature(Uint8List.fromList(utf8.encode(transaction)));
+    dev.log(sign.toString());
+    dev.log(signed.v.toString());
+    return transaction;
+  }
+
+  @override
+  State<KeySig> createState() => _KeySigState();
+}
+
+class _KeySigState extends State<KeySig> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,14 +118,13 @@ class _HomeState extends State<Home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(fromHex.address.hex),
-            ElevatedButton(onPressed: send, child: Text("Send")),
-            ElevatedButton(onPressed: timer, child: Text("check")),
-            ElevatedButton(onPressed: sign, child: Text("sign"))
+            Text(KeySig.fromHex.address.hex),
+            ElevatedButton(onPressed: KeySig().send, child: Text("Send")),
+            ElevatedButton(onPressed: KeySig().timer, child: Text("check")),
+            ElevatedButton(onPressed: () {}, child: Text("sign"))
           ],
         ),
       ),
     );
   }
 }
-// 0x7F3BD1Fa0d241bEd9D7bb81294b78daBa182287F
