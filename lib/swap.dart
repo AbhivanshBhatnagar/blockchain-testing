@@ -1,17 +1,22 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
+// import 'dart:js';
 import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:eth_sig_util/eth_sig_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_project/key_sig.dart';
+import 'package:test_project/transaction.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer';
+
+import 'constants.dart';
 
 class Swap extends StatefulWidget {
   Swap({super.key});
@@ -29,13 +34,13 @@ class Swap extends StatefulWidget {
     // 'sellToken': '0xE68104D83e647b7c1C15a91a8D8aAD21a51B3B3E',
     // 'buyToken': '0x0000000000000000000000000000000000000000',
     // 'amount': '100000000000000000',
-    'takerAddress': user_address,
     // 'slippage': '1',
     // 'disableEstimate': 'false',
     // 'allowPartialFill': 'false'
-    'sellToken': 'ETH',
-    'buyToken': 'WETH',
-    'sellAmount': '10000000000000000'
+    'takerAddress': user_address,
+    'sellToken': '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    'buyToken': '0xE68104D83e647b7c1C15a91a8D8aAD21a51B3B3E',
+    'sellAmount': '1000000000000000'
   };
 
   Future<DeployedContract> loadContract({String tokenAdress = ''}) async {
@@ -257,15 +262,15 @@ class Swap extends StatefulWidget {
     // log(_credentials.address.hex);
     var httpsUri = Uri(
         scheme: 'https',
-        host: 'api.0x.org',
+        host: 'goerli.api.0x.org',
         path: '/swap/v1/quote',
         queryParameters: check_allowance_query_params);
-    print(httpsUri);
+    // print(httpsUri);
     http.Response response = await http.get(httpsUri);
     try {
-      if (response.statusCode == 200) {
+      if (response.statusCode != 200) {
         var data = jsonDecode(response.body);
-        log(data.toString());
+        // log(data.toString());
         // try {
         //   var sig = _credentials.signPersonalMessageToUint8List(
         //       Uint8List.fromList(utf8.encode(data.toString())));
@@ -287,26 +292,30 @@ class Swap extends StatefulWidget {
           // maxGas: hexToDartInt(data['gas']),
           // gasPrice: EtherAmount.inWei(hexToInt(data['gasPrice'])),
           value: EtherAmount.inWei(hexToInt(data['value'])),
-          // data: hexToBytes(data['data']),
+          data: hexToBytes(data['data']),
         );
-
+        // ethClient.sendTransaction(_credentials, transaction);
         try {
-          var sig = await _credentials.signToUint8List(
+          var sig = await _credentials.signPersonalMessageToUint8List(
               Uint8List.fromList(utf8.encode(transaction.toString())));
           log(sig.toString());
           try {
-            await ethClient.sendRawTransaction(sig);
+            // await ethClient.sendRawTransaction(sig);
+            await WalletTransaction()
+                .sendTransaction(transactiondata: transaction);
+
+            // await ethClient.sendTransaction(_credentials, transaction);
           } catch (e) {
-            log(e.toString());
+            Fluttertoast.showToast(msg: e.toString());
           }
         } catch (e) {
-          log(e.toString());
+          Fluttertoast.showToast(msg: e.toString());
         }
       } else {
         log(response.body.toString());
       }
     } catch (e) {
-      log(e.toString());
+      Fluttertoast.showToast(msg: e.toString());
     }
   }
 
@@ -359,10 +368,23 @@ class _SwapState extends State<Swap> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
-                Swap().swap(amount: 1);
+              onPressed: () async {
+                var maxGas = await WalletTransaction().web3client.estimateGas();
+                var gasprice =
+                    await WalletTransaction().web3client.getGasPrice();
+                WalletTransaction().sendTransaction(
+                  transactiondata: Transaction(
+                      from: Constants.ethereumAddress,
+                      to: EthereumAddress.fromHex(
+                          "0x35EFceC1182d758A3c7e96DDaDE4064222d7C270"),
+                      value: EtherAmount.inWei(
+                        BigInt.from(1000000000000000),
+                      ),
+                      maxGas: maxGas.toInt(),
+                      gasPrice: gasprice),
+                );
               },
-              child: Text("check allowance"),
+              child: Text("send"),
             ),
             ElevatedButton(
               onPressed: () {},
