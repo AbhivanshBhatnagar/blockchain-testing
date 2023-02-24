@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:http/http.dart' as http;
 import 'constants.dart';
+import 'dart:convert';
 
 class WalletTransaction {
   static String rpc_url =
@@ -19,7 +20,9 @@ class WalletTransaction {
           chainId: chainID.toInt(), Constants.userCredentials, transactiondata);
       log(transactionHash);
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
+      Fluttertoast.showToast(
+          msg: e.toString().substring(
+              e.toString().indexOf('"') + 1, e.toString().lastIndexOf('"')));
     }
   }
 }

@@ -157,7 +157,7 @@ class WalletLendBorrow {
                 function: contract.function("supply"),
                 parameters: [
                   EthereumAddress.fromHex(
-                      "0xe9c4393a23246293a8D31BF7ab68c17d4CF90A29"), //Token address of token to be lent
+                      address), //Token address of token to be lent
                   BigInt.from(amount),
                   Constants.ethereumAddress,
                   BigInt.from(0)
@@ -271,19 +271,24 @@ class WalletLendBorrow {
       var chainId = await ethClient.getChainId();
       var gasPrice = await ethClient.getGasPrice();
       var maxGas = await ethClient.estimateGas();
+      // var tokenData = await getTokenData();
+      // log(tokenData[0].toString());
+      var Amount = EtherAmount.fromInt(EtherUnit.wei, amount.toInt()).getInWei;
       try {
         var trans = await ethClient.sendTransaction(
             chainId: chainId.toInt(),
             Constants.userCredentials,
             Transaction.callContract(
-                gasPrice: EtherAmount.inWei(BigInt.from(2000000000)),
+                gasPrice: gasPrice,
                 contract: contract,
                 maxGas: 300000,
                 function: contract.function("borrow"),
                 parameters: [
                   EthereumAddress.fromHex(
                       ERC20address), //Token address of token to be lent
-                  BigInt.from(amount),
+                  BigInt.from(Amount.toInt()),
+                  BigInt.two,
+                  BigInt.zero,
                   Constants.ethereumAddress,
                 ]));
         log(trans);
@@ -491,7 +496,7 @@ class WalletLendBorrow {
       args: [],
       contract: contract,
     );
-    log(userData.toString());
+    // log(userData.toString());
     List<dynamic> data1 = [];
     List<dynamic> data2 = [];
     List<dynamic> data3 = [];
@@ -515,7 +520,9 @@ class WalletLendBorrow {
           ],
           contract: contract));
       tokenData.addEntries([
-        MapEntry(_data, {
+        MapEntry(_data[1].toString(), {
+          "decimals": data2[i][0],
+          "ltv": data2[i][1],
           "CollateralEnabled": data2[i][5],
           "BorrowEnabled": data2[i][6],
           "isActive": data2[i][7],
@@ -529,7 +536,8 @@ class WalletLendBorrow {
       ]);
       i++;
     }
-    log(tokenData.toString());
+    // log(tokenData.toString());
+    return tokenData;
     // log(data1.toString());
     // log(data2.toString());
     // log(data3.toString());

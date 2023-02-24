@@ -21,16 +21,16 @@ class _LendBorrowScreenState extends State<LendBorrowScreen> {
           // var UserData = await WalletLendBorrow()
           //     .getUserData(UserAddress: Constants.ethereumAddress);
           // WalletLendBorrow().supply(
-          //     address: "0xe9c4393a23246293a8D31BF7ab68c17d4CF90A29",
-          //     amount: 200000000);
+          //     address: "0xBa8DCeD3512925e52FE67b1b5329187589072A55",
+          //     amount: 20);
           // WalletLendBorrow()
           //     .getUserData(UserAddress: Constants.ethereumAddress);
 
           // log(UserData[3].toString());
 
-          // WalletLendBorrow().borrow(
-          //     ERC20address: "0x65aFADD39029741B3b8f0756952C74678c9cEC93",
-          //     amount: 30000037);
+          WalletLendBorrow().borrow(
+              ERC20address: "0xe9c4393a23246293a8D31BF7ab68c17d4CF90A29",
+              amount: 2);
           // WalletLendBorrow().repay(
           //     ERC20address: "0x65aFADD39029741B3b8f0756952C74678c9cEC93",
           //     amount:
@@ -51,7 +51,7 @@ class _LendBorrowScreenState extends State<LendBorrowScreen> {
           // );
           // var data = await WalletLendBorrow().getReservesData();
           // log(data.toString());
-          WalletLendBorrow().getTokenData();
+          // WalletLendBorrow().getTokenData();
         },
         child: Text("call"),
       )),
