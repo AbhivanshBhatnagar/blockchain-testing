@@ -28,6 +28,7 @@ class _SendScreenState extends State<SendScreen> {
   final ensClient = Ens(client: ethClient);
   static var addr = '';
   late int value;
+  String selectedValue1 = "ETH";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,12 +55,11 @@ class _SendScreenState extends State<SendScreen> {
                           msg: "Please enter a valid ENS or Address");
                     }
                   },
-                  cursorColor: Color(0xFF064848),
+                  // cursorColor: Color(0xFF064848),
                   controller: addressController,
                   decoration: InputDecoration(
                       label: Text(
                     "Address",
-                    style: TextStyle(color: Color(0xFF064848)),
                   )),
                   validator: MultiValidator([
                     RequiredValidator(errorText: "Address is required"),
@@ -67,42 +67,66 @@ class _SendScreenState extends State<SendScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction),
             ),
           ),
-          Form(
-            key: valueKey,
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: TextFormField(
-                  // onChanged: ,
-                  keyboardType: TextInputType.number,
-                  cursorColor: Color(0xFF064848),
-                  controller: _valueController,
-                  decoration: const InputDecoration(
-                      label: Text(
-                    "value",
-                    style: TextStyle(color: Color(0xFF064848)),
-                  )),
-                  autovalidateMode: AutovalidateMode.onUserInteraction),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 35),
+                child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                        items: Constants.tokens,
+                        value: selectedValue1,
+                        onChanged: (String? value) {
+                          setState(() {
+                            selectedValue1 = value.toString();
+                          });
+                          log(value.toString());
+                        })),
+              ),
+              Expanded(
+                child: Form(
+                  key: valueKey,
+                  child: Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: TextFormField(
+                        // onChanged: ,
+                        keyboardType: TextInputType.number,
+                        controller: _valueController,
+                        decoration: const InputDecoration(
+                            label: Text(
+                          "value",
+                        )),
+                        autovalidateMode: AutovalidateMode.onUserInteraction),
+                  ),
+                ),
+              ),
+            ],
           ),
           ElevatedButton(
               onPressed: () async {
                 // value =
                 //     (_valueController.text * math.pow(10, 9).toInt()) as int;
-                double sendValue = double.parse(_valueController.text);
-                sendValue = sendValue * math.pow(10, 18);
                 var maxGas = await WalletTransaction().web3client.estimateGas();
                 var gasprice =
                     await WalletTransaction().web3client.getGasPrice();
-                WalletTransaction().sendTransaction(
-                    transactiondata: Transaction(
-                        from: Constants.ethereumAddress,
-                        to: EthereumAddress.fromHex(addr),
-                        value: EtherAmount.fromBigInt(
-                            EtherUnit.wei,
-                            BigInt.from(
-                                double.parse(sendValue.toInt().toString()))),
-                        maxGas: maxGas.toInt(),
-                        gasPrice: gasprice));
+                if (addressController.text.isNotEmpty &&
+                    _valueController.text.isNotEmpty) {
+                  double sendValue = double.parse(_valueController.text);
+                  sendValue = sendValue * math.pow(10, 18);
+                  WalletTransaction().sendTransaction(
+                      transactiondata: Transaction(
+                          from: Constants.ethereumAddress,
+                          to: EthereumAddress.fromHex(addr),
+                          value: EtherAmount.fromBigInt(
+                              EtherUnit.wei,
+                              BigInt.from(
+                                  double.parse(sendValue.toInt().toString()))),
+                          maxGas: maxGas.toInt(),
+                          gasPrice: gasprice));
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "Please enter a valid ENS or Address or Value");
+                }
               },
               child: Text("Send"))
         ],

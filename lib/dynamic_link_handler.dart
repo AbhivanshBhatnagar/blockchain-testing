@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_project/home.dart';
 import 'package:test_project/lend_borrow_screen.dart';
-import 'package:test_project/onboarding.dart';
+import 'package:test_project/onboarding1.dart';
 import 'package:test_project/swap.dart';
 import 'package:test_project/test.dart';
 import 'package:test_project/wallet_connect/qr_scan.dart';

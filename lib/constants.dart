@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:web3dart/web3dart.dart';
+import 'dart:math';
+import 'dart:developer' as dev;
 
 class Constants {
   static Credentials userCredentials = EthPrivateKey.fromHex(
@@ -33,4 +35,9 @@ class Constants {
     "USDT": "0x56705db9f87c8a930ec87da0d458e00a657fccb0 ",
     "LINK": "0xe9c4393a23246293a8D31BF7ab68c17d4CF90A29"
   };
+  createWallet() {
+    var rng = Random.secure();
+    Credentials random = EthPrivateKey.createRandom(rng);
+    dev.log(random.address.hex);
+  }
 }
