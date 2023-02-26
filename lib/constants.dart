@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:web3dart/web3dart.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:math';
+import 'dart:developer' as dev;
 
 class Constants {
   static Credentials userCredentials = EthPrivateKey.fromHex(
@@ -112,4 +114,9 @@ class Constants {
     ),
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
   );
+  createWallet() {
+    var rng = Random.secure();
+    Credentials random = EthPrivateKey.createRandom(rng);
+    dev.log(random.address.hex);
+  }
 }

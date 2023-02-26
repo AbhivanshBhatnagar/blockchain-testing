@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:test_project/home.dart';
 // import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:test_project/lend_borrow_screen.dart';
-import 'package:test_project/onboarding.dart';
+import 'package:test_project/onboarding1.dart';
 import 'package:test_project/send.dart';
+import 'package:test_project/splashScreen.dart';
 import 'package:test_project/swap.dart';
 import 'package:test_project/test.dart';
 import 'package:test_project/wallet_connect/wallet_connect_screen.dart';
@@ -36,14 +37,14 @@ class _AppState extends State<App> {
       routes: {
         // '/': (context) => const OnBoardingScreen(),
         '/recieve/': (context) => SendScreen(),
-        '/mailSuccess/': (context) => OnBoardingScreen()
+        '/mailSuccess/': (context) => OnBoarding1Screen()
       },
       theme: ThemeData(
         useMaterial3: true,
         primarySwatch: Colors.amber,
       ),
       home: Builder(builder: (context) {
-        return AuthWrapper();
+        return SplashScreen();
       }),
     );
   }

@@ -4,7 +4,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:test_project/home.dart';
-import 'package:test_project/onboarding.dart';
+import 'package:test_project/onboarding1.dart';
 
 import 'dynamic_link_handler.dart';
 
@@ -20,7 +20,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
       EncryptedSharedPreferences();
   String authCode = '';
   getToken() async {
-    String code = await encryptedSharedPreferences.getString('code');
+    String code = await encryptedSharedPreferences.getString('codes');
     if (code.isNotEmpty) {
       setState(() {});
       return code.toString();
@@ -67,7 +67,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
           if (snapshot.hasData) {
             return Home();
           } else {
-            return OnBoardingScreen();
+            return OnBoarding1Screen();
           }
         });
   }
