@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Constants {
   static Credentials userCredentials = EthPrivateKey.fromHex(
@@ -33,4 +34,82 @@ class Constants {
     "USDT": "0x56705db9f87c8a930ec87da0d458e00a657fccb0 ",
     "LINK": "0xe9c4393a23246293a8D31BF7ab68c17d4CF90A29"
   };
+  static TextStyle h1poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 45,
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+    ),
+  );
+  static TextStyle h2poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 40,
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+    ),
+  );
+  static TextStyle h3poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 24,
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+    ),
+  );
+  static TextStyle h4poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 20,
+      color: Colors.white,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+  static TextStyle h5poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 12,
+      color: Colors.white,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+
+  static TextStyle h6poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 16,
+      color: Colors.white,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+  static TextStyle h7poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 8,
+      color: Colors.white,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+  static ButtonStyle roundCornerBlue = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF2f89a6),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(37.0),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  );
+  static ButtonStyle roundCornerBlack = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF222529),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(37.0),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  );
+  static ButtonStyle rectRoundCornerBlue = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF2f89a6),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  );
+  static ButtonStyle rectRoundCornerBlack = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF222529),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  );
 }
