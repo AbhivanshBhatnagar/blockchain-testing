@@ -10,12 +10,17 @@ class Constants {
   static EthereumAddress ethereumAddress = userCredentials.address;
   static String address = userCredentials.address.hex;
   static List<DropdownMenuItem<String>> tokens = [
-    DropdownMenuItem(child: Text("ETH"), value: "ETH"),
-    DropdownMenuItem(child: Text("DAI"), value: "DAI"),
-    DropdownMenuItem(child: Text("UDSC"), value: "USDC"),
-    DropdownMenuItem(child: Text("LINK"), value: "LINK"),
-    DropdownMenuItem(child: Text("USDT"), value: "USDT"),
-    DropdownMenuItem(child: Text("UNI"), value: "UNI"),
+    DropdownMenuItem(
+        child: Text(
+          "ETH",
+          style: h4poppinsStyle,
+        ),
+        value: "ETH"),
+    DropdownMenuItem(child: Text("DAI", style: h4poppinsStyle), value: "DAI"),
+    DropdownMenuItem(child: Text("UDSC", style: h4poppinsStyle), value: "USDC"),
+    DropdownMenuItem(child: Text("LINK", style: h4poppinsStyle), value: "LINK"),
+    DropdownMenuItem(child: Text("USDT", style: h4poppinsStyle), value: "USDT"),
+    DropdownMenuItem(child: Text("UNI", style: h4poppinsStyle), value: "UNI"),
     // DropdownMenuItem(child: Text("Wrapped BTC"), value: "WBTC"),
     // DropdownMenuItem(child: Text("FRAX"), value: "FRAX"),
     // DropdownMenuItem(child: Text("USD Mapped Token"), value: "USDM"),
@@ -38,35 +43,35 @@ class Constants {
   };
   static TextStyle h1poppinsStyle = GoogleFonts.poppins(
     textStyle: const TextStyle(
-      fontSize: 45,
+      fontSize: 43,
       color: Colors.white,
       fontWeight: FontWeight.w500,
     ),
   );
   static TextStyle h2poppinsStyle = GoogleFonts.poppins(
     textStyle: const TextStyle(
-      fontSize: 40,
+      fontSize: 38,
       color: Colors.white,
       fontWeight: FontWeight.w500,
     ),
   );
   static TextStyle h3poppinsStyle = GoogleFonts.poppins(
     textStyle: const TextStyle(
-      fontSize: 24,
+      fontSize: 22,
       color: Colors.white,
       fontWeight: FontWeight.w500,
     ),
   );
   static TextStyle h4poppinsStyle = GoogleFonts.poppins(
     textStyle: const TextStyle(
-      fontSize: 20,
+      fontSize: 18,
       color: Colors.white,
       fontWeight: FontWeight.w400,
     ),
   );
   static TextStyle h5poppinsStyle = GoogleFonts.poppins(
     textStyle: const TextStyle(
-      fontSize: 12,
+      fontSize: 14,
       color: Colors.white,
       fontWeight: FontWeight.w400,
     ),
@@ -74,7 +79,7 @@ class Constants {
 
   static TextStyle h6poppinsStyle = GoogleFonts.poppins(
     textStyle: const TextStyle(
-      fontSize: 16,
+      fontSize: 10,
       color: Colors.white,
       fontWeight: FontWeight.w400,
     ),
