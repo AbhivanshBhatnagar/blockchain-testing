@@ -14,11 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       backgroundColor: Colors.black,
-      splash: Icon(
-        Icons.money,
-        color: Colors.white,
-        size: 150,
-      ),
+      splash: Image.asset('assets/logo.png'),
       nextScreen: AuthWrapper(),
       splashTransition: SplashTransition.fadeTransition,
       curve: Curves.easeInExpo,

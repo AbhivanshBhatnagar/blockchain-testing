@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:web3dart/web3dart.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
 import 'dart:developer' as dev;
 
@@ -9,12 +10,17 @@ class Constants {
   static EthereumAddress ethereumAddress = userCredentials.address;
   static String address = userCredentials.address.hex;
   static List<DropdownMenuItem<String>> tokens = [
-    DropdownMenuItem(child: Text("ETH"), value: "ETH"),
-    DropdownMenuItem(child: Text("DAI"), value: "DAI"),
-    DropdownMenuItem(child: Text("UDSC"), value: "USDC"),
-    DropdownMenuItem(child: Text("LINK"), value: "LINK"),
-    DropdownMenuItem(child: Text("USDT"), value: "USDT"),
-    DropdownMenuItem(child: Text("UNI"), value: "UNI"),
+    DropdownMenuItem(
+        child: Text(
+          "ETH",
+          style: h4poppinsStyle,
+        ),
+        value: "ETH"),
+    DropdownMenuItem(child: Text("DAI", style: h4poppinsStyle), value: "DAI"),
+    DropdownMenuItem(child: Text("UDSC", style: h4poppinsStyle), value: "USDC"),
+    DropdownMenuItem(child: Text("LINK", style: h4poppinsStyle), value: "LINK"),
+    DropdownMenuItem(child: Text("USDT", style: h4poppinsStyle), value: "USDT"),
+    DropdownMenuItem(child: Text("UNI", style: h4poppinsStyle), value: "UNI"),
     // DropdownMenuItem(child: Text("Wrapped BTC"), value: "WBTC"),
     // DropdownMenuItem(child: Text("FRAX"), value: "FRAX"),
     // DropdownMenuItem(child: Text("USD Mapped Token"), value: "USDM"),
@@ -35,6 +41,84 @@ class Constants {
     "USDT": "0x56705db9f87c8a930ec87da0d458e00a657fccb0 ",
     "LINK": "0xe9c4393a23246293a8D31BF7ab68c17d4CF90A29"
   };
+  static TextStyle h1poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 43,
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+    ),
+  );
+  static TextStyle h2poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 38,
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+    ),
+  );
+  static TextStyle h3poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 22,
+      color: Colors.white,
+      fontWeight: FontWeight.w500,
+    ),
+  );
+  static TextStyle h4poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 18,
+      color: Colors.white,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+  static TextStyle h5poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 14,
+      color: Colors.white,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+
+  static TextStyle h6poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 10,
+      color: Colors.white,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+  static TextStyle h7poppinsStyle = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 8,
+      color: Colors.white,
+      fontWeight: FontWeight.w400,
+    ),
+  );
+  static ButtonStyle roundCornerBlue = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF2f89a6),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(37.0),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  );
+  static ButtonStyle roundCornerBlack = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF222529),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(37.0),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  );
+  static ButtonStyle rectRoundCornerBlue = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF2f89a6),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  );
+  static ButtonStyle rectRoundCornerBlack = ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF222529),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  );
   createWallet() {
     var rng = Random.secure();
     Credentials random = EthPrivateKey.createRandom(rng);
