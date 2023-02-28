@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
+  base58check:
+    dependency: transitive
+    description:
+      name: base58check
+      sha256: "6c300dfc33e598d2fe26319e13f6243fea81eaf8204cb4c6b69ef20a625319a5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   base_x:
     dependency: transitive
     description:
@@ -241,6 +249,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  dart_bip32_bip44:
+    dependency: "direct main"
+    description:
+      name: dart_bip32_bip44
+      sha256: ca8417bac434f2ece417b03818d91fe2d1d036e5aa568743872dede401660560
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   dart_style:
     dependency: transitive
     description:
@@ -752,6 +768,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.3.2"
+  ntcdcrypto:
+    dependency: "direct main"
+    description:
+      name: ntcdcrypto
+      sha256: c89e721bba962599783bb42fe8db64f876d079a747856823872883c42bcfca99
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   package_config:
     dependency: transitive
     description:
