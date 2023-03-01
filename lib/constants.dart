@@ -84,6 +84,14 @@ class Constants {
       fontWeight: FontWeight.w400,
     ),
   );
+  static TextStyle h6poppinsStyleGreaterWeight = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+      fontSize: 10,
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+    ),
+  );
+
   static TextStyle h7poppinsStyle = GoogleFonts.poppins(
     textStyle: const TextStyle(
       fontSize: 8,
