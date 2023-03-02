@@ -11,13 +11,38 @@ import 'package:http/http.dart' as http;
 import 'dart:math' as math;
 
 class SendScreen extends StatefulWidget {
-  const SendScreen({super.key});
+  String token = '', amount = '', sendAddress = '';
+  bool? isRecieve;
+  SendScreen(
+      {String token = '',
+      String amount = '',
+      String sendAddress = '',
+      bool isRecieve = false}) {
+    this.token = token;
+    this.amount = amount;
+    this.sendAddress = sendAddress;
+    this.isRecieve = isRecieve;
+  }
 
   @override
   State<SendScreen> createState() => _SendScreenState();
 }
 
 class _SendScreenState extends State<SendScreen> {
+  setValues() {
+    setState(() {
+      widget.token = Constants.tokenAddressList.keys.firstWhere(
+          (k) => Constants.tokenAddressList[k] == widget.token,
+          orElse: () => '');
+      selectedValue1 = widget.token;
+      widget.amount = widget.amount.substring(0, widget.amount.indexOf('e'));
+      _valueController.text = widget.amount;
+      addressController.value = widget.sendAddress.isNotEmpty
+          ? TextEditingValue(text: widget.sendAddress)
+          : TextEditingValue(text: Constants.dummyAddress);
+    });
+  }
+
   GlobalKey<FormState> addressKey = GlobalKey<FormState>();
   GlobalKey<FormState> valueKey = GlobalKey<FormState>();
   final addressController = TextEditingController();
@@ -30,26 +55,41 @@ class _SendScreenState extends State<SendScreen> {
   late int value;
   String selectedValue1 = "ETH";
   @override
+  void initState() {
+    bool? x = widget.isRecieve;
+    x! ? setValues() : null;
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Text(Constants.dummyAddress + Constants.seedPhrase),
           Form(
             key: addressKey,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: TextFormField(
-                  onEditingComplete: () async {
-                    if (addressController.text.endsWith(".eth")) {
-                      try {
-                        var ens = await fetchENS(addressController.text);
-                        addr = ens;
-                      } catch (e) {}
-                    } else if (addressController.text.startsWith("0x") &&
-                        addressController.text.length == 42) {
-                      addr = addressController.text;
+                  onChanged: (value) async {
+                    var trimmed = value.trim();
+                    if (trimmed.isNotEmpty && !trimmed.contains(" ")) {
+                      if (addressController.text.endsWith(".eth")) {
+                        try {
+                          var ens = await fetchENS(addressController.text);
+                          addr = ens;
+                        } catch (e) {}
+                      } else if (addressController.text.startsWith("0x") &&
+                          addressController.text.length == 42) {
+                        addr = addressController.text;
+                      } else {
+                        Fluttertoast.showToast(
+                            msg: "Please enter a valid ENS or Address");
+                      }
                     } else {
                       Fluttertoast.showToast(
                           msg: "Please enter a valid ENS or Address");
@@ -104,8 +144,6 @@ class _SendScreenState extends State<SendScreen> {
           ),
           ElevatedButton(
               onPressed: () async {
-                // value =
-                //     (_valueController.text * math.pow(10, 9).toInt()) as int;
                 var maxGas = await WalletTransaction().web3client.estimateGas();
                 var gasprice =
                     await WalletTransaction().web3client.getGasPrice();
@@ -115,8 +153,8 @@ class _SendScreenState extends State<SendScreen> {
                   sendValue = sendValue * math.pow(10, 18);
                   WalletTransaction().sendTransaction(
                       transactiondata: Transaction(
-                          from: Constants.ethereumAddress,
-                          to: EthereumAddress.fromHex(addr),
+                          from: Constants.dummyethereumAddress,
+                          to: EthereumAddress.fromHex(addressController.text),
                           value: EtherAmount.fromBigInt(
                               EtherUnit.wei,
                               BigInt.from(
@@ -127,6 +165,8 @@ class _SendScreenState extends State<SendScreen> {
                   Fluttertoast.showToast(
                       msg: "Please enter a valid ENS or Address or Value");
                 }
+                // Constants().createAccount(Constants.seedPhrase, false);
+                // log(Constants.accountsList.toString());
               },
               child: Text("Send"))
         ],

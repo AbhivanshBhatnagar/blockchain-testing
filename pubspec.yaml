@@ -67,6 +67,8 @@ dependencies:
   dart_bip32_bip44: ^0.2.0
   ntcdcrypto: ^0.2.0
   slide_to_confirm: ^1.1.0
+  share_plus: ^6.3.1
+  meilisearch: ^0.9.1
 
 dev_dependencies:
   build_runner: ^2.3.2

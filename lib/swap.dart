@@ -21,7 +21,10 @@ class _SwapScreenState extends State<SwapScreen> with TickerProviderStateMixin {
 
   double _currentSliderValue = 20;
   void confirmed() {
-    print('Slider confirmed!');
+    WalletSwap().swap(
+        token1: Constants.tokenAddressList[selectedValue1].toString(),
+        token2: Constants.tokenAddressList[selectedValue2].toString(),
+        amount: (double.parse(_token1Controller.text)));
   }
 
   @override
@@ -133,21 +136,27 @@ class _SwapScreenState extends State<SwapScreen> with TickerProviderStateMixin {
                                   child: Form(
                                       child: TextFormField(
                                     style: Constants.h4poppinsStyle,
-                                    onEditingComplete: () async {
-                                      exchangePrice = await WalletSwap()
-                                          .qoute0x(
-                                              buytoken: Constants
-                                                  .tokenAddressList[
-                                                      selectedValue2]
-                                                  .toString(),
-                                              selltoken: Constants
-                                                  .tokenAddressList[
-                                                      selectedValue1]
-                                                  .toString(),
-                                              amount: double.parse(
-                                                  _token1Controller.text));
-                                      _token2Controller.text = exchangePrice;
-                                      setState(() {});
+                                    onChanged: (value) async {
+                                      var trimmedValue = value.trim();
+                                      if (trimmedValue.isNotEmpty &&
+                                          !trimmedValue.endsWith('.') &&
+                                          !trimmedValue.contains(',') &&
+                                          !trimmedValue.contains('-')) {
+                                        exchangePrice = await WalletSwap()
+                                            .qoute0x(
+                                                buytoken: Constants
+                                                    .tokenAddressList[
+                                                        selectedValue2]
+                                                    .toString(),
+                                                selltoken: Constants
+                                                    .tokenAddressList[
+                                                        selectedValue1]
+                                                    .toString(),
+                                                amount: double.parse(
+                                                    _token1Controller.text));
+                                        _token2Controller.text = exchangePrice;
+                                        setState(() {});
+                                      }
                                     },
                                     key: _token1Key,
                                     controller: _token1Controller,
@@ -225,21 +234,23 @@ class _SwapScreenState extends State<SwapScreen> with TickerProviderStateMixin {
                                   child: Form(
                                       child: TextFormField(
                                     style: Constants.h4poppinsStyle,
-                                    onEditingComplete: () async {
-                                      exchangePrice = await WalletSwap()
-                                          .qoute0x(
-                                              buytoken: Constants
-                                                  .tokenAddressList[
-                                                      selectedValue1]
-                                                  .toString(),
-                                              selltoken: Constants
-                                                  .tokenAddressList[
-                                                      selectedValue2]
-                                                  .toString(),
-                                              amount: double.parse(
-                                                  _token2Controller.text));
-                                      _token1Controller.text = exchangePrice;
-                                      setState(() {});
+                                    onChanged: (value) async {
+                                      () async {
+                                        exchangePrice = await WalletSwap()
+                                            .qoute0x(
+                                                buytoken: Constants
+                                                    .tokenAddressList[
+                                                        selectedValue1]
+                                                    .toString(),
+                                                selltoken: Constants
+                                                    .tokenAddressList[
+                                                        selectedValue2]
+                                                    .toString(),
+                                                amount: double.parse(
+                                                    _token2Controller.text));
+                                        _token1Controller.text = exchangePrice;
+                                        setState(() {});
+                                      };
                                     },
                                     key: _token2Key,
                                     controller: _token2Controller,
@@ -418,33 +429,32 @@ class _SwapScreenState extends State<SwapScreen> with TickerProviderStateMixin {
                     textStyle: Constants.h5poppinsStyle,
                   ),
                 ),
-
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   children: [
-                //     // DropdownButton(
-                //     //     underline: SizedBox(),
-                //     //     hint: Text(
-                //     //         "Max Slippage = ${double.parse(slippage) * 100}%"),
-                //     //     items: Constants.slippage,
-                //     //     onChanged: (String? value) {
-                //     //       setState(() {
-                //     //         slippage = value!;
-                //     //       });
-                //     //       log(value.toString());
-                //     //     }),
-                //     ElevatedButton(
-                //         onPressed: () {
-                //           WalletSwap().swap(
-                //               token1: Constants.tokenAddressList[selectedValue1]
-                //                   .toString(),
-                //               token2: Constants.tokenAddressList[selectedValue2]
-                //                   .toString(),
-                //               amount: (double.parse(_token1Controller.text)));
-                //         },
-                //         child: Text("Swap")),
-                //   ],
-                // )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    // DropdownButton(
+                    //     underline: SizedBox(),
+                    //     hint: Text(
+                    //         "Max Slippage = ${double.parse(slippage) * 100}%"),
+                    //     items: Constants.slippage,
+                    //     onChanged: (String? value) {
+                    //       setState(() {
+                    //         slippage = value!;
+                    //       });
+                    //       log(value.toString());
+                    //     }),
+                    // ElevatedButton(
+                    //     onPressed: () {
+                    //       WalletSwap().swap(
+                    //           token1: Constants.tokenAddressList[selectedValue1]
+                    //               .toString(),
+                    //           token2: Constants.tokenAddressList[selectedValue2]
+                    //               .toString(),
+                    //           amount: (double.parse(_token1Controller.text)));
+                    //     },
+                    //     child: Text("Swap")),
+                  ],
+                )
               ],
             ),
           ),

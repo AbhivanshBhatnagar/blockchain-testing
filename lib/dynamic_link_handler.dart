@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:test_project/home.dart';
 import 'package:test_project/lend_borrow_screen.dart';
 import 'package:test_project/onboarding1.dart';
+import 'package:test_project/send.dart';
 import 'package:test_project/swap.dart';
 import 'package:test_project/test.dart';
 import 'package:test_project/wallet_connect/qr_scan.dart';
@@ -15,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class DynamicLinkHandler {
-  late StreamSubscription _sub;
+  // late StreamSubscription _sub;
   // Future<Null> initUniLinks() async {
   //   try {
   //     final initialUri = await getInitialUri();
@@ -62,9 +63,25 @@ class DynamicLinkHandler {
                 // ),
                 ));
       } else if (queryParameter.isNotEmpty &&
-          dynamicLinkData.link.path == '/recieve/') {
+          dynamicLinkData.link.path == '/request/') {
         // Navigator.pushNamed(context, dynamicLinkData.link.path);
-        log("empty params");
+        String params = queryParameter["token"].toString();
+        var list = params.split('@amount=');
+        String address = list[1].split('@sendAddress=')[1];
+        log(list.toString() + address);
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SendScreen(
+                      token: list[0],
+                      amount: list[1],
+                      sendAddress: address,
+                      isRecieve: true,
+                    )
+                // OnBoardingScreen(
+                // authcode: authCode.toString(),
+                // ),
+                ));
       }
     }).onError((error) {
       print(error);

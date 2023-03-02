@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:test_project/onboarding1.dart';
+import 'package:dart_bip32_bip44/dart_bip32_bip44.dart';
+import 'package:test_project/wallet_creation.dart';
+import 'package:bip39/bip39.dart' as bip39;
 import 'package:web3dart/web3dart.dart';
+import 'dart:developer' as dev;
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
-import 'dart:developer' as dev;
+import 'package:meilisearch/meilisearch.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Constants {
   static Credentials userCredentials = EthPrivateKey.fromHex(
       'e99c15b79e18f14a08fc209ac2b6a2f4c70ee878a6e421c667562a94d2aeef9f');
   static EthereumAddress ethereumAddress = userCredentials.address;
   static String address = userCredentials.address.hex;
+  static String dummyAddress = '';
+  static EthereumAddress dummyethereumAddress =
+      EthereumAddress.fromHex(dummyAddress);
+  static String seedPhrase = '';
+  static List<String> accountsList = [];
   static List<DropdownMenuItem<String>> tokens = [
     DropdownMenuItem(
         child: Text(
@@ -119,9 +131,95 @@ class Constants {
     ),
     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
   );
-  createWallet() {
-    var rng = Random.secure();
-    Credentials random = EthPrivateKey.createRandom(rng);
-    dev.log(random.address.hex);
+  // createWallet() {
+  //   var rng = Random.secure();
+  //   Credentials random = EthPrivateKey.createRandom(rng);
+  //   dev.log(random.address.hex);
+  // }
+  String? pubaddr;
+  String? privaddr;
+  bool creatingWallet = false;
+
+  //Abstract class implemetation
+  WalletAddress walletAddress = WalletAddress();
+
+  void createWallet() async {
+    //generating seed phrase
+    final mnemonic = walletAddress.generateMnemonic();
+    dev.log(mnemonic.toString());
+
+    Constants.seedPhrase = mnemonic;
+    //creating new account with seed phrase
+    createAccount(mnemonic, false);
   }
+
+  //Creating an account. New account is created in 2 scenarios, 1. When user creates a new acount in existing wallet 2. When user imports a wallet
+  void createAccount(String mnemonic, bool importing) async {
+    String seed = bip39.mnemonicToSeedHex(mnemonic);
+    //Chain of wallet is created using seed
+    Chain chain = Chain.seed(seed);
+    ExtendedKey key;
+    importing
+        ? {
+            key = chain.forPath("m/44'/60'/0'/0/0"),
+            accountsList.clear()
+          } //If importing, only first account from the above chain is obtained
+        : key = chain.forPath(
+            "m/44'/60'/0'/0/${accountsList.length}"); //else if creating new account in existing wallet, new account is added to list of accounts
+    Credentials credentials = EthPrivateKey.fromHex(
+        key.privateKeyHex()); //Getting credentials from private key
+  }
+
+//Importin an existing wallet using seed phrase
+  void importWallet(String importSeed) async {
+    String seed = bip39.mnemonicToSeedHex(importSeed);
+    //Validating seed phrase
+    if (bip39.validateMnemonic(seed)) {
+      dev.log("true");
+    } else {
+      dev.log("false");
+    }
+    //Chain of wallet is created using seed
+    Chain chain = Chain.seed(seed); //web3dart
+    ExtendedKey key = chain.forPath("m/44'/60'/0'/0/0");
+    //Getting credentials from private key
+    Credentials credentials = EthPrivateKey.fromHex(key.privateKeyHex());
+  }
+
+  Future<double> getPrice({required String token}) async {
+    double x = 0;
+    var url =
+        "https://data.messari.io/api/v1/assets/$token/metrics/market-data";
+    var response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      var decodedData = jsonDecode(response.body);
+      var price = decodedData["data"]["market_data"]["price_usd"];
+      x = price;
+    }
+
+    return x;
+  }
+
+  static var client = MeiliSearchClient(
+      "https://ms-decb20c2b075-2348.sgp.meilisearch.io/",
+      "0a0d19ca9a2a29d97528913d6741313e446a455aaf863b82b451c62a0b834075");
+  var index = client.index("tokens");
 }
+  // var result;
+  // if (value.isNotEmpty) {
+  //   result = await Constants()
+  //       .index
+  //       .search(value, filter: ['symbol = $value']);
+  //   log(result.hits.toString());
+  // }
+
+// var address = await credentials.address;
+//     accountsList.add(address.hex.toString());
+//     dev.log(accountsList.length.toString());
+//     dev.log(accountsList.toString());
+
+//web3dart
+    // var address = await credentials.address;
+    // dev.log(address.hex); //web3dart
+    // // toggleCreateState();

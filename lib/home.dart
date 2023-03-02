@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:test_project/constants.dart';
 import 'package:test_project/lend_borrow_screen.dart';
+import 'package:test_project/recovery.dart';
 import 'package:test_project/request.dart';
 import 'package:test_project/send.dart';
 import 'package:test_project/swap.dart';
@@ -39,7 +40,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             ElevatedButton(
@@ -47,18 +48,27 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SendScreen()));
                 },
-                child: Text("Send")),
+                child: Text(
+                  "Send",
+                  style: Constants.h5poppinsStyle,
+                )),
             ElevatedButton(
                 onPressed: () {
                   bottomSheet(context);
                 },
-                child: Text("Recieve")),
+                child: Text(
+                  "Recieve",
+                  style: Constants.h5poppinsStyle,
+                )),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SwapScreen()));
                 },
-                child: Text("Swap")),
+                child: Text(
+                  "Swap",
+                  style: Constants.h5poppinsStyle,
+                )),
             ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -66,7 +76,21 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                       MaterialPageRoute(
                           builder: (context) => LendBorrowScreen()));
                 },
-                child: Text("Lend/Borrow")),
+                child: Text(
+                  "Lend/Borrow",
+                  style: Constants.h5poppinsStyle,
+                )),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RecoveryScreen()));
+                },
+                child: Text(
+                  "Recover",
+                  style: Constants.h5poppinsStyle,
+                )),
             // ElevatedButton(
             //     onPressed: () {
             //       setState(() {
