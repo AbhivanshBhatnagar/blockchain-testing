@@ -205,14 +205,52 @@ class Constants {
       "https://ms-decb20c2b075-2348.sgp.meilisearch.io/",
       "0a0d19ca9a2a29d97528913d6741313e446a455aaf863b82b451c62a0b834075");
   var index = client.index("tokens");
+  simluate(
+      {String toAddress = '',
+      String fromAddress = '',
+      double value = 0.0}) async {
+    //Use the below code to
+    // contract.function(name).encodeCall(params)
+    Map<String, dynamic> simulateParams = {
+      "chain": "ethereum-mainnet",
+      "params": [
+        {
+          "from": "0xa9527687EfA8AdABfEfD90a98Ac5a320DC747166",
+          "to": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+          "value": "0x0",
+          "data":
+              "0xa9059cbb000000000000000000000000fc43f5f9dd45258b3aff31bdbe6561d97e8b71de00000000000000000000000000000000000000000000000000000000000f4240"
+        }
+      ]
+    };
+    var simulateUri = Uri(
+      scheme: 'https',
+      host: '2701-2401-4900-1cc8-df15-2aaa-a7e8-5f08-6ce6.in.ngrok.io',
+      path: "/simulate/assetChange",
+    );
+
+    http.Response response = await http.post(simulateUri,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(simulateParams));
+    var data;
+    if (response.statusCode == 200) {
+      data = jsonDecode(response.body);
+      dev.log(data.toString());
+    } else {
+      data = jsonDecode(response.body);
+      dev.log(data['error']['message']);
+    }
+  }
 }
-  // var result;
-  // if (value.isNotEmpty) {
-  //   result = await Constants()
-  //       .index
-  //       .search(value, filter: ['symbol = $value']);
-  //   log(result.hits.toString());
-  // }
+// var result;
+// if (value.isNotEmpty) {
+//   result = await Constants()
+//       .index
+//       .search(value, filter: ['symbol = $value']);
+//   log(result.hits.toString());
+// }
 
 // var address = await credentials.address;
 //     accountsList.add(address.hex.toString());
@@ -220,6 +258,6 @@ class Constants {
 //     dev.log(accountsList.toString());
 
 //web3dart
-    // var address = await credentials.address;
-    // dev.log(address.hex); //web3dart
-    // // toggleCreateState();
+// var address = await credentials.address;
+// dev.log(address.hex); //web3dart
+// // toggleCreateState();
