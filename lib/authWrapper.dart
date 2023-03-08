@@ -19,8 +19,11 @@ class _AuthWrapperState extends State<AuthWrapper> {
   EncryptedSharedPreferences encryptedSharedPreferences =
       EncryptedSharedPreferences();
   String authCode = '';
+
+//Deeplinking is little buggy. Works under some scenarios.
+
   getToken() async {
-    String code = await encryptedSharedPreferences.getString('codes');
+    String code = await encryptedSharedPreferences.getString('code');
     if (code.isNotEmpty) {
       setState(() {});
       return code.toString();

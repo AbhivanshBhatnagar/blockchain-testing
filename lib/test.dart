@@ -1,6 +1,13 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:searchable_paginated_dropdown/searchable_paginated_dropdown.dart';
 import 'package:test_project/getTokens.dart';
+import 'package:http/http.dart' as http;
+
+import 'constants.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
@@ -9,44 +16,59 @@ class TestScreen extends StatefulWidget {
   State<TestScreen> createState() => _TestScreenState();
 }
 
+var httpClient = http.Client();
+final searchController = TextEditingController();
+
 class _TestScreenState extends State<TestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Column(
-        children: [
-          SearchableDropdownFormField<int>(
-            backgroundDecoration: (child) => Card(
-              margin: EdgeInsets.zero,
-              color: Colors.red,
-              elevation: 3,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: child,
-              ),
-            ),
-            hintText: const Text('Search Anime'),
-            margin: const EdgeInsets.all(15),
-            items: List.generate(
-                30,
-                (i) => SearchableDropdownMenuItem(
-                    value: i, label: 'item $i', child: Text('item $i'))),
-            validator: (val) {
-              if (val == null) return 'Cant be empty';
-              return null;
-            },
-            onSaved: (val) {
-              debugPrint('On save: $val');
-            },
-          ),
-          ElevatedButton(
-              onPressed: () {
-                getTokens().getTokenDetails();
+          child: Padding(
+        padding: const EdgeInsets.all(28.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CustomDropdown.searchRequest(
+                // canCloseOutsideBounds: true,
+                // fillColor: Colors.blue,
+                hintText: "Search",
+                controller: searchController,
+                listItemStyle: TextStyle(
+                  color: Colors.red,
+                ),
+                hintStyle: TextStyle(color: Colors.blue),
+                futureRequest: search),
+            TextField(
+              controller: searchController,
+              onChanged: (value) {
+                if (value != null) {
+                  // log(search(value));
+                  search(value);
+                }
               },
-              child: Text("tokens"))
-        ],
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Constants().simluate();
+                },
+                child: Text("Simulate"))
+          ],
+        ),
       )),
     );
+  }
+
+  Future<List<String>> search(String text) async {
+    var search = await Constants().index.search(text);
+    var results = search.hits;
+    List<String> names = [];
+
+    results?.forEach((element) {
+      var name = element['name'];
+      names.add(name.toString());
+    });
+    log(names.toString());
+    return names;
   }
 }

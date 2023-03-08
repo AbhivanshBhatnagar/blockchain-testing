@@ -18,8 +18,12 @@ void generateShares() {
   String s = Constants.seedPhrase;
   log("secret: ${s}");
   log("secret.length: ${s.length}");
-  // creates a set of shares
+  // creates a set of shares using seed phrase.
+
   List<String> arr = sss.create(2, 3, s, false);
+  // Different number of shares can be created and combined to recover the seed phrase
+  //In this case 2 out of 3 shares are required to recover the secret
+  //Here FIrst and Second share is being combined to recover the seed phrase
   log(arr.toString());
   switch (numberOfTasks) {
     case 2:
@@ -29,13 +33,16 @@ void generateShares() {
         data.removeWhere((key, value) => value == "");
         if (data["data1"] != "" && data["data2"] != "") {
           s1 = sss.combine(arr.sublist(0, 2), false);
+          //This seed can now be used to import the wallet/account
           bip39.validateMnemonic(s1) ? log("valid") : log("invalid");
         } else if (data["data1"] != "" && data["data3"] != "") {
           arr.removeRange(1, 2);
           s1 = sss.combine(arr, false);
+          //This seed can now be used to import the wallet/account
           bip39.validateMnemonic(s1) ? log("valid") : log("invalid");
         } else if (data["data2"] != "" && data["data3"] != "") {
           s1 = sss.combine(arr.sublist(1, 3), false);
+          //This seed can now be used to import the wallet/account
           bip39.validateMnemonic(s1) ? log("valid") : log("invalid");
         }
         log("secret: ${s1}");
@@ -49,6 +56,7 @@ void generateShares() {
       {
         var s1;
         s1 = sss.combine(arr.sublist(0, arr.length - 1), false);
+        //This seed can now be used to import the wallet/account
         bip39.validateMnemonic(s1) ? log("valid") : log("invalid");
         Constants().createAccount(s1, true);
         log("3 tasks done");
@@ -59,26 +67,6 @@ void generateShares() {
         log("Already Recovered");
       }
   }
-
-  // var s1 = sss.combine(arr.sublist(0, 2), false);
-  // print("combines shares 1 length = ${arr.sublist(0, 3).length}");
-  // print("secret: ${s1}");
-  // print("secret.length: ${s1.length}");
-
-  // combines shares into secret
-  // var s1 = sss.combine(data.sublist(0, 3), false);
-  // log("combines shares 1 length = ${arr.sublist(0, 3).length}");
-
-  // var s2 = sss.combine(arr.sublist(3, arr.length), false);
-  // log("combines shares 2 length = ${arr.sublist(3, arr.length).length}");
-  // log("secret: ${s2}");
-  // log("secret.length: ${s2.length}");
-
-  // var s3 = sss.combine(arr.sublist(1, 5), false);
-  // log("combines shares 3 length = ${arr.sublist(1, 5).length}");
-  // log("secret: ${s3}");
-  // log("secret.length: ${s3.length}");
-  // log(arr.toString());
 }
 
 int numberOfTasks = 0;
@@ -99,6 +87,8 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+//Simulation of Different tasks being done
+
             ElevatedButton(
                 onPressed: () {
                   data["data1"] = 0;
@@ -126,7 +116,7 @@ class _RecoveryScreenState extends State<RecoveryScreen> {
                   data.clear();
                   log(numberOfTasks.toString());
                   log(data.toString());
-                  Constants().getPrice(token: "polygon");
+                  // Constants().getPrice(token: "polygon");
                 },
                 child: Text("Reset")),
             ElevatedButton(onPressed: () {}, child: Text("Recover")),

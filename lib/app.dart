@@ -21,15 +21,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   @override
-  void initState() {
-    // DynamicLinkHandler.initDynamicLinks(context, FirebaseDynamicLinks.instance);
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // DynamicLinkHandler.initDynamicLinks(context, FirebaseDynamicLinks.instance);
     return MaterialApp(
       darkTheme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,

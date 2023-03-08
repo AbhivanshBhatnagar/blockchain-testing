@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:test_project/onboarding1.dart';
 import 'package:dart_bip32_bip44/dart_bip32_bip44.dart';
 import 'package:test_project/wallet_creation.dart';
@@ -242,6 +243,17 @@ class Constants {
       data = jsonDecode(response.body);
       dev.log(data['error']['message']);
     }
+  }
+
+  Future<DeployedContract> loadContract(
+      {String contractAddress = '', String contractFileName = ''}) async {
+    // String contractAddress = contractAddress;
+    String contractName = contractFileName;
+    String abi = await rootBundle.loadString("contracts/$contractName.json");
+
+    final contract = DeployedContract(ContractAbi.fromJson(abi, "TestnetERC20"),
+        EthereumAddress.fromHex(contractAddress));
+    return contract;
   }
 }
 // var result;

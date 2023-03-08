@@ -13,6 +13,8 @@ import 'dart:math' as math;
 class SendScreen extends StatefulWidget {
   String token = '', amount = '', sendAddress = '';
   bool? isRecieve;
+  //Send screen can open in 2 scenarios, normally or via a payment request link.
+  //Whlie opening links payment parameters need to be captured from the link and displayed
   SendScreen(
       {String token = '',
       String amount = '',

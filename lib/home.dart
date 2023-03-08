@@ -21,14 +21,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with WidgetsBindingObserver {
-  @override
-  void initState() {
-    // DynamicLinkHandler.initDynamicLinks(context, FirebaseDynamicLinks.instance);
-    // DynamicLinkHandler().initUniLinks();
-    // TODO: implement initState
-    super.initState();
-  }
-
   EncryptedSharedPreferences encryptedSharedPreferences =
       EncryptedSharedPreferences();
   List<DropdownMenuItem<String>> networks = [

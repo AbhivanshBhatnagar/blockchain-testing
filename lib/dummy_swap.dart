@@ -43,21 +43,10 @@ class WalletSwap extends StatefulWidget {
   //   'sellAmount': '1000000000000000'
   // };
 
-  Future<DeployedContract> loadContract(
-      {String tokenAdress = '', String contractFileName = ''}) async {
-    String contractAddress = tokenAdress;
-    String contractName = contractFileName;
-    String abi = await rootBundle.loadString("contracts/$contractName.json");
-
-    final contract = DeployedContract(ContractAbi.fromJson(abi, "TestnetERC20"),
-        EthereumAddress.fromHex(tokenAdress));
-    return contract;
-  }
-
   void swap(
       {String token1 = '', String token2 = '', double amount = 0.0}) async {
-    DeployedContract contract1 = await loadContract(
-        contractFileName: "erc20_token", tokenAdress: token1);
+    DeployedContract contract1 = await Constants()
+        .loadContract(contractFileName: "erc20_token", contractAddress: token1);
     // DeployedContract ethContract = await loadContract(tokenAdress: ethAddress);
     var decimalsfunc = contract1.function('decimals');
     var senderAddress = Constants.ethereumAddress;

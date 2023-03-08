@@ -31,13 +31,6 @@ class OnBoarding1Screen extends StatefulWidget {
 }
 
 class _OnBoarding1ScreenState extends State<OnBoarding1Screen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    // DynamicLinkHandler.initDynamicLinks(context, FirebaseDynamicLinks.instance);
-    super.initState();
-  }
-
   LocalAuthentication auth = LocalAuthentication();
   WalletAddress walletAddress = WalletAddress();
   String? pubaddr;
@@ -93,20 +86,11 @@ class _OnBoarding1ScreenState extends State<OnBoarding1Screen> {
                                     stickyAuth: true),
                                 localizedReason:
                                     'Please authenticate to create new Wallet');
-                            // ···
 
                             if (didAuthenticate) {
-                              // setState(() {
-                              //   creatingWallet = !creatingWallet;
-                              // });
+                              //Creates a new Crypto Wallet
                               Constants().createWallet();
-                              // log('$privaddr $pubaddr ');
-                              // showBottomSheet(
-                              //   context: context,
-                              //   builder: (context) {
-                              //     return Container();
-                              //   },
-                              // );
+
                               showDialog(
                                 context: context,
                                 builder: (context) {

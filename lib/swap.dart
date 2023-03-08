@@ -443,6 +443,9 @@ class _SwapScreenState extends State<SwapScreen> with TickerProviderStateMixin {
                     //       });
                     //       log(value.toString());
                     //     }),
+
+                    //Actual Swap is done here by taking Symbols of both cryptocurrencies and using 0x Aggregator API
+
                     // ElevatedButton(
                     //     onPressed: () {
                     //       WalletSwap().swap(
