@@ -4,13 +4,15 @@ import 'package:test_project/home.dart';
 // import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:test_project/lend_borrow_screen.dart';
 import 'package:test_project/onboarding1.dart';
+import 'package:test_project/presentation/main/home/home_screen.dart';
 import 'package:test_project/send.dart';
-import 'package:test_project/splashScreen.dart';
 import 'package:test_project/swap.dart';
 import 'package:test_project/test.dart';
 import 'package:test_project/wallet_connect/wallet_connect_screen.dart';
 import 'authWrapper.dart';
+import 'core/router.gr.dart';
 import 'dynamic_link_handler.dart';
+import 'presentation/splash_screen.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -20,24 +22,24 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  late final AppRouter _router;
+
+  @override
+  void initState() {
+    super.initState();
+    _router = AppRouter();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      darkTheme: ThemeData.dark(),
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      routes: {
-        // '/': (context) => const OnBoardingScreen(),
-        '/recieve/': (context) => SendScreen(),
-        '/mailSuccess/': (context) => OnBoarding1Screen()
-      },
-      theme: ThemeData(
-        useMaterial3: true,
-        primarySwatch: Colors.amber,
-      ),
-      home: Builder(builder: (context) {
-        return SplashScreen();
-      }),
+    return MaterialApp.router(
+      darkTheme: ThemeData(
+          brightness: Brightness.dark, scaffoldBackgroundColor: Colors.black),
+
+      // home: SplashScreen(),
+      routerDelegate: _router.delegate(),
+      routeInformationParser: _router.defaultRouteParser(),
+      themeMode: ThemeMode.dark,
     );
   }
 }
