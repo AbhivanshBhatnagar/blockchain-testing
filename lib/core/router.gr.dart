@@ -30,9 +30,11 @@ class AppRouter extends _i3.RootStackRouter {
       );
     },
     MainRouter.name: (routeData) {
+      final args = routeData.argsAs<MainRouterArgs>(
+          orElse: () => const MainRouterArgs());
       return _i3.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i2.MainPageHostScreen(),
+        child: _i2.MainPageHostScreen(key: args.key),
       );
     },
     HomeRoute.name: (routeData) {
@@ -121,15 +123,29 @@ class SplashRoute extends _i3.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.MainPageHostScreen]
-class MainRouter extends _i3.PageRouteInfo<void> {
-  const MainRouter({List<_i3.PageRouteInfo>? children})
-      : super(
+class MainRouter extends _i3.PageRouteInfo<MainRouterArgs> {
+  MainRouter({
+    _i4.Key? key,
+    List<_i3.PageRouteInfo>? children,
+  }) : super(
           MainRouter.name,
           path: '/main',
+          args: MainRouterArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'MainRouter';
+}
+
+class MainRouterArgs {
+  const MainRouterArgs({this.key});
+
+  final _i4.Key? key;
+
+  @override
+  String toString() {
+    return 'MainRouterArgs{key: $key}';
+  }
 }
 
 /// generated route for

@@ -5,6 +5,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Text("Helloworld"));
+    return Scaffold(body: Text("Home Screen"));
   }
 }

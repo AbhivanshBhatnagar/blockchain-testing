@@ -7,26 +7,49 @@ import 'package:flutter/widgets.dart';
 import 'package:test_project/core/router.gr.dart';
 
 class MainPageHostScreen extends StatelessWidget {
-  const MainPageHostScreen({super.key});
+  MainPageHostScreen({super.key});
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
+        homeIndex: 2,
+        drawer: Drawer(
+            elevation: 4,
+            child: ListView(
+              children: [
+                ListTile(
+                  // leading: Icon(Icons.message),
+                  title: Text('Messages'),
+                ),
+                ListTile(
+                  // leading: Icon(Icons.account_circle),
+                  title: Text('Profile'),
+                ),
+                ListTile(
+                  // leading: Icon(Icons.settings),
+                  title: Text('Settings'),
+                ),
+              ],
+            )),
         appBarBuilder: ((context, tabsRouter) => AppBar(
+              backgroundColor: Colors.transparent,
               leading: SizedBox(
                 height: 34,
                 width: 34,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: ClipOval(
-                      child: CachedNetworkImage(
-                    imageUrl:
-                        "https://avatars.githubusercontent.com/u/64317542?v=4",
-                  )),
+                  child: InkWell(
+                    onTap: () {},
+                    child: ClipOval(
+                        child: CachedNetworkImage(
+                      imageUrl:
+                          "https://avatars.githubusercontent.com/u/64317542?v=4",
+                    )),
+                  ),
                 ),
               ),
-              title: Text("Title"),
-              backgroundColor: Colors.transparent,
+              title: Text("Text"),
               elevation: 0,
               centerTitle: true,
             )),
@@ -43,18 +66,22 @@ class MainPageHostScreen extends StatelessWidget {
               },
               selectedItemColor: Colors.white,
               unselectedItemColor: Colors.white30,
-              backgroundColor: Color(0xFF2F2C44),
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              backgroundColor: Colors.transparent,
+              type: BottomNavigationBarType.fixed,
               currentIndex: tabsRouter.activeIndex,
               items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.search), label: "Search"),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.history), label: "History"),
+                    icon: Icon(Icons.message), label: "Message"),
+                BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Home"),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.history), label: "History"),
+                    icon: Icon(Icons.notifications_none),
+                    label: "Notification"),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.history), label: "History"),
+                    icon: Icon(Icons.settings), label: "Settings"),
               ],
             ));
   }

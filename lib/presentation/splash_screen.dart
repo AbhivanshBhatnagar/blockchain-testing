@@ -42,7 +42,7 @@ class _SplashScreenState extends AuthState<SplashScreen> {
 
   @override
   void onAuthSuccess() {
-    AutoRouter.of(context).replace(const MainRouter());
+    AutoRouter.of(context).replace(MainRouter());
     // print("THIS");
   }
 }
