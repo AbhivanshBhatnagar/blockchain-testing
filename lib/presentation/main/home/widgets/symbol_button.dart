@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SymbolButton extends StatelessWidget {
-  const SymbolButton({super.key});
-
+  const SymbolButton({required this.title, required this.icon, super.key});
+  final String title;
+  final Icon icon;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -14,12 +15,12 @@ class SymbolButton extends StatelessWidget {
             color: Color(0xFF37CBFA),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Icon(Icons.credit_card),
+              child: icon,
             ),
           ),
         ),
         const SizedBox(height: 8),
-        Text("Add Funds",
+        Text(title,
             style:
                 GoogleFonts.urbanist(fontSize: 12, fontWeight: FontWeight.w600))
       ],
