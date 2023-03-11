@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:test_project/core/router.gr.dart';
 
 class MainPageHostScreen extends StatelessWidget {
@@ -49,7 +50,29 @@ class MainPageHostScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              title: Text("Text"),
+              actions: [
+                GestureDetector(
+                  onTap: () {},
+                  child: Image.asset("assets/qr_code.png"),
+                ),
+              ],
+              title: Container(
+                  decoration: new BoxDecoration(
+                      color: Colors.white30,
+                      borderRadius: new BorderRadius.all(
+                        const Radius.circular(40.0),
+                      )),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text("Etherium MainNet",
+                            style: GoogleFonts.urbanist(fontSize: 14)),
+                        Icon(Icons.expand_more)
+                      ],
+                    ),
+                  )),
               elevation: 0,
               centerTitle: true,
             )),
@@ -76,7 +99,8 @@ class MainPageHostScreen extends StatelessWidget {
                     icon: Icon(Icons.search), label: "Search"),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.message), label: "Message"),
-                BottomNavigationBarItem(icon: Icon(Icons.wallet), label: "Home"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.wallet), label: "Home"),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.notifications_none),
                     label: "Notification"),
