@@ -81,7 +81,7 @@ class AppRouter extends _i3.RootStackRouter {
           children: [
             _i3.RouteConfig(
               HomeRoute.name,
-              path: 'home',
+              path: '',
               parent: MainRouter.name,
             ),
             _i3.RouteConfig(
@@ -154,7 +154,7 @@ class HomeRoute extends _i3.PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
-          path: 'home',
+          path: '',
         );
 
   static const String name = 'HomeRoute';

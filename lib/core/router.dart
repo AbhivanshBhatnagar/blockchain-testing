@@ -10,7 +10,7 @@ import '../presentation/presentation.dart';
       name: 'MainRouter',
       page: MainPageHostScreen,
       children: [
-        AutoRoute(path: 'home', page: HomeScreen),
+        AutoRoute(path: '', page: HomeScreen),
         AutoRoute(path: 'search', page: SearchScreen),
         AutoRoute(path: 'notification', page: NotificationScreen),
         AutoRoute(path: 'settings', page: SettingsScreen),
