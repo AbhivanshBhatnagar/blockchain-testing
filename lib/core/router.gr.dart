@@ -29,6 +29,12 @@ class AppRouter extends _i3.RootStackRouter {
         child: const _i1.SplashScreen(),
       );
     },
+    SignupRoute.name: (routeData) {
+      return _i3.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i1.SignupScreen(),
+      );
+    },
     MainRouter.name: (routeData) {
       final args = routeData.argsAs<MainRouterArgs>(
           orElse: () => const MainRouterArgs());
@@ -76,6 +82,10 @@ class AppRouter extends _i3.RootStackRouter {
           path: '/',
         ),
         _i3.RouteConfig(
+          SignupRoute.name,
+          path: '/signup',
+        ),
+        _i3.RouteConfig(
           MainRouter.name,
           path: '/main',
           children: [
@@ -119,6 +129,18 @@ class SplashRoute extends _i3.PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
+}
+
+/// generated route for
+/// [_i1.SignupScreen]
+class SignupRoute extends _i3.PageRouteInfo<void> {
+  const SignupRoute()
+      : super(
+          SignupRoute.name,
+          path: '/signup',
+        );
+
+  static const String name = 'SignupRoute';
 }
 
 /// generated route for

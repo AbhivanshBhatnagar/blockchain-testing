@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-abstract class AuthState<T extends StatefulWidget> extends State<T> {
+abstract class AuthState<T extends ConsumerStatefulWidget>
+    extends ConsumerState<T> {
   bool _redirectCalled = false;
 
   //For One-time get authSessions
@@ -12,7 +14,10 @@ abstract class AuthState<T extends StatefulWidget> extends State<T> {
       return;
     }
     _redirectCalled = true;
-    onAuthSuccess();
+    if (true) {
+      onAuthFailure();
+    } else
+      onAuthSuccess();
   }
 
   //For Stream Subscription of Auth Sessions

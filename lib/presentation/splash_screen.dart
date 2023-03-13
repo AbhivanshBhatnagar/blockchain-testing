@@ -3,16 +3,17 @@ import 'dart:math';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/auth_state.dart';
 import '../core/router.gr.dart';
 import 'main/home/home_screen.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends AuthState<SplashScreen> {
@@ -37,7 +38,7 @@ class _SplashScreenState extends AuthState<SplashScreen> {
 
   @override
   void onAuthFailure() {
-    // TODO: implement onAuthFailure
+    AutoRouter.of(context).replace(const SignupRoute());
   }
 
   @override
