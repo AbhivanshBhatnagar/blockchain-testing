@@ -5,3 +5,4 @@ export 'main/search/search_screen.dart';
 export "main/notification/notification_screen.dart";
 export "main/settings/settings_screen.dart";
 export "auth/signup_screen.dart";
+export 'auth/onboarding_screen.dart';
