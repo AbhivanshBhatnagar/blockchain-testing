@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/router.gr.dart';
 import '../widget/button.dart';
 
 class SeedRecoveryScreen extends ConsumerWidget {
@@ -86,7 +88,9 @@ class SeedRecoveryScreen extends ConsumerWidget {
                 height: 12,
               ),
               CustomButton(
-                onClick: () => {},
+                onClick: () => {
+                  AutoRouter.of(context).push(RestoreExistingAccountRoute())
+                },
                 title: "Open My Email",
               ),
             ],
