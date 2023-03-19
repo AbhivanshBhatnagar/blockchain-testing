@@ -21,26 +21,28 @@ class _AvexApiClient implements AvexApiClient {
   String? baseUrl;
 
   @override
-  Future<dynamic> generateEmailDynamicLink(request) async {
+  Future<HttpResponse<dynamic>> generateEmailDynamicLink(request) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/auth/login',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/auth/login',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
-    return value;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
