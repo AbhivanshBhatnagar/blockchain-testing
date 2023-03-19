@@ -65,6 +65,7 @@ class OnboardingScreen extends ConsumerWidget {
                   AutoRouter.of(context).push(SeedRecoveryRoute())
                 },
                 title: "Open My Email",
+                isLoading:false
               ),
             ],
           ),

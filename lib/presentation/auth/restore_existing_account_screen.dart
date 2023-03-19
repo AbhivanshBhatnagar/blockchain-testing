@@ -68,6 +68,7 @@ class RestoreExistingAccountScreen extends ConsumerWidget {
                 height: 12,
               ),
               CustomButton(
+                isLoading: false,
                 onClick: () => {
                   showModalBottomSheet(
                       shape: RoundedRectangleBorder(
@@ -114,7 +115,7 @@ class RestoreExistingAccountScreen extends ConsumerWidget {
                               const SizedBox(
                                 height: 24,
                               ),
-                              CustomButton(title: "Share", onClick: () => {})
+                              CustomButton(title: "Share", onClick: () => {}, isLoading: false,)
                             ],
                           ),
                         );

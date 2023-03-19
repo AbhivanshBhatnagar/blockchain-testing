@@ -3,9 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomButton extends ConsumerWidget {
-  const CustomButton({required this.title, required this.onClick, super.key});
+  const CustomButton(
+      {required this.title,
+      required this.onClick,
+       this.isLoading=false,
+      super.key});
   final Function onClick;
   final String title;
+  final bool isLoading;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
@@ -17,10 +22,13 @@ class CustomButton extends ConsumerWidget {
         ),
       ),
       onPressed: () => {onClick()},
-      child: Text(
-        title,
-        style: GoogleFonts.inter(fontSize: 16,fontWeight: FontWeight.bold),
-      ),
+      child: (isLoading)
+          ? const SizedBox.square(dimension:15,child: CircularProgressIndicator(color: Colors.white,))
+          : Text(
+              title,
+              style:
+                  GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
     );
   }
 }

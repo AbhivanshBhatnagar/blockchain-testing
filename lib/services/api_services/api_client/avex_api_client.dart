@@ -15,6 +15,3 @@ abstract class AvexApiClient {
     @Body() SignupRequest request
   );
 }
-
-final avexApiClientProvider =
-    Provider<AvexApiClient>((ref) => AvexApiClient(ref.read(dioProvider)));

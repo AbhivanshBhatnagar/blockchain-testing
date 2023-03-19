@@ -4,13 +4,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_project/core/router.gr.dart';
 import 'package:test_project/models/models.dart';
+import 'package:test_project/presentation/auth/signup/signup_state_notifier.dart';
 import 'package:test_project/presentation/widget/button.dart';
 
-import '../../core/auth_state.dart';
-import '../../services/api_services/api_client/avex_api_client.dart';
+import '../../../core/auth_state.dart';
+import '../../../services/api_services/api_client/avex_api_client.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
@@ -20,7 +22,6 @@ class SignupScreen extends ConsumerStatefulWidget {
 }
 
 class _SignupScreenState extends AuthState<SignupScreen> {
-  double signupButtonOpacity = 0;
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -28,6 +29,21 @@ class _SignupScreenState extends AuthState<SignupScreen> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    final status =
+        ref.watch(signupStateNortifierProvider.select((value) => value.status));
+    final opacitySignupButton = ref.watch(signupStateNortifierProvider
+        .select((value) => value.signupButtonOpacity));
+    ref.listen(signupStateNortifierProvider.select((value) => value.status),
+        (prev, next) {
+      if (next == SignupStateNotifierStatus.loaded) {
+        AutoRouter.of(context).push(const OnboardingRoute());
+      } else if (next == SignupStateNotifierStatus.error) {
+        final errorMessage = ref.read(
+            signupStateNortifierProvider.select((value) => value.errorMessage));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(errorMessage.toString())));
+      }
+    });
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -41,11 +57,9 @@ class _SignupScreenState extends AuthState<SignupScreen> {
                   children: [
                     Row(
                       children: [
-                        Text(
-                          "Let's get Started!",
-                          style: GoogleFonts.inter(
-                        fontWeight: FontWeight.w600, fontSize: 24)
-                        ),
+                        Text("Let's get Started!",
+                            style: GoogleFonts.inter(
+                                fontWeight: FontWeight.w600, fontSize: 24)),
                       ],
                     ),
                     Row(
@@ -60,31 +74,17 @@ class _SignupScreenState extends AuthState<SignupScreen> {
                     SizedBox(height: screenHeight * 0.15),
                     SvgPicture.asset("assets/logo.svg",
                         semanticsLabel: 'Acme Logo'),
-                    SizedBox(height: screenHeight * 0.125),
-                    Row(
-                      children: [
-                        Text(
-                          "Email",
-                          style: GoogleFonts.inter(
-                              fontSize: 22, fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
+                    SizedBox(height: screenHeight * 0.15),
                     const SizedBox(
                       height: 8,
                     ),
-                    TextField(
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       autofocus: false,
                       onChanged: (value) {
-                        if (value.isEmpty) {
-                          setState(() {
-                            this.signupButtonOpacity = 0;
-                          });
-                        } else {
-                          setState(() {
-                            this.signupButtonOpacity = 1;
-                          });
-                        }
+                        ref
+                            .read(signupStateNortifierProvider.notifier)
+                            .setEmail(value);
                       },
                       style:
                           TextStyle(fontSize: 17.0, color: Color(0xFFbdc6cf)),
@@ -102,7 +102,7 @@ class _SignupScreenState extends AuthState<SignupScreen> {
                     Stack(
                       children: [
                         AnimatedOpacity(
-                          opacity: 1 - signupButtonOpacity,
+                          opacity: 1 - opacitySignupButton,
                           duration: const Duration(milliseconds: 500),
                           child: Column(
                             children: [
@@ -114,18 +114,7 @@ class _SignupScreenState extends AuthState<SignupScreen> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   GestureDetector(
-                                    onTap: () async {
-                                      SignupRequest signupRequest =
-                                          const SignupRequest(
-                                              email:
-                                                  "daimashashank10@gmail.com");
-                                      final response = await ref
-                                          .read(avexApiClientProvider)
-                                          .generateEmailDynamicLink(
-                                              signupRequest);
-                                      print(response.response.statusCode
-                                          .toString());
-                                    },
+                                    onTap: () async {},
                                     child: Container(
                                       decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
@@ -138,10 +127,7 @@ class _SignupScreenState extends AuthState<SignupScreen> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () => {
-                                      AutoRouter.of(context)
-                                          .push(const OnboardingRoute())
-                                    },
+                                    onTap: () => {},
                                     child: Container(
                                       decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
@@ -172,10 +158,18 @@ class _SignupScreenState extends AuthState<SignupScreen> {
                             child: Align(
                                 alignment: Alignment.center,
                                 child: AnimatedOpacity(
-                                  opacity: signupButtonOpacity,
+                                  opacity: opacitySignupButton,
                                   duration: const Duration(milliseconds: 500),
                                   child: CustomButton(
-                                      title: "Signup", onClick: () {}),
+                                      title: "Signup",
+                                      onClick: () {
+                                        ref
+                                            .read(signupStateNortifierProvider
+                                                .notifier)
+                                            .signup();
+                                      },
+                                      isLoading: status ==
+                                          SignupStateNotifierStatus.loading),
                                 )))
                       ],
                     )
