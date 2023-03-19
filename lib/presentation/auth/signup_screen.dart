@@ -6,8 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_project/core/router.gr.dart';
+import 'package:test_project/models/models.dart';
 
 import '../../core/auth_state.dart';
+import '../../services/api_services/api_client/avex_api_client.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
@@ -48,7 +50,8 @@ class _SignupScreenState extends AuthState<SignupScreen> {
                       children: [
                         Text(
                           "An amazing web3 journey awaits",
-                          style: GoogleFonts.inter(color:const Color(0xFF626164)),
+                          style:
+                              GoogleFonts.inter(color: const Color(0xFF626164)),
                         ),
                       ],
                     ),
@@ -89,24 +92,37 @@ class _SignupScreenState extends AuthState<SignupScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Color(0xFF25252D)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(14.0),
-                            child: SvgPicture.asset("assets/google_logo.svg"),
-                          ),
-                        ),
                         GestureDetector(
-                          onTap: ()=>{
-                            AutoRouter.of(context).push(OnboardingRoute())
+                          onTap: () async {
+                            SignupRequest signupRequest = SignupRequest(
+                                email: "daimashashank10@gmail.com");
+                            final response = await ref
+                                .read(avexApiClientProvider)
+                                .generateEmailDynamicLink(signupRequest);
+                            print(response.toString());
                           },
                           child: Container(
                             decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Color(0xFF25252D)),
+                                shape: BoxShape.circle,
+                                color: Color(0xFF25252D)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(14.0),
+                              child: SvgPicture.asset("assets/google_logo.svg"),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => {
+                            AutoRouter.of(context).push(const OnboardingRoute())
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFF25252D)),
                             child: Padding(
                               padding: const EdgeInsets.all(15.0),
-                              child: SvgPicture.asset("assets/twitter_logo.svg"),
+                              child:
+                                  SvgPicture.asset("assets/twitter_logo.svg"),
                             ),
                           ),
                         ),
