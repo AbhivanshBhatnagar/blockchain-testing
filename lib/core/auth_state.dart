@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class AuthState<T extends ConsumerStatefulWidget>
     extends ConsumerState<T> {
   bool _redirectCalled = false;
+
+
 
   //For One-time get authSessions
   Future<void> redirect() async {

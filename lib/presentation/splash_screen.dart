@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/auth_state.dart';
 import '../core/router.gr.dart';
+import '../dynamic_link_handler.dart';
 import 'main/home/home_screen.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -38,6 +40,7 @@ class _SplashScreenState extends AuthState<SplashScreen> {
 
   @override
   void onAuthFailure() {
+    // debugPrint('my.app.category');
     AutoRouter.of(context).replace(const SignupRoute());
   }
 
@@ -46,4 +49,6 @@ class _SplashScreenState extends AuthState<SplashScreen> {
     AutoRouter.of(context).replace(MainRouter());
     // print("THIS");
   }
+
+
 }

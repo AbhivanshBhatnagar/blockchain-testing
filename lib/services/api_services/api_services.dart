@@ -1,5 +1,6 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_project/services/api_services/api_client/avex_api_client.dart';
 import 'package:test_project/services/api_services/api_response.dart';
@@ -13,6 +14,7 @@ final apiServiceProvider =
 class ApiService {
   late final AvexApiClient avexApiClient;
   final String unknownErrorMessage = "An Unknown Error Message Happen";
+
   Future<ApiResponse<void>> signupWithDynamicLink(String email) async {
     final request = SignupRequest(email: email);
     final response = await avexApiClient.generateEmailDynamicLink(request);
@@ -26,6 +28,50 @@ class ApiService {
     } else {
       return ApiResponse.error(unknownErrorMessage, 500);
     }
+  }
+
+  Future<ApiResponse<VerifyAuthResponse>> verifyAuthToken(
+      String authToken) async {
+    try {
+      final response = await avexApiClient.verifyAuthToken(authToken);
+      final statusCode = response.response.statusCode;
+      return ApiResponse.success(
+          VerifyAuthResponse.fromJson(response.data), statusCode ?? -1);
+    } catch (e) {
+      return _handleError(e);
+    }
+  }
+
+  /// handles error, and returns an ApiResponse based on the error
+  Future<ApiResponse<DataType>> _handleError<DataType>(e) async {
+    switch (e.runtimeType) {
+      case DioError:
+        if ((e as DioError).type == DioErrorType.badResponse) {
+          final res = e.response;
+          return ApiResponse<DataType>.error(
+              res?.data["message"], e.response?.statusCode ?? -1);
+        }
+        break;
+    }
+    return ApiResponse<DataType>.error(await _checkNetworkAndReturnError(), -1);
+  }
+
+  Future<String> _checkNetworkAndReturnError() async {
+    return (await hasInternetAccess()) == false
+        ? 'Oh snap! It seems you\'re offline.'
+        : 'Something went wrong!';
+  }
+
+  Future<bool?> hasInternetAccess() async {
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+    } on SocketException catch (_) {
+      return false;
+    }
+    return null;
   }
 
   ApiService(Dio dio) {
