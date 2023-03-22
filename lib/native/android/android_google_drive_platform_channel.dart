@@ -9,10 +9,14 @@ class AndroidGoogleDrivePlatformChannel {
   static Future<void> invoke() async {
     String batteryLevel;
     try {
-      final int result = await platform.invokeMethod('change_activity');
+      final String result = await platform.invokeMethod('change_activity');
       batteryLevel = 'Battery level at $result % .';
+      debugPrint(batteryLevel);
+
+
     } on PlatformException catch (e) {
       batteryLevel = "Failed to get battery level: '${e.message}'.";
+      debugPrint(batteryLevel);
     }
     return;
   }
