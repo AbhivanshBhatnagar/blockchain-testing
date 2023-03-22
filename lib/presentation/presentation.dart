@@ -6,5 +6,5 @@ export "main/notification/notification_screen.dart";
 export "main/settings/settings_screen.dart";
 export 'auth/signup/signup_screen.dart';
 export 'auth/onboarding_screen.dart';
-export 'auth/seed_recovery_screen.dart';
+export 'auth/seed_recovery/seed_recovery_screen.dart';
 export 'auth/dynamic_link_proceessing/dynamic_link_processing_screen.dart';
