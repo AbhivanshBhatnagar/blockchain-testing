@@ -2,12 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_project/presentation/auth/seed_recovery/seed_recovery_state_notifier.dart';
 
 import '../../../core/router.gr.dart';
 import '../../widget/button.dart';
 
 class SeedRecoveryScreen extends ConsumerWidget {
   const SeedRecoveryScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
@@ -33,7 +35,7 @@ class SeedRecoveryScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 24.0),
                 child:
-                    Text("To backup your wallet complete all the steps below"),
+                Text("To backup your wallet complete all the steps below"),
               ),
               Expanded(child: Container()),
               Row(
@@ -89,8 +91,9 @@ class SeedRecoveryScreen extends ConsumerWidget {
               ),
               CustomButton(
                 onClick: () => {
-                  AutoRouter.of(context).push(RestoreExistingAccountRoute())
-                },
+                // AutoRouter.of(context).push(RestoreExistingAccountRoute())
+                ref.read(seedRecoveryStateNotifierProvider.notifier).moveToNextScreen()
+              },
                 title: "Open My Email",
               ),
             ],

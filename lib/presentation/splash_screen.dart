@@ -41,7 +41,7 @@ class _SplashScreenState extends AuthState<SplashScreen> {
   @override
   void onAuthFailure() {
     // debugPrint('my.app.category');
-    AutoRouter.of(context).replace(const SignupRoute());
+    AutoRouter.of(context).replace(const SeedRecoveryRoute());
   }
 
   @override
