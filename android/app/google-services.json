@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "917456096698-3rnip7gdh6e2q40bl4vr97pat75ec9kq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.avex_app",
+            "certificate_hash": "08d7c0954bd1b3b178fe89e2d0c83a8b58555d8d"
+          }
+        },
+        {
           "client_id": "917456096698-jmlk6i5nd537pndsq2ha0fa5rq1m8pcn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -57,6 +65,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "917456096698-7kgfjkinms18hsf06tkhp290hctu94so.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test_project",
+            "certificate_hash": "cc0d48bb731ef980dcfcf4594e976060a2a66fe3"
+          }
+        },
+        {
+          "client_id": "917456096698-eci2hdn2omg17ioiet8g0pabq7rn56rp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test_project",
+            "certificate_hash": "08d7c0954bd1b3b178fe89e2d0c83a8b58555d8d"
+          }
+        },
         {
           "client_id": "917456096698-en5irt9d8n9l5365g61d491m68nemthh.apps.googleusercontent.com",
           "client_type": 1,

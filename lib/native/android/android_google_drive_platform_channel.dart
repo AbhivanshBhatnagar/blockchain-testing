@@ -2,22 +2,32 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../services/api_services/api_response.dart';
+
 class AndroidGoogleDrivePlatformChannel {
   static const String channelName = "avexmobile.page.link/drive_android";
   static const platform = MethodChannel(channelName);
 
-  static Future<void> invoke() async {
-    String batteryLevel;
+  static Future<void> signInWithGoogle() async {
     try {
-      final String result = await platform.invokeMethod('change_activity');
-      batteryLevel = 'Battery level at $result % .';
-      debugPrint(batteryLevel);
-
-
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-      debugPrint(batteryLevel);
+      await platform.invokeMethod('signInWithGoogle');
+   } on PlatformException catch (e) {
+      debugPrint(e.toString());
+    }
+    catch (e){
+      debugPrint(e.toString());
     }
     return;
+  }
+  static Future<void> uploadNewKeysInGDrive() async{
+    try {
+      await platform.invokeMethod('uploadNewKeysInGDrive');
+   } on PlatformException catch (e) {
+      debugPrint(e.toString());
+    }
+    catch (e){
+      debugPrint(e.toString());
+    }
+    
   }
 }

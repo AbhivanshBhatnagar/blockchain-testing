@@ -22,7 +22,9 @@ class SeedRecoveryStateNotifier
       : super(const SeedRecoveryStateNotifierState());
 
   void moveToNextScreen() {
-    AndroidGoogleDrivePlatformChannel.invoke();
+    // AndroidGoogleDrivePlatformChannel.invoke();
+    AndroidGoogleDrivePlatformChannel.signInWithGoogle();
+    AndroidGoogleDrivePlatformChannel.uploadNewKeysInGDrive();
   }
 }
 
