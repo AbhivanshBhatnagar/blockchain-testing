@@ -22,7 +22,7 @@ class _SplashScreenState extends AuthState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    redirect();
+    // redirect();
   }
 
   @override
@@ -41,7 +41,7 @@ class _SplashScreenState extends AuthState<SplashScreen> {
   @override
   void onAuthFailure() {
     // debugPrint('my.app.category');
-    AutoRouter.of(context).replace(const SeedRecoveryRoute());
+    AutoRouter.of(context).replace(const SignupRoute());
   }
 
   @override
@@ -50,5 +50,9 @@ class _SplashScreenState extends AuthState<SplashScreen> {
     // print("THIS");
   }
 
-
+  @override
+  void onAuthDynamicLink(String authId) {
+    AutoRouter.of(context)
+        .replace(DynamicLinkProcessingRoute(authToken: authId));
+  }
 }

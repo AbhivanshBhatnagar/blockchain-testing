@@ -192,4 +192,11 @@ class _SignupScreenState extends AuthState<SignupScreen> {
   void onAuthSuccess() {
     // TODO: implement onAuthSuccess
   }
+  
+  @override
+  void onAuthDynamicLink(String authId) {
+    AutoRouter.of(context)
+        .replace(DynamicLinkProcessingRoute(authToken: authId));
+
+  }
 }

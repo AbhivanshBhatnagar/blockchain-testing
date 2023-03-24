@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:test_project/core/router.gr.dart';
 import 'package:test_project/home.dart';
 import 'package:test_project/lend_borrow_screen.dart';
 import 'package:test_project/onboarding1.dart';
@@ -41,50 +43,65 @@ class DynamicLinkHandler {
     _dynamicLinks.onLink.listen((dynamicLinkData) {
       final Uri uri = dynamicLinkData.link;
       final queryParameter = uri.queryParameters;
-
-      if (queryParameter.isNotEmpty &&
-          dynamicLinkData.link.path == "/mailsuccess/") {
-        String authCode = queryParameter["authCode"].toString();
-        if (authCode.isNotEmpty) {
-          log(authCode);
-          // () async {
-          encryptedSharedPreferences.setString("code", authCode);
-          //   code = authCode;
-          // };
-        }
-        // String? password = queryParameter["password"];
-        log(dynamicLinkData.link.path);
-        log(authCode.toString());
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => Home()
-                // OnBoardingScreen(
-                // authcode: authCode.toString(),
-                // ),
-                ));
-      } else if (queryParameter.isNotEmpty &&
-          dynamicLinkData.link.path == '/request/') {
-        // Navigator.pushNamed(context, dynamicLinkData.link.path);
-        String params = queryParameter["token"].toString();
-        var list = params.split('@amount=');
-        String address = list[1].split('@sendAddress=')[1];
-        log(list.toString() + address);
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SendScreen(
-                      token: list[0],
-                      amount: list[1],
-                      sendAddress: address,
-                      isRecieve: true,
-                    )
-                // OnBoardingScreen(
-                // authcode: authCode.toString(),
-                // ),
-                ));
+      debugPrint(uri.toString());
+      debugPrint(queryParameter.toString());
+      if(queryParameter.isNotEmpty && dynamicLinkData.link.path=="/signup/"){
+        String authCode= queryParameter["userAuthenticationCode"].toString();
+        // AutoRouter.of(context ).replace(DynamicLinkProcessingRoute(authToken: authCode));
       }
+      // if (queryParameter.isNotEmpty &&
+      //     dynamicLinkData.link.path == "/mailsuccess/") {
+      //   String authCode = queryParameter["authCode"].toString();
+      //   if (authCode.isNotEmpty) {
+      //     log(authCode);
+      //     // () async {
+      //     encryptedSharedPreferences.setString("code", authCode);
+      //     //   code = authCode;
+      //     // };
+      //   }
+      //   // String? password = queryParameter["password"];
+      //   log(dynamicLinkData.link.path);
+      //   log(authCode.toString());
+      //   Navigator.pushReplacement(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => Home()
+      //           // OnBoardingScreen(
+      //           // authcode: authCode.toString(),
+      //           // ),
+      //           ));
+      // } else if (queryParameter.isNotEmpty &&
+      //     dynamicLinkData.link.path == '/request/') {
+      //   // Navigator.pushNamed(context, dynamicLinkData.link.path);
+      //   String params = queryParameter["token"].toString();
+      //   var list = params.split('@amount=');
+      //   String address = list[1].split('@sendAddress=')[1];
+      //   log(list.toString() + address);
+      //   Navigator.pushReplacement(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) => SendScreen(
+      //                 token: list[0],
+      //                 amount: list[1],
+      //                 sendAddress: address,
+      //                 isRecieve: true,
+      //               )
+      //           // OnBoardingScreen(
+      //           // authcode: authCode.toString(),
+      //           // ),
+      //           ));
+      // }
     }).onError((error) {
       print(error);
     });
   }
 }
+/*
+
+
+https://avexmobile.page.link/?link=https://avexmobile.page.link/signup/?userAuthenticationCode=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NzkyNzcwNjUsImV4cCI6MTY3OTI3NzM2NSwidXNlciI6IjU1MWY2Zjc1LTA2N2UtNDYyMy1iOWM3LTdhMjcxMWVjNDZhMyIsInRva2VuX3R5cGUiOiJ2ZXJpZnkifQ.OTMYDsFR--n7mtThBm47NAdSCX0cvpImhKWV85IbnGg&apn=com.example.test_project
+
+
+
+
+
+*/ 
