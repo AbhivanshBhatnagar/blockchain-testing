@@ -19,6 +19,8 @@ mixin _$DynamicLinkProcessingStateNotifierState {
   DynamicLinkProcessingStateNotifierStatus get status =>
       throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
+  String? get accessToken => throw _privateConstructorUsedError;
+  String? get refreshToken => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DynamicLinkProcessingStateNotifierStateCopyWith<
@@ -35,7 +37,10 @@ abstract class $DynamicLinkProcessingStateNotifierStateCopyWith<$Res> {
           DynamicLinkProcessingStateNotifierState>;
   @useResult
   $Res call(
-      {DynamicLinkProcessingStateNotifierStatus status, String? errorMessage});
+      {DynamicLinkProcessingStateNotifierStatus status,
+      String? errorMessage,
+      String? accessToken,
+      String? refreshToken});
 }
 
 /// @nodoc
@@ -55,6 +60,8 @@ class _$DynamicLinkProcessingStateNotifierStateCopyWithImpl<$Res,
   $Res call({
     Object? status = null,
     Object? errorMessage = freezed,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -64,6 +71,14 @@ class _$DynamicLinkProcessingStateNotifierStateCopyWithImpl<$Res,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      refreshToken: freezed == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -79,7 +94,10 @@ abstract class _$$_DynamicLinkProcessingStateNotifierStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {DynamicLinkProcessingStateNotifierStatus status, String? errorMessage});
+      {DynamicLinkProcessingStateNotifierStatus status,
+      String? errorMessage,
+      String? accessToken,
+      String? refreshToken});
 }
 
 /// @nodoc
@@ -97,6 +115,8 @@ class __$$_DynamicLinkProcessingStateNotifierStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? errorMessage = freezed,
+    Object? accessToken = freezed,
+    Object? refreshToken = freezed,
   }) {
     return _then(_$_DynamicLinkProcessingStateNotifierState(
       status: null == status
@@ -106,6 +126,14 @@ class __$$_DynamicLinkProcessingStateNotifierStateCopyWithImpl<$Res>
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      accessToken: freezed == accessToken
+          ? _value.accessToken
+          : accessToken // ignore: cast_nullable_to_non_nullable
+              as String?,
+      refreshToken: freezed == refreshToken
+          ? _value.refreshToken
+          : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -117,17 +145,23 @@ class _$_DynamicLinkProcessingStateNotifierState
     implements _DynamicLinkProcessingStateNotifierState {
   const _$_DynamicLinkProcessingStateNotifierState(
       {this.status = DynamicLinkProcessingStateNotifierStatus.initial,
-      this.errorMessage});
+      this.errorMessage,
+      this.accessToken,
+      this.refreshToken});
 
   @override
   @JsonKey()
   final DynamicLinkProcessingStateNotifierStatus status;
   @override
   final String? errorMessage;
+  @override
+  final String? accessToken;
+  @override
+  final String? refreshToken;
 
   @override
   String toString() {
-    return 'DynamicLinkProcessingStateNotifierState(status: $status, errorMessage: $errorMessage)';
+    return 'DynamicLinkProcessingStateNotifierState(status: $status, errorMessage: $errorMessage, accessToken: $accessToken, refreshToken: $refreshToken)';
   }
 
   @override
@@ -137,11 +171,16 @@ class _$_DynamicLinkProcessingStateNotifierState
             other is _$_DynamicLinkProcessingStateNotifierState &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            (identical(other.accessToken, accessToken) ||
+                other.accessToken == accessToken) &&
+            (identical(other.refreshToken, refreshToken) ||
+                other.refreshToken == refreshToken));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, errorMessage);
+  int get hashCode =>
+      Object.hash(runtimeType, status, errorMessage, accessToken, refreshToken);
 
   @JsonKey(ignore: true)
   @override
@@ -156,12 +195,18 @@ abstract class _DynamicLinkProcessingStateNotifierState
     implements DynamicLinkProcessingStateNotifierState {
   const factory _DynamicLinkProcessingStateNotifierState(
       {final DynamicLinkProcessingStateNotifierStatus status,
-      final String? errorMessage}) = _$_DynamicLinkProcessingStateNotifierState;
+      final String? errorMessage,
+      final String? accessToken,
+      final String? refreshToken}) = _$_DynamicLinkProcessingStateNotifierState;
 
   @override
   DynamicLinkProcessingStateNotifierStatus get status;
   @override
   String? get errorMessage;
+  @override
+  String? get accessToken;
+  @override
+  String? get refreshToken;
   @override
   @JsonKey(ignore: true)
   _$$_DynamicLinkProcessingStateNotifierStateCopyWith<

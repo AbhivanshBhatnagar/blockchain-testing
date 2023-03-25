@@ -48,6 +48,12 @@ class _DynamicLinkProcessingScreenState
               predicate: (route) => false);
         });
       }
+      if (next.status ==
+          DynamicLinkProcessingStateNotifierStatus.dynamicLinkVerified) {
+        ref
+            .read(dynamicLinkProcessingStateNotifierProvider.notifier)
+            .checkWhetherUserExists();
+      }
     });
     return const Scaffold(
       body: Center(

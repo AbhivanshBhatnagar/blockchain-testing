@@ -19,4 +19,9 @@ abstract class AvexApiClient {
   Future<HttpResponse> verifyAuthToken(
     @Path() String authToken,
   );
+
+  @POST("/user/exists")
+  Future<HttpResponse> getUserExistence(
+    @Header("Authorization") String accessToken,
+  );
 }

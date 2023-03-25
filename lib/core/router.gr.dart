@@ -64,6 +64,12 @@ class AppRouter extends _i4.RootStackRouter {
         child: const _i2.RestoreExistingAccountScreen(),
       );
     },
+    SetupOrImportNewAccountRoute.name: (routeData) {
+      return _i4.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i1.SetupOrImportNewAccountScreen(),
+      );
+    },
     MainRouter.name: (routeData) {
       final args = routeData.argsAs<MainRouterArgs>(
           orElse: () => const MainRouterArgs());
@@ -129,6 +135,10 @@ class AppRouter extends _i4.RootStackRouter {
         _i4.RouteConfig(
           RestoreExistingAccountRoute.name,
           path: '/restoreExistingAccount',
+        ),
+        _i4.RouteConfig(
+          SetupOrImportNewAccountRoute.name,
+          path: '/setupOrImportNewAccountScreen',
         ),
         _i4.RouteConfig(
           MainRouter.name,
@@ -257,6 +267,18 @@ class RestoreExistingAccountRoute extends _i4.PageRouteInfo<void> {
         );
 
   static const String name = 'RestoreExistingAccountRoute';
+}
+
+/// generated route for
+/// [_i1.SetupOrImportNewAccountScreen]
+class SetupOrImportNewAccountRoute extends _i4.PageRouteInfo<void> {
+  const SetupOrImportNewAccountRoute()
+      : super(
+          SetupOrImportNewAccountRoute.name,
+          path: '/setupOrImportNewAccountScreen',
+        );
+
+  static const String name = 'SetupOrImportNewAccountRoute';
 }
 
 /// generated route for

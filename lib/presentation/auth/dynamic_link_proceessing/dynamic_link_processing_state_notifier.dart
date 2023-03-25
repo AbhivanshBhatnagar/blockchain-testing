@@ -28,6 +28,25 @@ class DynamicLinkProcessingStateNotifier
     if (response.code < 300 && response.code >= 200) {
       try {
         state = state.copyWith(
+            status:
+                DynamicLinkProcessingStateNotifierStatus.dynamicLinkVerified);
+      } catch (e) {}
+    } else {
+      debugPrint(response.errorMessage);
+      try {
+        state = state.copyWith(
+            status: DynamicLinkProcessingStateNotifierStatus.error,
+            errorMessage: response.errorMessage);
+      } catch (e) {}
+    }
+  }
+
+  void checkWhetherUserExists() async {
+    final response =
+        await apiServices.getUserExistence(state.accessToken ?? "");
+    if (response.code < 300 && response.code >= 200) {
+      try {
+        state = state.copyWith(
             status: DynamicLinkProcessingStateNotifierStatus.loaded);
       } catch (e) {}
     } else {
@@ -44,16 +63,18 @@ class DynamicLinkProcessingStateNotifier
 @freezed
 class DynamicLinkProcessingStateNotifierState
     with _$DynamicLinkProcessingStateNotifierState {
-  const factory DynamicLinkProcessingStateNotifierState({
-    @Default(DynamicLinkProcessingStateNotifierStatus.initial)
-        DynamicLinkProcessingStateNotifierStatus status,
-    String? errorMessage,
-  }) = _DynamicLinkProcessingStateNotifierState;
+  const factory DynamicLinkProcessingStateNotifierState(
+      {@Default(DynamicLinkProcessingStateNotifierStatus.initial)
+          DynamicLinkProcessingStateNotifierStatus status,
+      String? errorMessage,
+      String? accessToken,
+      String? refreshToken}) = _DynamicLinkProcessingStateNotifierState;
 }
 
 enum DynamicLinkProcessingStateNotifierStatus {
   initial,
   loading,
   error,
+  dynamicLinkVerified,
   loaded
 }

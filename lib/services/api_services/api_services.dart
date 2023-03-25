@@ -6,6 +6,7 @@ import 'package:test_project/services/api_services/api_client/avex_api_client.da
 import 'package:test_project/services/api_services/api_response.dart';
 
 import '../../models/models.dart';
+import '../../models/responses/get_existence_response.dart';
 import '../dio_provider.dart';
 
 final apiServiceProvider =
@@ -41,10 +42,24 @@ class ApiService {
       return _handleError(e);
     }
   }
+  Future<ApiResponse<GetExistenceResponse>> getUserExistence(String authToken)async{
+    try{
+      final response= await avexApiClient.getUserExistence(authToken);
+      final statusCode= response.response.statusCode;
+      return ApiResponse.success(GetExistenceResponse.fromJson(response.data), statusCode??-1);
+
+    }catch(e){
+      return _handleError(e);
+    }
+
+  }
 
   /// handles error, and returns an ApiResponse based on the error
   Future<ApiResponse<DataType>> _handleError<DataType>(e) async {
     if (e.runtimeType == DioError) {
+      if(e.statusCode==401){
+        
+      }
       final res = e.response;
       return ApiResponse<DataType>.error(
           res?.data["message"], e.response?.statusCode ?? -1);

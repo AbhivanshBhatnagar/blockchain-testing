@@ -8,3 +8,4 @@ export 'auth/signup/signup_screen.dart';
 export 'auth/onboarding_screen.dart';
 export 'auth/seed_recovery/seed_recovery_screen.dart';
 export 'auth/dynamic_link_proceessing/dynamic_link_processing_screen.dart';
+export 'auth/setup_or_import_account/setup_or_import_new_account.dart';

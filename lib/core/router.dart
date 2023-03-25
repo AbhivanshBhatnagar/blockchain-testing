@@ -10,6 +10,7 @@ import '../presentation/presentation.dart';
   AutoRoute(path: '/confirmEmail', page: OnboardingScreen),
   AutoRoute(path: '/seedRecovery', page: SeedRecoveryScreen),
   AutoRoute(path: '/restoreExistingAccount', page: RestoreExistingAccountScreen),
+  AutoRoute(path: '/setupOrImportNewAccountScreen', page: SetupOrImportNewAccountScreen),
   AutoRoute(
       path: '/main',
       name: 'MainRouter',
