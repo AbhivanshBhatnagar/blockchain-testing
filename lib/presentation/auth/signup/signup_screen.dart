@@ -11,7 +11,6 @@ import 'package:test_project/models/models.dart';
 import 'package:test_project/presentation/auth/signup/signup_state_notifier.dart';
 import 'package:test_project/presentation/widget/button.dart';
 
-import '../../../core/auth_state.dart';
 import '../../../services/api_services/api_client/avex_api_client.dart';
 
 class SignupScreen extends ConsumerStatefulWidget {
@@ -21,7 +20,7 @@ class SignupScreen extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends AuthState<SignupScreen> {
+class _SignupScreenState extends ConsumerState<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -36,7 +35,8 @@ class _SignupScreenState extends AuthState<SignupScreen> {
     ref.listen(signupStateNortifierProvider.select((value) => value.status),
         (prev, next) {
       if (next == SignupStateNotifierStatus.loaded) {
-        AutoRouter.of(context).push(const OnboardingRoute());
+        AutoRouter.of(context).pushAndPopUntil(const OnboardingRoute(),
+            predicate: (route) => false);
       } else if (next == SignupStateNotifierStatus.error) {
         final errorMessage = ref.read(
             signupStateNortifierProvider.select((value) => value.errorMessage));
@@ -181,22 +181,5 @@ class _SignupScreenState extends AuthState<SignupScreen> {
         ),
       ),
     );
-  }
-
-  @override
-  void onAuthFailure() {
-    // TODO: implement onAuthFailure
-  }
-
-  @override
-  void onAuthSuccess() {
-    // TODO: implement onAuthSuccess
-  }
-  
-  @override
-  void onAuthDynamicLink(String authId) {
-    AutoRouter.of(context)
-        .replace(DynamicLinkProcessingRoute(authToken: authId));
-
   }
 }

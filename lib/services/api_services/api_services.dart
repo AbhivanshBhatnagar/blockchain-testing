@@ -44,14 +44,10 @@ class ApiService {
 
   /// handles error, and returns an ApiResponse based on the error
   Future<ApiResponse<DataType>> _handleError<DataType>(e) async {
-    switch (e.runtimeType) {
-      case DioError:
-        if ((e as DioError).type == DioErrorType.badResponse) {
-          final res = e.response;
-          return ApiResponse<DataType>.error(
-              res?.data["message"], e.response?.statusCode ?? -1);
-        }
-        break;
+    if (e.runtimeType == DioError) {
+      final res = e.response;
+      return ApiResponse<DataType>.error(
+          res?.data["message"], e.response?.statusCode ?? -1);
     }
     return ApiResponse<DataType>.error(await _checkNetworkAndReturnError(), -1);
   }

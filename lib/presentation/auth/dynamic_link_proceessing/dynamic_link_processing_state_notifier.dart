@@ -22,14 +22,21 @@ class DynamicLinkProcessingStateNotifier
       {required this.apiServices, required this.ref})
       : super(const DynamicLinkProcessingStateNotifierState());
 
-  void verifyDynamicLink() async {
-    String authToken="";
+  void verifyDynamicLink(String authToken) async {
     final response = await apiServices.verifyAuthToken(authToken);
     // ignore: unrelated_type_equality_checks
     if (response.code < 300 && response.code >= 200) {
-      debugPrint("SUCCESS");
+      try {
+        state = state.copyWith(
+            status: DynamicLinkProcessingStateNotifierStatus.loaded);
+      } catch (e) {}
     } else {
       debugPrint(response.errorMessage);
+      try {
+        state = state.copyWith(
+            status: DynamicLinkProcessingStateNotifierStatus.error,
+            errorMessage: response.errorMessage);
+      } catch (e) {}
     }
   }
 }
