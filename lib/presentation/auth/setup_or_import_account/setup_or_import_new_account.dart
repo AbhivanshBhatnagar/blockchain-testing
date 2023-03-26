@@ -70,7 +70,7 @@ class _SetupOrImportNewAccountScreenState
               ),
               CustomButton(
                   onClick: () =>
-                      {AutoRouter.of(context).push(SeedRecoveryRoute())},
+                      {AutoRouter.of(context).push(const RestoreExistingAccountRoute())},
                   title: "Restore existing wallet",
                   isLoading: false),
             ],

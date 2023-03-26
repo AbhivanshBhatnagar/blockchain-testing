@@ -6,6 +6,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:open_mail_app/open_mail_app.dart';
 import '../../core/router.gr.dart';
 import '../widget/button.dart';
 
@@ -19,6 +20,7 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   late StreamSubscription dynamicLinkStreamSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -92,8 +94,30 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 height: 12,
               ),
               CustomButton(
-                  onClick: () =>
-                      {AutoRouter.of(context).push(SeedRecoveryRoute())},
+                  onClick: () async {
+                    // AutoRouter.of(context).push(SeedRecoveryRoute())
+                    var result = await OpenMailApp.openMailApp(
+                      nativePickerTitle: 'Select email app to open',
+                    );
+
+                    // If no mail apps found, show error
+                    if (!result.didOpen && !result.canOpen) {
+                      showNoMailAppsDialog(context);
+
+                      // iOS: if multiple mail apps found, show dialog to select.
+                      // There is no native intent/default app system in iOS so
+                      // you have to do it yourself.
+                    } else if (!result.didOpen && result.canOpen) {
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return MailAppPickerDialog(
+                            mailApps: result.options,
+                          );
+                        },
+                      );
+                    }
+                  },
                   title: "Open My Email",
                   isLoading: false),
             ],
@@ -107,6 +131,26 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   void dispose() {
     dynamicLinkStreamSubscription.cancel();
     super.dispose();
+  }
+
+  void showNoMailAppsDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Open Mail App"),
+          content: Text("No mail apps installed"),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   void onAuthDynamicLink(String authId) {

@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:test_project/presentation/auth/recover_account/recover_account.dart';
-import 'package:test_project/presentation/auth/restore_existing_account_screen.dart';
+import 'package:test_project/presentation/auth/restore_existing_account/restore_existing_account_screen.dart';
 import '../presentation/main/main_router.dart';
 import '../presentation/presentation.dart';
 

@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../services/api_services/api_response.dart';
 import '../../../services/api_services/api_services.dart';
-import '../../../services/local_services/encryoted_shared_pref.dart';
+import '../../../services/local_services/encrypted_shared_pref.dart';
 
 part 'dynamic_link_processing_state_notifier.freezed.dart';
 

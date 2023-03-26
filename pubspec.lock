@@ -105,6 +105,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  bip32_ed25519:
+    dependency: transitive
+    description:
+      name: bip32_ed25519
+      sha256: "8c739df5d7a05ac2d08dd355062313d84f41244d05cf6cc953c9f0bca66b1fdf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.2"
   bip39:
     dependency: "direct main"
     description:
@@ -369,6 +377,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  eddsa_hmac:
+    dependency: "direct main"
+    description:
+      path: eddsa_hmac
+      relative: true
+    source: path
+    version: "0.0.1"
   eip1559:
     dependency: transitive
     description:
@@ -928,6 +943,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  open_mail_app:
+    dependency: "direct main"
+    description:
+      name: open_mail_app
+      sha256: ffc93edc0590ef4586136f505187b25014a336fe0374ad3cc528e727b3f2e726
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.5"
   package_config:
     dependency: transitive
     description:
@@ -1622,5 +1645,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.19.2-151.0.dev <3.0.0"
+  dart: ">=2.19.4 <3.0.0"
   flutter: ">=3.7.0-0"

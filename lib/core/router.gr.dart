@@ -15,7 +15,8 @@ import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:flutter/material.dart' as _i6;
 
 import '../presentation/auth/recover_account/recover_account.dart' as _i3;
-import '../presentation/auth/restore_existing_account_screen.dart' as _i2;
+import '../presentation/auth/restore_existing_account/restore_existing_account_screen.dart'
+    as _i2;
 import '../presentation/main/main_router.dart' as _i4;
 import '../presentation/presentation.dart' as _i1;
 

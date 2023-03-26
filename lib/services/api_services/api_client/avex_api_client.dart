@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:test_project/models/requests/refresh_access_token_request.dart';
 
 import '../../../models/models.dart';
 import '../../dio_provider.dart';
@@ -23,5 +24,15 @@ abstract class AvexApiClient {
   @GET("/user/exists")
   Future<HttpResponse> getUserExistence(
     @Header("Authorization") String accessToken,
+  );
+
+  @GET("/user/nonce")
+  Future<HttpResponse> getNonce(
+    @Header("Authorization") String accessToken,
+  );
+
+  @POST("/auth/refresh")
+  Future<HttpResponse> refreshAccessToken(
+    @Body() RefreshAccessTokenRequest request,
   );
 }
