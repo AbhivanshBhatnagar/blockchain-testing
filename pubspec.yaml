@@ -78,6 +78,7 @@ dependencies:
   dots_indicator: ^2.1.0
   flutter_svg: ^2.0.3
   retrofit: ^4.0.1
+  
 
 dev_dependencies:
   build_runner: ^2.3.3
