@@ -43,7 +43,8 @@ class DynamicLinkProcessingStateNotifier
                 ? {debugPrint("REFRESH TOKEN SAVED!!!")}
                 : {debugPrint("REFRESH TOKEN NOT SAVED!!!")});
         state = state.copyWith(
-            status: DynamicLinkProcessingStateNotifierStatus.dynamicLinkVerified,
+            status:
+                DynamicLinkProcessingStateNotifierStatus.dynamicLinkVerified,
             accessToken: response.data!.access.access,
             refreshToken: response.data!.refresh.refresh);
       } catch (e) {}
@@ -63,7 +64,8 @@ class DynamicLinkProcessingStateNotifier
     if (response.code < 300 && response.code >= 200) {
       try {
         state = state.copyWith(
-            status: DynamicLinkProcessingStateNotifierStatus.loaded);
+            status: DynamicLinkProcessingStateNotifierStatus.loaded,
+            userExistsInBackend: response.data!.exists);
       } catch (e) {}
     } else {
       debugPrint(response.errorMessage);
@@ -84,6 +86,8 @@ class DynamicLinkProcessingStateNotifierState
           DynamicLinkProcessingStateNotifierStatus status,
       String? errorMessage,
       String? accessToken,
+      @Default(false)
+          bool userExistsInBackend,
       String? refreshToken}) = _DynamicLinkProcessingStateNotifierState;
 }
 

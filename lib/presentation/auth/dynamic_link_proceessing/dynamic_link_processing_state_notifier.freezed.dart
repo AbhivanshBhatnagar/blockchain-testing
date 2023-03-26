@@ -20,6 +20,7 @@ mixin _$DynamicLinkProcessingStateNotifierState {
       throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
+  bool get userExistsInBackend => throw _privateConstructorUsedError;
   String? get refreshToken => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -40,6 +41,7 @@ abstract class $DynamicLinkProcessingStateNotifierStateCopyWith<$Res> {
       {DynamicLinkProcessingStateNotifierStatus status,
       String? errorMessage,
       String? accessToken,
+      bool userExistsInBackend,
       String? refreshToken});
 }
 
@@ -61,6 +63,7 @@ class _$DynamicLinkProcessingStateNotifierStateCopyWithImpl<$Res,
     Object? status = null,
     Object? errorMessage = freezed,
     Object? accessToken = freezed,
+    Object? userExistsInBackend = null,
     Object? refreshToken = freezed,
   }) {
     return _then(_value.copyWith(
@@ -76,6 +79,10 @@ class _$DynamicLinkProcessingStateNotifierStateCopyWithImpl<$Res,
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
               as String?,
+      userExistsInBackend: null == userExistsInBackend
+          ? _value.userExistsInBackend
+          : userExistsInBackend // ignore: cast_nullable_to_non_nullable
+              as bool,
       refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
@@ -97,6 +104,7 @@ abstract class _$$_DynamicLinkProcessingStateNotifierStateCopyWith<$Res>
       {DynamicLinkProcessingStateNotifierStatus status,
       String? errorMessage,
       String? accessToken,
+      bool userExistsInBackend,
       String? refreshToken});
 }
 
@@ -116,6 +124,7 @@ class __$$_DynamicLinkProcessingStateNotifierStateCopyWithImpl<$Res>
     Object? status = null,
     Object? errorMessage = freezed,
     Object? accessToken = freezed,
+    Object? userExistsInBackend = null,
     Object? refreshToken = freezed,
   }) {
     return _then(_$_DynamicLinkProcessingStateNotifierState(
@@ -131,6 +140,10 @@ class __$$_DynamicLinkProcessingStateNotifierStateCopyWithImpl<$Res>
           ? _value.accessToken
           : accessToken // ignore: cast_nullable_to_non_nullable
               as String?,
+      userExistsInBackend: null == userExistsInBackend
+          ? _value.userExistsInBackend
+          : userExistsInBackend // ignore: cast_nullable_to_non_nullable
+              as bool,
       refreshToken: freezed == refreshToken
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
@@ -147,6 +160,7 @@ class _$_DynamicLinkProcessingStateNotifierState
       {this.status = DynamicLinkProcessingStateNotifierStatus.initial,
       this.errorMessage,
       this.accessToken,
+      this.userExistsInBackend = false,
       this.refreshToken});
 
   @override
@@ -157,11 +171,14 @@ class _$_DynamicLinkProcessingStateNotifierState
   @override
   final String? accessToken;
   @override
+  @JsonKey()
+  final bool userExistsInBackend;
+  @override
   final String? refreshToken;
 
   @override
   String toString() {
-    return 'DynamicLinkProcessingStateNotifierState(status: $status, errorMessage: $errorMessage, accessToken: $accessToken, refreshToken: $refreshToken)';
+    return 'DynamicLinkProcessingStateNotifierState(status: $status, errorMessage: $errorMessage, accessToken: $accessToken, userExistsInBackend: $userExistsInBackend, refreshToken: $refreshToken)';
   }
 
   @override
@@ -174,13 +191,15 @@ class _$_DynamicLinkProcessingStateNotifierState
                 other.errorMessage == errorMessage) &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
+            (identical(other.userExistsInBackend, userExistsInBackend) ||
+                other.userExistsInBackend == userExistsInBackend) &&
             (identical(other.refreshToken, refreshToken) ||
                 other.refreshToken == refreshToken));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, errorMessage, accessToken, refreshToken);
+  int get hashCode => Object.hash(runtimeType, status, errorMessage,
+      accessToken, userExistsInBackend, refreshToken);
 
   @JsonKey(ignore: true)
   @override
@@ -197,6 +216,7 @@ abstract class _DynamicLinkProcessingStateNotifierState
       {final DynamicLinkProcessingStateNotifierStatus status,
       final String? errorMessage,
       final String? accessToken,
+      final bool userExistsInBackend,
       final String? refreshToken}) = _$_DynamicLinkProcessingStateNotifierState;
 
   @override
@@ -205,6 +225,8 @@ abstract class _DynamicLinkProcessingStateNotifierState
   String? get errorMessage;
   @override
   String? get accessToken;
+  @override
+  bool get userExistsInBackend;
   @override
   String? get refreshToken;
   @override

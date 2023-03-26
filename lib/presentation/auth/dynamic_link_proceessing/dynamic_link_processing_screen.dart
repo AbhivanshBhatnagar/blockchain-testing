@@ -38,16 +38,24 @@ class _DynamicLinkProcessingScreenState
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(next.errorMessage.toString()),
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
         ));
         // AutoRouter.of(context).navigateBack();
       }
       if (next.status == DynamicLinkProcessingStateNotifierStatus.loaded) {
-        
-        Future.delayed(Duration(milliseconds: 500), () {
+        final userExistInBackend=ref.read(dynamicLinkProcessingStateNotifierProvider.select((value) => value.userExistsInBackend));
+        if(userExistInBackend){
+          Future.delayed(const Duration(milliseconds: 500), () {
+            AutoRouter.of(context).pushAndPopUntil(const RecoverAccountRoute(),
+                predicate: (route) => false);
+          });
+        }
+        else {
+          Future.delayed(const Duration(milliseconds: 500), () {
           AutoRouter.of(context).pushAndPopUntil(const SetupOrImportNewAccountRoute(),
               predicate: (route) => false);
         });
+        }
         debugPrint("dynamic link api done. ");
 
       }

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:test_project/presentation/auth/recover_account/recover_account.dart';
 import 'package:test_project/presentation/auth/restore_existing_account_screen.dart';
 import '../presentation/main/main_router.dart';
 import '../presentation/presentation.dart';
@@ -11,6 +12,7 @@ import '../presentation/presentation.dart';
   AutoRoute(path: '/seedRecovery', page: SeedRecoveryScreen),
   AutoRoute(path: '/restoreExistingAccount', page: RestoreExistingAccountScreen),
   AutoRoute(path: '/setupOrImportNewAccountScreen', page: SetupOrImportNewAccountScreen),
+  AutoRoute(path: '/recoverAccount', page: RecoverAccountScreen),
   AutoRoute(
       path: '/main',
       name: 'MainRouter',
