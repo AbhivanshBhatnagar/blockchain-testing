@@ -20,7 +20,7 @@ abstract class AvexApiClient {
     @Path() String authToken,
   );
 
-  @POST("/user/exists")
+  @GET("/user/exists")
   Future<HttpResponse> getUserExistence(
     @Header("Authorization") String accessToken,
   );

@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../services/api_services/api_response.dart';
 import '../../../services/api_services/api_services.dart';
+import '../../../services/local_services/encryoted_shared_pref.dart';
 
 part 'dynamic_link_processing_state_notifier.freezed.dart';
 
@@ -27,9 +28,24 @@ class DynamicLinkProcessingStateNotifier
     // ignore: unrelated_type_equality_checks
     if (response.code < 300 && response.code >= 200) {
       try {
+        ref
+            .read(encryptedSharedPrefProvider)
+            .instance
+            .setString("access_token", response.data!.access.access)
+            .then((value) => (value)
+                ? {debugPrint("ACCESS TOKEN SAVED!!!")}
+                : {debugPrint("ACCESS TOKEN NOT SAVED!!!")});
+        ref
+            .read(encryptedSharedPrefProvider)
+            .instance
+            .setString("refresh_token", response.data!.refresh.refresh)
+            .then((value) => (value)
+                ? {debugPrint("REFRESH TOKEN SAVED!!!")}
+                : {debugPrint("REFRESH TOKEN NOT SAVED!!!")});
         state = state.copyWith(
-            status:
-                DynamicLinkProcessingStateNotifierStatus.dynamicLinkVerified);
+            status: DynamicLinkProcessingStateNotifierStatus.dynamicLinkVerified,
+            accessToken: response.data!.access.access,
+            refreshToken: response.data!.refresh.refresh);
       } catch (e) {}
     } else {
       debugPrint(response.errorMessage);

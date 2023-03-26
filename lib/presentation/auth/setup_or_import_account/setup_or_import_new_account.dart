@@ -50,28 +50,24 @@ class _SetupOrImportNewAccountScreenState
                 style: GoogleFonts.inter(
                     fontWeight: FontWeight.w500, fontSize: 40),
               ),
-              Text(
-                "Quickly, connect or restore a wallet",
-                style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w400, fontSize: 16),
+              Row(
+                children: [
+                  Text(
+                    "Quickly, connect or restore a wallet",
+                    style: GoogleFonts.inter(
+                        fontWeight: FontWeight.w400, fontSize: 16),
+                  ),
+                ],
               ),
               Expanded(child: Container()),
-         
-              Text(
-                "Sent to xyz@gmail.com",
-                style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                    color: Color(0xFFDEDEDE)),
-              ),
-              SizedBox(
-                height: 12,
-              ),
               CustomButton(
                   onClick: () =>
                       {AutoRouter.of(context).push(SeedRecoveryRoute())},
                   title: "Create new Wallet",
                   isLoading: false),
+              const SizedBox(
+                height: 12,
+              ),
               CustomButton(
                   onClick: () =>
                       {AutoRouter.of(context).push(SeedRecoveryRoute())},

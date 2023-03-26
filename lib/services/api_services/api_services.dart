@@ -44,7 +44,7 @@ class ApiService {
   }
   Future<ApiResponse<GetExistenceResponse>> getUserExistence(String authToken)async{
     try{
-      final response= await avexApiClient.getUserExistence(authToken);
+      final response= await avexApiClient.getUserExistence("Bearer ${authToken}");
       final statusCode= response.response.statusCode;
       return ApiResponse.success(GetExistenceResponse.fromJson(response.data), statusCode??-1);
 
@@ -57,12 +57,12 @@ class ApiService {
   /// handles error, and returns an ApiResponse based on the error
   Future<ApiResponse<DataType>> _handleError<DataType>(e) async {
     if (e.runtimeType == DioError) {
-      if(e.statusCode==401){
+      if(e.response!=null&& e.response.statusCode==401){
         
       }
       final res = e.response;
       return ApiResponse<DataType>.error(
-          res?.data["message"], e.response?.statusCode ?? -1);
+          e.message, e.response?.statusCode ?? -1);
     }
     return ApiResponse<DataType>.error(await _checkNetworkAndReturnError(), -1);
   }

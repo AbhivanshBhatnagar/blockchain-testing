@@ -43,16 +43,20 @@ class _DynamicLinkProcessingScreenState
         // AutoRouter.of(context).navigateBack();
       }
       if (next.status == DynamicLinkProcessingStateNotifierStatus.loaded) {
+        
         Future.delayed(Duration(milliseconds: 500), () {
-          AutoRouter.of(context).pushAndPopUntil(const SeedRecoveryRoute(),
+          AutoRouter.of(context).pushAndPopUntil(const SetupOrImportNewAccountRoute(),
               predicate: (route) => false);
         });
+        debugPrint("dynamic link api done. ");
+
       }
       if (next.status ==
           DynamicLinkProcessingStateNotifierStatus.dynamicLinkVerified) {
         ref
             .read(dynamicLinkProcessingStateNotifierProvider.notifier)
             .checkWhetherUserExists();
+        debugPrint("deep link successful");
       }
     });
     return const Scaffold(
