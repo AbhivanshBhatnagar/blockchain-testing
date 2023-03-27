@@ -8,6 +8,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_project/core/router.gr.dart';
 import 'package:test_project/models/models.dart';
+import 'package:test_project/native/android/android_google_drive_platform_channel.dart';
 import 'package:test_project/presentation/auth/signup/signup_state_notifier.dart';
 import 'package:test_project/presentation/widget/button.dart';
 
@@ -127,7 +128,9 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () => {},
+                                    onTap: () async{
+                                      // AndroidGoogleDrivePlatformChannel.uploadNewKeysInGDrive();
+                                    },
                                     child: Container(
                                       decoration: const BoxDecoration(
                                           shape: BoxShape.circle,

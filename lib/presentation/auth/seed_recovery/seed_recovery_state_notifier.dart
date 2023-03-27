@@ -23,8 +23,7 @@ class SeedRecoveryStateNotifier
 
   void moveToNextScreen() {
     // AndroidGoogleDrivePlatformChannel.invoke();
-    AndroidGoogleDrivePlatformChannel.signInWithGoogle();
-    AndroidGoogleDrivePlatformChannel.uploadNewKeysInGDrive();
+
   }
 }
 

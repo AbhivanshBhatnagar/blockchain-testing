@@ -132,8 +132,8 @@ open class GDriveExt {
 //                    val fileName = "Ticket"
                     val raunit = file
                     val gfile = com.google.api.services.drive.model.File()
-                    gfile.name = "SHASHANK LATEST UPLOAD.png"
-                    val mimetype = "*/*"
+                    gfile.name = "keys.txt"
+                    val mimetype = "text/plain"
                     val fileContent = FileContent(mimetype, raunit)
                     var fileid = ""
 

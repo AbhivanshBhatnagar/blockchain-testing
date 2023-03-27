@@ -36,6 +36,10 @@ class MainActivity : FlutterFragmentActivity() {
                 "uploadNewKeysInGDrive" -> {
                     val content = "This is random keys..."
                     if (Firebase.auth.currentUser != null) {
+                        if (!this::gDrive.isInitialized) {
+                            gDrive = GDriveExt()
+                            gDrive.init(this)
+                        }
                         val mDrive = gDrive.getDriveService(this)
                         GlobalScope.async(Dispatchers.IO) {
                             val newFile = (this@MainActivity).createTemporaryFile("temp", content)
