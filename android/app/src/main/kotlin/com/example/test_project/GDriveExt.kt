@@ -125,14 +125,14 @@ open class GDriveExt {
         return tempDrive
     }
 
-    fun uploadFileToGDrive(context: Context, file: File, mDrive: Drive) {
+    fun uploadFileToGDrive(context: Context, file: File, mDrive: Drive, fileName: String) {
         mDrive.let { googleDriveService ->
             GlobalScope.launch {
                 try {
 //                    val fileName = "Ticket"
                     val raunit = file
                     val gfile = com.google.api.services.drive.model.File()
-                    gfile.name = "keys.txt"
+                    gfile.name = fileName
                     val mimetype = "text/plain"
                     val fileContent = FileContent(mimetype, raunit)
                     var fileid = ""
@@ -142,11 +142,7 @@ open class GDriveExt {
 
                         withContext(Dispatchers.IO) {
                             launch {
-                                var mFile =
-                                    googleDriveService.Files().create(gfile, fileContent).execute()
-                                        .also {
-                                            Log.d("Shashank", "uploadFileToGDrive: ${it.parents}")
-                                        }
+                                googleDriveService.Files().create(gfile, fileContent).execute()
                             }
                         }
 
@@ -167,6 +163,42 @@ open class GDriveExt {
         }
 
     }
+
+//    suspend fun readFileFromDrive(context: Context, mDrive: Drive): String? {
+//        mDrive.let { googleDriveService ->
+//            GlobalScope.launch {
+//                try {
+//
+//
+//                    withContext(Dispatchers.Main) {
+//
+//                        withContext(Dispatchers.IO) {
+//                            launch {
+//                                val fileList = googleDriveService.Files().get("keys.txt").execute()
+//                                if (fileList != null) {
+//                                    val result = fileList.webContentLink
+//                                    Log.d(TAG, "uploadFileToGDrive: ${result}")
+//                                }
+//                                googleDriveService.Files().create(gfile, fileContent).execute()
+//                            }
+//                        }
+//
+//
+//                    }
+//
+//
+//                } catch (userAuthEx: UserRecoverableAuthIOException) {
+//
+//                    Log.d(TAG, "uploadFileToGDrive: USER RECOVERABLE AUTH IO EXCEPTION")
+//                    startActivity(context, userAuthEx.intent, null)
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                    Log.d("", e.toString())
+//
+//                }
+//            }
+//        }
+//    }
 
     fun Activity.makeCopy(fileUri: Uri): File {
         val parcelFileDescriptor =

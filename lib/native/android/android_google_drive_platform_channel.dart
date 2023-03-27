@@ -11,23 +11,33 @@ class AndroidGoogleDrivePlatformChannel {
   static Future<void> signInWithGoogle() async {
     try {
       await platform.invokeMethod('signInWithGoogle');
-   } on PlatformException catch (e) {
+    } on PlatformException catch (e) {
       debugPrint(e.toString());
-    }
-    catch (e){
+    } catch (e) {
       debugPrint(e.toString());
     }
     return;
   }
-  static Future<void> uploadNewKeysInGDrive() async{
+
+  static Future<void> uploadNewKeysInGDrive(
+      String fileName, String fileContent) async {
     try {
-      await platform.invokeMethod('uploadNewKeysInGDrive');
-   } on PlatformException catch (e) {
+      await platform
+          .invokeMethod('uploadNewKeysInGDrive', [fileName, fileContent]);
+    } on PlatformException catch (e) {
+      debugPrint(e.toString());
+    } catch (e) {
       debugPrint(e.toString());
     }
-    catch (e){
+  }
+
+  static Future<void> readFromGDrive(String fileName) async {
+    try {
+      await platform.invokeMethod('readFromGDrive', [fileName]);
+    } on PlatformException catch (e) {
+      debugPrint(e.toString());
+    } catch (e) {
       debugPrint(e.toString());
     }
-    
   }
 }

@@ -128,8 +128,11 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () async{
-                                      // AndroidGoogleDrivePlatformChannel.uploadNewKeysInGDrive();
+                                    onTap: () async {
+                                      // AndroidGoogleDrivePlatformChannel
+                                          // .uploadNewKeysInGDrive("file.txt",
+                                          //     "this is content from file.txt");
+                                      AndroidGoogleDrivePlatformChannel.readFromGDrive("keys.txt");
                                     },
                                     child: Container(
                                       decoration: const BoxDecoration(
