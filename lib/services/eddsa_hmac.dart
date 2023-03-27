@@ -6,40 +6,70 @@ import 'package:eddsa_hmac/ethereum.service.dart';
 import 'package:eddsa_hmac/message.service.dart';
 import 'package:eddsa_hmac/path.service.dart';
 import 'package:eddsa_hmac/shamir.service.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:test_project/services/api_services/api_response.dart';
+import 'package:test_project/services/api_services/api_services.dart';
 import 'package:web3dart/web3dart.dart';
 
-final eddsaHmacProvider = Provider((ref) => EddsaHmac());
+import 'local_services/encrypted_shared_pref.dart';
+
+final eddsaHmacProvider = Provider(
+    (ref) => EddsaHmac(service: ref.read(apiServiceProvider), ref: ref));
 
 class EddsaHmac {
-  void importSeedPhrase(String arguments, String nonce) {
+  final ApiService service;
+  final ProviderRef ref;
+  EddsaHmac({required this.service, required this.ref});
+  Future<ApiResponse> importSeedPhrase(String arguments) async {
     // Import Seed Phrase from User
-    var safeMnemonic = importMnemonic("picture hand perfect embody pioneer cruel royal accuse olive type tunnel brick");
+
+    var safeMnemonic = importMnemonic(
+        "kidney wealth trophy panel book car reveal shoulder gaze ski require exile");
     var backupShares = createBackupShares(safeMnemonic);
     print(backupShares); // Save these backup share to Drive, Email, Qrcode
     var seed = createWallet(safeMnemonic);
-
     var edwardsKey = createEdwardsKey(seed);
-    var data1 =
-        genreateShamirCreationMessage(backupShares[1], nonce, edwardsKey);
+    await service.refreshAccessTokenToSharedPref();
+    final accessToken = await ref
+        .read(encryptedSharedPrefProvider)
+        .instance
+        .getString("access_token");
+    final firstNonce = await service.getNonce(accessToken);
+    if (firstNonce.status == ApiStatus.success) {
+      var data1 = genreateShamirCreationMessage(
+          backupShares[1], firstNonce.data!, edwardsKey);
 
-    print(backupShares[
-        0]); // Send this key to API: SecretShare/CreateShare in the secret field
-    print(hex.encode(edwardsKey
-        .publicKey)); // Send this key to API: SecretShare/CreateShare in the pub_key field
-    print(
-        data1); // Send this signature to API: SecretShare/CreateShare in the signature field
+      // print(backupShares[
+      //     0]); // Send this key to API: SecretShare/CreateShare in the secret field
+      // print(hex.encode(edwardsKey
+      //     .publicKey)); // Send this key to API: SecretShare/CreateShare in the pub_key field
+      // print(
+      //     data1); // Send this signature to API: SecretShare/CreateShare in the signature field
+      final response = await service.createSecret(accessToken, backupShares[0],
+          hex.encode(edwardsKey.publicKey), data1);
+      debugPrint(response.toString());
+      var keys = createEthereumAccount(seed,
+          0); // 0 is the index of the account, this will keep on incementing
+      final secondNonce = await service.getNonce(accessToken);
+      if (secondNonce.status == ApiStatus.success) {
+        var data2 = genreateEthereumCreationMessage(secondNonce.data!, keys);
 
-    var keys = createEthereumAccount(seed,
-        0); // 0 is the index of the account, this will keep on incementing
-    var data2 = genreateEthereumCreationMessage(nonce, keys);
+        // print(keys
+        //     .address); // Send this key to API: Address/CreateAddress in the public_address field
+        // print(
+        //     "eth"); // Send this key to API: Address/CreateAddress in the chain field
+        // print(
+        //     data2); // Send this signature to API: Address/CreateAddress in the signature field
+        final responseOfCreateAddress = await service.createAddress(
+            accessToken, "eth", keys.address.toString(), data2);
+        debugPrint(response.toString());
+        return ApiResponse.success(null, 200);
 
-    print(keys
-        .address); // Send this key to API: Address/CreateAddress in the public_address field
-    print(
-        "eth"); // Send this key to API: Address/CreateAddress in the chain field
-    print(
-        data2); // Send this signature to API: Address/CreateAddress in the signature field
+        /// send result back
+      }
+    }
+    return ApiResponse.error("SomethingWent Wrong", -1);
   }
 
   void createNewMemonicAndWallet(String nonce) {

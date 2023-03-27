@@ -75,6 +75,7 @@ class ApiService {
       final response = await avexApiClient
           .refreshAccessToken(RefreshAccessTokenRequest(refresh: refreshToken));
       final statusCode = response.response.statusCode;
+
       return ApiResponse.success(
           VerifyAuthResponse.fromJson(response.data), statusCode ?? -1);
     } catch (e) {
@@ -110,12 +111,47 @@ class ApiService {
     return null;
   }
 
+  Future createSecret(
+    String accessToken,
+    String secret,
+    String pubKey,
+    String signature,
+  ) async {
+    try {
+      final request = CreateSecretRequest(
+          secret: secret, pubKey: pubKey, signature: signature);
+      final response = await avexApiClient.createSecret("Bearer ${accessToken}", request);
+      final statusCode = response.response.statusCode;
+      return ApiResponse.success(response.data.toString(), statusCode ?? -1);
+    } catch (e) {
+      return _handleError(e);
+    }
+  }
+
+  Future createAddress(
+    String accessToken,
+    String chain,
+    String publicAddress,
+    String signature,
+  ) async {
+    try {
+      final request = CreateAddressRequest(
+          chain: chain, publicAddress: publicAddress, signature: signature);
+      final response = await avexApiClient.createAddress("Bearer ${accessToken}", request);
+      final statusCode = response.response.statusCode;
+      return ApiResponse.success(response.data.toString(), statusCode ?? -1);
+    } catch (e) {
+      return _handleError(e);
+    }
+  }
+
   ApiService(Dio dio, this.sharedPref) {
     avexApiClient = AvexApiClient(dio);
   }
 
-  void refreshAccessTokenToSharedPref() async {
-    final prevRefreshToken = await sharedPref.instance.getString("refresh_token");
+  Future<void> refreshAccessTokenToSharedPref() async {
+    final prevRefreshToken =
+        await sharedPref.instance.getString("refresh_token");
     final response = await refreshAccessToken(prevRefreshToken);
     // ignore: unrelated_type_equality_checks
     if (response.code < 300 && response.code >= 200) {

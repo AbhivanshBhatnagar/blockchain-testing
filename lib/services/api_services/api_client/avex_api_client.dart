@@ -35,4 +35,15 @@ abstract class AvexApiClient {
   Future<HttpResponse> refreshAccessToken(
     @Body() RefreshAccessTokenRequest request,
   );
+
+  @POST("/secret")
+  Future<HttpResponse> createSecret(
+    @Header("Authorization") String accessToken,
+    @Body() CreateSecretRequest request
+  );
+  @POST("/address")
+  Future<HttpResponse> createAddress(
+    @Header("Authorization") String accessToken,
+    @Body() CreateAddressRequest request
+  );
 }

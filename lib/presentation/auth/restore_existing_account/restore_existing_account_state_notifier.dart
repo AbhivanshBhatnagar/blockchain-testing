@@ -34,19 +34,28 @@ class RestoreExistingAccountStateNotifier
 
   void onSeedPhraseSubmitted() async {
     debugPrint(state.seedPhraseList);
-    final refreshToken = await ref
-        .read(encryptedSharedPrefProvider)
-        .instance
-        .getString("refresh_token");
-    final freshAuthToken =
-        await ref.read(apiServiceProvider).refreshAccessToken(refreshToken);
-    if(freshAuthToken.status==ApiStatus.success){
-      final accessToken = freshAuthToken.data!.access.access;
-      final nonce = await ref.read(apiServiceProvider).getNonce(accessToken);
-      if (nonce.status == ApiStatus.success) {
-        eddsaHmac.importSeedPhrase(state.seedPhraseList, nonce.data!);
-      }
+    final response = await eddsaHmac.importSeedPhrase(state.seedPhraseList);
+    if (response.status == ApiResponse.success) {
+      // AutoRouter.of()
+      state = state.copyWith(
+          status: RestoreExistingAccountStateNotifierStatus.loaded);
+    } else {
+      state = state.copyWith(
+          status: RestoreExistingAccountStateNotifierStatus.error,
+          errorMessage: response.errorMessage);
     }
+    // final refreshToken = await ref
+    //     .read(encryptedSharedPrefProvider)
+    //     .instance
+    //     .getString("refresh_token");
+    // final freshAuthToken =
+    //     await ref.read(apiServiceProvider).refreshAccessToken(refreshToken);
+    // if(freshAuthToken.status==ApiStatus.success){
+    //   final accessToken = freshAuthToken.data!.access.access;
+    //   final nonce = await ref.read(apiServiceProvider).getNonce(accessToken);
+    //   if (nonce.status == ApiStatus.success) {
+    //   }
+    // }
   }
 }
 
@@ -56,7 +65,8 @@ class RestoreExistingAccountStateNotifierState
   const factory RestoreExistingAccountStateNotifierState({
     @Default(RestoreExistingAccountStateNotifierStatus.initial)
         RestoreExistingAccountStateNotifierStatus status,
-    @Default("") String seedPhraseList,
+    @Default("picture hand perfect embody pioneer cruel royal accuse olive type tunnel brick")
+        String seedPhraseList,
     String? errorMessage,
   }) = _RestoreExistingAccountStateNotifierState;
 }

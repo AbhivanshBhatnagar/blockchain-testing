@@ -132,7 +132,8 @@ class _$_RestoreExistingAccountStateNotifierState
     implements _RestoreExistingAccountStateNotifierState {
   const _$_RestoreExistingAccountStateNotifierState(
       {this.status = RestoreExistingAccountStateNotifierStatus.initial,
-      this.seedPhraseList = "",
+      this.seedPhraseList =
+          "picture hand perfect embody pioneer cruel royal accuse olive type tunnel brick",
       this.errorMessage});
 
   @override
