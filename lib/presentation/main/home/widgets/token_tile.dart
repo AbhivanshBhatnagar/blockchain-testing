@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class TokenTile extends ConsumerWidget {
-  const TokenTile({required this.index,super.key});
-  final int index;
+  const TokenTile({ this.index,super.key});
+  final int? index;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
