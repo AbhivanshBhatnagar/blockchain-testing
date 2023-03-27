@@ -36,8 +36,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
     ref.listen(signupStateNortifierProvider.select((value) => value.status),
         (prev, next) {
       if (next == SignupStateNotifierStatus.loaded) {
-        AutoRouter.of(context).pushAndPopUntil(const OnboardingRoute(),
-            predicate: (route) => false);
+        final email=ref.read(signupStateNortifierProvider.select((value) => value.email));
+        AutoRouter.of(context).pushAndPopUntil(OnboardingRoute(email:email.toString() ),predicate: (route) => false);
       } else if (next == SignupStateNotifierStatus.error) {
         final errorMessage = ref.read(
             signupStateNortifierProvider.select((value) => value.errorMessage));

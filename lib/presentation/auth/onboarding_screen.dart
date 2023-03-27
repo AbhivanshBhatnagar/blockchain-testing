@@ -7,12 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:open_mail_app/open_mail_app.dart';
+import 'package:test_project/services/api_services/api_services.dart';
 import '../../core/router.gr.dart';
 import '../widget/button.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
-  const OnboardingScreen({super.key});
-
+  const OnboardingScreen({required this.email, super.key});
+  final String email;
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _OnboardingScreenState();
@@ -20,10 +21,33 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   late StreamSubscription dynamicLinkStreamSubscription;
+  bool makeResendButtonVisible = false;
+  Timer? countdownTimer;
+  Duration myDuration = Duration(minutes: 1, seconds: 1);
+  void startTimer() {
+    countdownTimer =
+        Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
+  }
+
+  void setCountDown() {
+    final reduceSecondsBy = 1;
+    setState(() {
+      final seconds = myDuration.inSeconds - reduceSecondsBy;
+      if (seconds < 0) {
+        countdownTimer!.cancel();
+        setState(() {
+          makeResendButtonVisible = true;
+        });
+      } else {
+        myDuration = Duration(seconds: seconds);
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    startTimer();
     String code = '';
     EncryptedSharedPreferences encryptedSharedPreferences =
         EncryptedSharedPreferences();
@@ -43,6 +67,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String strDigits(int n) => n.toString().padLeft(2, '0');
+    final seconds = strDigits(myDuration.inSeconds.remainder(60));
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -78,18 +104,44 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     fontWeight: FontWeight.w400, fontSize: 16),
               ),
               Expanded(child: Container()),
-              Text(
-                "You can resend in 28 seconds",
-                style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w400, fontSize: 16),
-              ),
-              Text(
-                "Sent to xyz@gmail.com",
-                style: GoogleFonts.inter(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16,
-                    color: Color(0xFFDEDEDE)),
-              ),
+              Stack(children: [
+                Positioned.fill(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "You can resend in ${seconds} seconds",
+                        style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w400, fontSize: 16),
+                      ),
+                      Text(
+                        "Sent to ${widget.email}",
+                        style: GoogleFonts.inter(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: Color(0xFFDEDEDE)),
+                      ),
+                    ],
+                  ),
+                ),
+                AnimatedOpacity(
+                  duration: const Duration(microseconds: 200),
+                  opacity: (makeResendButtonVisible) ? 1 : 0,
+                  child: CustomButton(
+                      onClick: () async {
+                        final result = await ref
+                            .read(apiServiceProvider)
+                            .signupWithDynamicLink(widget.email);
+                        if (result.errorMessage != null &&
+                            result.errorMessage!.isNotEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(result.errorMessage.toString())));
+                        }
+                      },
+                      title: "Resend the email.",
+                      isLoading: false),
+                ),
+              ]),
               SizedBox(
                 height: 12,
               ),

@@ -49,9 +49,13 @@ class AppRouter extends _i5.RootStackRouter {
       );
     },
     OnboardingRoute.name: (routeData) {
+      final args = routeData.argsAs<OnboardingRouteArgs>();
       return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.OnboardingScreen(),
+        child: _i1.OnboardingScreen(
+          email: args.email,
+          key: args.key,
+        ),
       );
     },
     SeedRecoveryRoute.name: (routeData) {
@@ -247,14 +251,36 @@ class DynamicLinkProcessingRouteArgs {
 
 /// generated route for
 /// [_i1.OnboardingScreen]
-class OnboardingRoute extends _i5.PageRouteInfo<void> {
-  const OnboardingRoute()
-      : super(
+class OnboardingRoute extends _i5.PageRouteInfo<OnboardingRouteArgs> {
+  OnboardingRoute({
+    required String email,
+    _i6.Key? key,
+  }) : super(
           OnboardingRoute.name,
           path: '/confirmEmail',
+          args: OnboardingRouteArgs(
+            email: email,
+            key: key,
+          ),
         );
 
   static const String name = 'OnboardingRoute';
+}
+
+class OnboardingRouteArgs {
+  const OnboardingRouteArgs({
+    required this.email,
+    this.key,
+  });
+
+  final String email;
+
+  final _i6.Key? key;
+
+  @override
+  String toString() {
+    return 'OnboardingRouteArgs{email: $email, key: $key}';
+  }
 }
 
 /// generated route for
