@@ -77,10 +77,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: const [
                               SymbolButton(
-                                  title: "Add Funds",
+                                  title: "Lend and Borrow",
                                   icon: Icon(Icons.credit_card)),
                               SymbolButton(
-                                  title: "Send", icon: Icon(Icons.credit_card)),
+                                  title: "Swap", icon: Icon(Icons.credit_card)),
                               SizedBox(
                                 width: 50,
                               )
