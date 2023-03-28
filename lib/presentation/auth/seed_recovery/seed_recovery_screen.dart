@@ -7,11 +7,19 @@ import 'package:test_project/presentation/auth/seed_recovery/seed_recovery_state
 import '../../../core/router.gr.dart';
 import '../../widget/button.dart';
 
-class SeedRecoveryScreen extends ConsumerWidget {
+
+class SeedRecoveryScreen extends ConsumerStatefulWidget {
   const SeedRecoveryScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _SeedRecoveryScreenState();
+}
+
+class _SeedRecoveryScreenState extends ConsumerState<SeedRecoveryScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    int step= ref.watch(seedRecoveryStateNotifierProvider.select((value) => value.noOfSteps));
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -51,7 +59,7 @@ class SeedRecoveryScreen extends ConsumerWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 4.0, horizontal: 8),
                         child: Text(
-                          "1 of 3 completed",
+                          "$step of 3 completed",
                           style: GoogleFonts.inter(
                               fontSize: 10, fontWeight: FontWeight.w700),
                         ),

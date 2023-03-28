@@ -43,21 +43,22 @@ class _DynamicLinkProcessingScreenState
         // AutoRouter.of(context).navigateBack();
       }
       if (next.status == DynamicLinkProcessingStateNotifierStatus.loaded) {
-        final userExistInBackend=ref.read(dynamicLinkProcessingStateNotifierProvider.select((value) => value.userExistsInBackend));
-        if(userExistInBackend){
+        final userExistInBackend = ref.read(
+            dynamicLinkProcessingStateNotifierProvider
+                .select((value) => value.userExistsInBackend));
+        if (userExistInBackend) { //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<CHANGE IT HERE
           Future.delayed(const Duration(milliseconds: 500), () {
-            AutoRouter.of(context).pushAndPopUntil(const RecoverAccountRoute(),
+            AutoRouter.of(context).pushAndPopUntil(const SeedSavingRoute(),
+                predicate: (route) => false);
+          });
+        } else {
+          Future.delayed(const Duration(milliseconds: 500), () {
+            AutoRouter.of(context).pushAndPopUntil(
+                const SetupOrImportNewAccountRoute(),
                 predicate: (route) => false);
           });
         }
-        else {
-          Future.delayed(const Duration(milliseconds: 500), () {
-          AutoRouter.of(context).pushAndPopUntil(const SetupOrImportNewAccountRoute(),
-              predicate: (route) => false);
-        });
-        }
         debugPrint("dynamic link api done. ");
-
       }
       if (next.status ==
           DynamicLinkProcessingStateNotifierStatus.dynamicLinkVerified) {

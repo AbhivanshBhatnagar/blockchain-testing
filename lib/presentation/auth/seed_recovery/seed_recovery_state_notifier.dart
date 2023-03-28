@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:test_project/services/eddsa_hmac.dart';
 
 import '../../../native/android/android_google_drive_platform_channel.dart';
 import '../../../services/api_services/api_response.dart';
@@ -19,12 +20,18 @@ class SeedRecoveryStateNotifier
   final ApiService apiServices;
 
   SeedRecoveryStateNotifier({required this.apiServices, required this.ref})
-      : super(const SeedRecoveryStateNotifierState());
+      : super(const SeedRecoveryStateNotifierState()) {
+    final eddsaHmac = ref.read(eddsaHmacProvider);
+    
+    eddsaHmac.createNewMemonicAndWallet()
+  }
 
   void moveToNextScreen() {
     // AndroidGoogleDrivePlatformChannel.invoke();
-
   }
+  void driveRecovery() {}
+
+  void sendToApi() {}
 }
 
 @freezed
@@ -33,6 +40,7 @@ class SeedRecoveryStateNotifierState with _$SeedRecoveryStateNotifierState {
     @Default(SeedRecoveryStateNotifierStatus.initial)
         SeedRecoveryStateNotifierStatus status,
     String? errorMessage,
+    @Default(0) int noOfSteps,
   }) = _SeedRecoveryStateNotifierState;
 }
 

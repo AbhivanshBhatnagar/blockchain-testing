@@ -22,12 +22,14 @@ import java.io.OutputStream;
 @OptIn(DelicateCoroutinesApi::class)
 class MainActivity : FlutterFragmentActivity() {
     private val channel = "avexmobile.page.link/drive_android"
+    private lateinit var methodChannel:MethodChannel
     private lateinit var gDrive: GDriveExt
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        MethodChannel(
+        methodChannel=MethodChannel(
             flutterEngine.dartExecutor.binaryMessenger, channel
-        ).setMethodCallHandler { call, result ->
+        )
+        methodChannel.setMethodCallHandler { call, result ->
             when (call.method) {
                 "signInWithGoogle" -> {
                     if (!this::gDrive.isInitialized) {
@@ -50,7 +52,7 @@ class MainActivity : FlutterFragmentActivity() {
                         val mDrive = gDrive.getDriveService(this)
                         GlobalScope.async(Dispatchers.IO) {
                             val newFile = (this@MainActivity).createTemporaryFile(fileName, content)
-                            gDrive.uploadFileToGDrive(this@MainActivity, newFile, mDrive, fileName)
+                            gDrive.uploadFileToGDrive(this@MainActivity, newFile, mDrive, fileName )
                         }
                         result.success(null)
                     } else {
@@ -86,11 +88,12 @@ class MainActivity : FlutterFragmentActivity() {
             this,
             object : GDriveResultCallback<FirebaseUser> {
                 override fun onSuccess(data: FirebaseUser) {
-                    TODO("Not yet implemented")
+                    methodChannel.invokeMethod("signInWithGoogle_success", data!!.uid.toString())
                 }
 
                 override fun onError(errorMessage: String) {
-                    TODO("Not yet implemented")
+                    methodChannel.invokeMethod("signInWithGoogle_error", errorMessage)
+
                 }
 
             })

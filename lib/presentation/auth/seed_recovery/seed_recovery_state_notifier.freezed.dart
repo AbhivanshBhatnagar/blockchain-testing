@@ -19,6 +19,7 @@ mixin _$SeedRecoveryStateNotifierState {
   SeedRecoveryStateNotifierStatus get status =>
       throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
+  int get noOfSteps => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SeedRecoveryStateNotifierStateCopyWith<SeedRecoveryStateNotifierState>
@@ -33,7 +34,10 @@ abstract class $SeedRecoveryStateNotifierStateCopyWith<$Res> {
       _$SeedRecoveryStateNotifierStateCopyWithImpl<$Res,
           SeedRecoveryStateNotifierState>;
   @useResult
-  $Res call({SeedRecoveryStateNotifierStatus status, String? errorMessage});
+  $Res call(
+      {SeedRecoveryStateNotifierStatus status,
+      String? errorMessage,
+      int noOfSteps});
 }
 
 /// @nodoc
@@ -52,6 +56,7 @@ class _$SeedRecoveryStateNotifierStateCopyWithImpl<$Res,
   $Res call({
     Object? status = null,
     Object? errorMessage = freezed,
+    Object? noOfSteps = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -62,6 +67,10 @@ class _$SeedRecoveryStateNotifierStateCopyWithImpl<$Res,
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      noOfSteps: null == noOfSteps
+          ? _value.noOfSteps
+          : noOfSteps // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -75,7 +84,10 @@ abstract class _$$_SeedRecoveryStateNotifierStateCopyWith<$Res>
       __$$_SeedRecoveryStateNotifierStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({SeedRecoveryStateNotifierStatus status, String? errorMessage});
+  $Res call(
+      {SeedRecoveryStateNotifierStatus status,
+      String? errorMessage,
+      int noOfSteps});
 }
 
 /// @nodoc
@@ -93,6 +105,7 @@ class __$$_SeedRecoveryStateNotifierStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? errorMessage = freezed,
+    Object? noOfSteps = null,
   }) {
     return _then(_$_SeedRecoveryStateNotifierState(
       status: null == status
@@ -103,6 +116,10 @@ class __$$_SeedRecoveryStateNotifierStateCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      noOfSteps: null == noOfSteps
+          ? _value.noOfSteps
+          : noOfSteps // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -113,17 +130,21 @@ class _$_SeedRecoveryStateNotifierState
     implements _SeedRecoveryStateNotifierState {
   const _$_SeedRecoveryStateNotifierState(
       {this.status = SeedRecoveryStateNotifierStatus.initial,
-      this.errorMessage});
+      this.errorMessage,
+      this.noOfSteps = 0});
 
   @override
   @JsonKey()
   final SeedRecoveryStateNotifierStatus status;
   @override
   final String? errorMessage;
+  @override
+  @JsonKey()
+  final int noOfSteps;
 
   @override
   String toString() {
-    return 'SeedRecoveryStateNotifierState(status: $status, errorMessage: $errorMessage)';
+    return 'SeedRecoveryStateNotifierState(status: $status, errorMessage: $errorMessage, noOfSteps: $noOfSteps)';
   }
 
   @override
@@ -133,11 +154,13 @@ class _$_SeedRecoveryStateNotifierState
             other is _$_SeedRecoveryStateNotifierState &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            (identical(other.noOfSteps, noOfSteps) ||
+                other.noOfSteps == noOfSteps));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, errorMessage);
+  int get hashCode => Object.hash(runtimeType, status, errorMessage, noOfSteps);
 
   @JsonKey(ignore: true)
   @override
@@ -151,12 +174,15 @@ abstract class _SeedRecoveryStateNotifierState
     implements SeedRecoveryStateNotifierState {
   const factory _SeedRecoveryStateNotifierState(
       {final SeedRecoveryStateNotifierStatus status,
-      final String? errorMessage}) = _$_SeedRecoveryStateNotifierState;
+      final String? errorMessage,
+      final int noOfSteps}) = _$_SeedRecoveryStateNotifierState;
 
   @override
   SeedRecoveryStateNotifierStatus get status;
   @override
   String? get errorMessage;
+  @override
+  int get noOfSteps;
   @override
   @JsonKey(ignore: true)
   _$$_SeedRecoveryStateNotifierStateCopyWith<_$_SeedRecoveryStateNotifierState>

@@ -22,7 +22,7 @@ class SeedSavingScreen extends ConsumerWidget {
                 children: [
                   Icon(Icons.arrow_back_ios),
                   Text(
-                    "Setup Seedless Saving",
+                    "Setup Seedless Recovery",
                     style: GoogleFonts.inter(
                         fontWeight: FontWeight.w600, fontSize: 24),
                   )

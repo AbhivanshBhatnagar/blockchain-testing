@@ -11,36 +11,37 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i5;
-import 'package:flutter/material.dart' as _i6;
+import 'package:auto_route/auto_route.dart' as _i6;
+import 'package:flutter/material.dart' as _i7;
 
 import '../presentation/auth/recover_account/recover_account.dart' as _i3;
 import '../presentation/auth/restore_existing_account/restore_existing_account_screen.dart'
     as _i2;
-import '../presentation/main/main_router.dart' as _i4;
+import '../presentation/auth/seed_saving/seed_saving_screen.dart' as _i4;
+import '../presentation/main/main_router.dart' as _i5;
 import '../presentation/presentation.dart' as _i1;
 
-class AppRouter extends _i5.RootStackRouter {
-  AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
+class AppRouter extends _i6.RootStackRouter {
+  AppRouter([_i7.GlobalKey<_i7.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i5.PageFactory> pagesMap = {
+  final Map<String, _i6.PageFactory> pagesMap = {
     SplashRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SplashScreen(),
       );
     },
     SignupRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SignupScreen(),
       );
     },
     DynamicLinkProcessingRoute.name: (routeData) {
       final args = routeData.argsAs<DynamicLinkProcessingRouteArgs>();
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.DynamicLinkProcessingScreen(
           authToken: args.authToken,
@@ -50,7 +51,7 @@ class AppRouter extends _i5.RootStackRouter {
     },
     OnboardingRoute.name: (routeData) {
       final args = routeData.argsAs<OnboardingRouteArgs>();
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i1.OnboardingScreen(
           email: args.email,
@@ -59,63 +60,69 @@ class AppRouter extends _i5.RootStackRouter {
       );
     },
     SeedRecoveryRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SeedRecoveryScreen(),
       );
     },
     RestoreExistingAccountRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i2.RestoreExistingAccountScreen(),
       );
     },
     SetupOrImportNewAccountRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SetupOrImportNewAccountScreen(),
       );
     },
     RecoverAccountRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i3.RecoverAccountScreen(),
+      );
+    },
+    SeedSavingRoute.name: (routeData) {
+      return _i6.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i4.SeedSavingScreen(),
       );
     },
     MainRouter.name: (routeData) {
       final args = routeData.argsAs<MainRouterArgs>(
           orElse: () => const MainRouterArgs());
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i4.MainPageHostScreen(key: args.key),
+        child: _i5.MainPageHostScreen(key: args.key),
       );
     },
     HomeRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.HomeScreen(),
       );
     },
     SearchRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SearchScreen(),
       );
     },
     NotificationRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.NotificationScreen(),
       );
     },
     SettingsRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.SettingsScreen(),
       );
     },
     MessageRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
+      return _i6.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.MessageScreen(),
       );
@@ -123,64 +130,68 @@ class AppRouter extends _i5.RootStackRouter {
   };
 
   @override
-  List<_i5.RouteConfig> get routes => [
-        _i5.RouteConfig(
+  List<_i6.RouteConfig> get routes => [
+        _i6.RouteConfig(
           SplashRoute.name,
           path: '/',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           SignupRoute.name,
           path: '/signup',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           DynamicLinkProcessingRoute.name,
           path: '/dynamic_link_processing_screen',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           OnboardingRoute.name,
           path: '/confirmEmail',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           SeedRecoveryRoute.name,
           path: '/seedRecovery',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           RestoreExistingAccountRoute.name,
           path: '/restoreExistingAccount',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           SetupOrImportNewAccountRoute.name,
           path: '/setupOrImportNewAccountScreen',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
           RecoverAccountRoute.name,
           path: '/recoverAccount',
         ),
-        _i5.RouteConfig(
+        _i6.RouteConfig(
+          SeedSavingRoute.name,
+          path: '/seedSaving',
+        ),
+        _i6.RouteConfig(
           MainRouter.name,
           path: '/main',
           children: [
-            _i5.RouteConfig(
+            _i6.RouteConfig(
               HomeRoute.name,
               path: '',
               parent: MainRouter.name,
             ),
-            _i5.RouteConfig(
+            _i6.RouteConfig(
               SearchRoute.name,
               path: 'search',
               parent: MainRouter.name,
             ),
-            _i5.RouteConfig(
+            _i6.RouteConfig(
               NotificationRoute.name,
               path: 'notification',
               parent: MainRouter.name,
             ),
-            _i5.RouteConfig(
+            _i6.RouteConfig(
               SettingsRoute.name,
               path: 'settings',
               parent: MainRouter.name,
             ),
-            _i5.RouteConfig(
+            _i6.RouteConfig(
               MessageRoute.name,
               path: 'message',
               parent: MainRouter.name,
@@ -192,7 +203,7 @@ class AppRouter extends _i5.RootStackRouter {
 
 /// generated route for
 /// [_i1.SplashScreen]
-class SplashRoute extends _i5.PageRouteInfo<void> {
+class SplashRoute extends _i6.PageRouteInfo<void> {
   const SplashRoute()
       : super(
           SplashRoute.name,
@@ -204,7 +215,7 @@ class SplashRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.SignupScreen]
-class SignupRoute extends _i5.PageRouteInfo<void> {
+class SignupRoute extends _i6.PageRouteInfo<void> {
   const SignupRoute()
       : super(
           SignupRoute.name,
@@ -217,10 +228,10 @@ class SignupRoute extends _i5.PageRouteInfo<void> {
 /// generated route for
 /// [_i1.DynamicLinkProcessingScreen]
 class DynamicLinkProcessingRoute
-    extends _i5.PageRouteInfo<DynamicLinkProcessingRouteArgs> {
+    extends _i6.PageRouteInfo<DynamicLinkProcessingRouteArgs> {
   DynamicLinkProcessingRoute({
     required String authToken,
-    _i6.Key? key,
+    _i7.Key? key,
   }) : super(
           DynamicLinkProcessingRoute.name,
           path: '/dynamic_link_processing_screen',
@@ -241,7 +252,7 @@ class DynamicLinkProcessingRouteArgs {
 
   final String authToken;
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {
@@ -251,10 +262,10 @@ class DynamicLinkProcessingRouteArgs {
 
 /// generated route for
 /// [_i1.OnboardingScreen]
-class OnboardingRoute extends _i5.PageRouteInfo<OnboardingRouteArgs> {
+class OnboardingRoute extends _i6.PageRouteInfo<OnboardingRouteArgs> {
   OnboardingRoute({
     required String email,
-    _i6.Key? key,
+    _i7.Key? key,
   }) : super(
           OnboardingRoute.name,
           path: '/confirmEmail',
@@ -275,7 +286,7 @@ class OnboardingRouteArgs {
 
   final String email;
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {
@@ -285,7 +296,7 @@ class OnboardingRouteArgs {
 
 /// generated route for
 /// [_i1.SeedRecoveryScreen]
-class SeedRecoveryRoute extends _i5.PageRouteInfo<void> {
+class SeedRecoveryRoute extends _i6.PageRouteInfo<void> {
   const SeedRecoveryRoute()
       : super(
           SeedRecoveryRoute.name,
@@ -297,7 +308,7 @@ class SeedRecoveryRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.RestoreExistingAccountScreen]
-class RestoreExistingAccountRoute extends _i5.PageRouteInfo<void> {
+class RestoreExistingAccountRoute extends _i6.PageRouteInfo<void> {
   const RestoreExistingAccountRoute()
       : super(
           RestoreExistingAccountRoute.name,
@@ -309,7 +320,7 @@ class RestoreExistingAccountRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.SetupOrImportNewAccountScreen]
-class SetupOrImportNewAccountRoute extends _i5.PageRouteInfo<void> {
+class SetupOrImportNewAccountRoute extends _i6.PageRouteInfo<void> {
   const SetupOrImportNewAccountRoute()
       : super(
           SetupOrImportNewAccountRoute.name,
@@ -321,7 +332,7 @@ class SetupOrImportNewAccountRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.RecoverAccountScreen]
-class RecoverAccountRoute extends _i5.PageRouteInfo<void> {
+class RecoverAccountRoute extends _i6.PageRouteInfo<void> {
   const RecoverAccountRoute()
       : super(
           RecoverAccountRoute.name,
@@ -332,11 +343,23 @@ class RecoverAccountRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.MainPageHostScreen]
-class MainRouter extends _i5.PageRouteInfo<MainRouterArgs> {
+/// [_i4.SeedSavingScreen]
+class SeedSavingRoute extends _i6.PageRouteInfo<void> {
+  const SeedSavingRoute()
+      : super(
+          SeedSavingRoute.name,
+          path: '/seedSaving',
+        );
+
+  static const String name = 'SeedSavingRoute';
+}
+
+/// generated route for
+/// [_i5.MainPageHostScreen]
+class MainRouter extends _i6.PageRouteInfo<MainRouterArgs> {
   MainRouter({
-    _i6.Key? key,
-    List<_i5.PageRouteInfo>? children,
+    _i7.Key? key,
+    List<_i6.PageRouteInfo>? children,
   }) : super(
           MainRouter.name,
           path: '/main',
@@ -350,7 +373,7 @@ class MainRouter extends _i5.PageRouteInfo<MainRouterArgs> {
 class MainRouterArgs {
   const MainRouterArgs({this.key});
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {
@@ -360,7 +383,7 @@ class MainRouterArgs {
 
 /// generated route for
 /// [_i1.HomeScreen]
-class HomeRoute extends _i5.PageRouteInfo<void> {
+class HomeRoute extends _i6.PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
@@ -372,7 +395,7 @@ class HomeRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.SearchScreen]
-class SearchRoute extends _i5.PageRouteInfo<void> {
+class SearchRoute extends _i6.PageRouteInfo<void> {
   const SearchRoute()
       : super(
           SearchRoute.name,
@@ -384,7 +407,7 @@ class SearchRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.NotificationScreen]
-class NotificationRoute extends _i5.PageRouteInfo<void> {
+class NotificationRoute extends _i6.PageRouteInfo<void> {
   const NotificationRoute()
       : super(
           NotificationRoute.name,
@@ -396,7 +419,7 @@ class NotificationRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.SettingsScreen]
-class SettingsRoute extends _i5.PageRouteInfo<void> {
+class SettingsRoute extends _i6.PageRouteInfo<void> {
   const SettingsRoute()
       : super(
           SettingsRoute.name,
@@ -408,7 +431,7 @@ class SettingsRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.MessageScreen]
-class MessageRoute extends _i5.PageRouteInfo<void> {
+class MessageRoute extends _i6.PageRouteInfo<void> {
   const MessageRoute()
       : super(
           MessageRoute.name,
