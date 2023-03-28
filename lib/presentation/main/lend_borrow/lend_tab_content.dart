@@ -44,6 +44,7 @@ class LendTabContent extends ConsumerWidget {
               shrinkWrap: true,
               children: [
                 ExpansionTile(
+                  initiallyExpanded: true,
                   title: Text(
                     "Your Suppliers",
                     style: GoogleFonts.inter(

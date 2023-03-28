@@ -44,6 +44,7 @@ class BorrowTabContent extends ConsumerWidget {
                 shrinkWrap: true,
                 children: [
                   ExpansionTile(
+                    initiallyExpanded: true,
                     title: Text(
                       "Your Borrows",
                       style: GoogleFonts.inter(
@@ -64,7 +65,6 @@ class BorrowTabContent extends ConsumerWidget {
                   ),
                   ExpansionTile(
                     controlAffinity: ListTileControlAffinity.trailing,
-                    initiallyExpanded: true,
                     title: Text(
                       "Assets to borrow",
                       style: GoogleFonts.inter(
