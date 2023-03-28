@@ -8,6 +8,5 @@ class MessageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(body: Center(child: Text("Messaging Comming soon.", style: GoogleFonts.inter(fontSize: 22),)));
 
-    // return Scaffold(body: Text("Message "));
   }
 }
