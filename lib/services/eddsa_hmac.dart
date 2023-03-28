@@ -46,7 +46,7 @@ class EddsaHmac {
       //     .publicKey)); // Send this key to API: SecretShare/CreateShare in the pub_key field
       // print(
       //     data1); // Send this signature to API: SecretShare/CreateShare in the signature field
-      final response = await service.createSecret(accessToken, backupShares[0],
+      final response = await service.createSecret(accessToken, backupShares[1],
           hex.encode(edwardsKey.publicKey), data1);
       debugPrint(response.toString());
       var keys = createEthereumAccount(seed,
@@ -84,7 +84,7 @@ class EddsaHmac {
         genreateShamirCreationMessage(backupShares[1], nonce, edwardsKey);
 
     print(backupShares[
-        0]); // Send this key to API: SecretShare/CreateShare in the secret field
+        1]); // Send this key to API: SecretShare/CreateShare in the secret field
     print(hex.encode(edwardsKey
         .publicKey)); // Send this key to API: SecretShare/CreateShare in the pub_key field
     print(
@@ -118,7 +118,7 @@ class EddsaHmac {
         genreateShamirCreationMessage(backupShares[1], nonce, edwardsKey);
 
     print(backupShares[
-        0]); // Send this key to API: SecretShare/CreateShare in the secret field
+        1]); // Send this key to API: SecretShare/CreateShare in the secret field
     print(hex.encode(edwardsKey
         .publicKey)); // Send this key to API: SecretShare/CreateShare in the pub_key field
     print(
