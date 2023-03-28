@@ -14,7 +14,7 @@ abstract class AuthState<T extends ConsumerStatefulWidget>
       return;
     }
     _redirectCalled = true;
-    if (true) {
+    if (false) {
       onAuthFailure();
     } else
       onAuthSuccess();
