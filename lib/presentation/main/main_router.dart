@@ -92,7 +92,7 @@ class MainPageHostScreen extends StatelessWidget {
           SearchRoute(),
           MessageRoute(),
           HomeRoute(),
-          NotificationRoute(),
+          PortfolioRoute(),
           SettingsRoute()
         ],
         bottomNavigationBuilder: (context, tabsRouter) => BottomNavigationBar(
