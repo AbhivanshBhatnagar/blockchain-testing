@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 class SymbolButton extends StatelessWidget {
   const SymbolButton({required this.title, required this.icon, super.key});
   final String title;
-  final Icon icon;
+  final Widget icon;
   @override
   Widget build(BuildContext context) {
     return Column(

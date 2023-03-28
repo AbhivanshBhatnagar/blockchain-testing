@@ -67,10 +67,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                   title: "Add Funds",
                                   icon: Icon(Icons.credit_card)),
                               SymbolButton(
-                                  title: "Send", icon: Icon(Icons.credit_card)),
+                                  title: "Send",
+                                  icon: Icon(Icons.arrow_outward)),
                               SymbolButton(
                                   title: "Receive",
-                                  icon: Icon(Icons.credit_card)),
+                                  icon: RotatedBox(
+                                    child: Icon(Icons.arrow_outward),
+                                    quarterTurns: 2,
+                                  )),
                             ],
                           ),
                           Row(
@@ -80,7 +84,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                                   title: "Lend and Borrow",
                                   icon: Icon(Icons.credit_card)),
                               SymbolButton(
-                                  title: "Swap", icon: Icon(Icons.credit_card)),
+                                  title: "Swap", icon: Icon(Icons.swap_horiz)),
                               SizedBox(
                                 width: 50,
                               )
