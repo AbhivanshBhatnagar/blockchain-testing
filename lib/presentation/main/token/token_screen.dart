@@ -5,12 +5,28 @@ import 'package:test_project/presentation/main/home/widgets/sliver_app_bar_deleg
 import 'package:test_project/presentation/main/home/widgets/symbol_button.dart';
 import 'package:test_project/presentation/main/token/widgets/activity_tile.dart';
 
-class TokenScreen extends ConsumerWidget {
+class TokenScreen extends ConsumerStatefulWidget {
   const TokenScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TokenScreen> createState() => _TokenScreenState();
+}
+
+class _TokenScreenState extends ConsumerState<TokenScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  double _sendReceivePagePosition = 0;
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    double _sendReceivePagePosition = 0;
     return Scaffold(
         // backgroundColor: const Color(0xFF111013),
         extendBodyBehindAppBar: true,
@@ -28,8 +44,8 @@ class TokenScreen extends ConsumerWidget {
               ),
               SliverPersistentHeader(
                   delegate: SliverAppBarDelegate(
-                      minHeight: size.height * .40,
-                      maxHeight: size.height * .40,
+                      minHeight: size.height * .25,
+                      maxHeight: size.height * .25,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: DefaultTextStyle(
@@ -78,32 +94,55 @@ class TokenScreen extends ConsumerWidget {
                                         fontSize: 11, color: Colors.black),
                                   ),
                                 ),
-                                const SizedBox(height: 42),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: const [
-                                    SymbolButton(
-                                      title: "Buy",
-                                      icon: Icon(Icons.credit_card),
-                                    ),
-                                    SymbolButton(
-                                      title: "Send",
-                                      icon: Icon(Icons.send),
-                                    ),
-                                    SymbolButton(
-                                      title: "Receive",
-                                      icon: Icon(Icons.credit_card),
-                                    ),
-                                    SymbolButton(
-                                      title: "'More",
-                                      icon: Icon(Icons.more),
-                                    )
-                                  ],
-                                ),
                               ],
                             )),
-                      )))
+                      ))),
+              SliverPersistentHeader(
+                delegate: SliverAppBarDelegate(
+                  minHeight: 100,
+                  maxHeight: 50,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: SizedBox(
+                      height: 100,
+                      child: PageView(
+                        physics: const BouncingScrollPhysics(),
+                        onPageChanged: (value) => setState(() {
+                          _sendReceivePagePosition = value.toDouble();
+                        }),
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              SymbolButton(
+                                  title: "Add Funds",
+                                  icon: Icon(Icons.credit_card)),
+                              SymbolButton(
+                                  title: "Send", icon: Icon(Icons.credit_card)),
+                              SymbolButton(
+                                  title: "Receive",
+                                  icon: Icon(Icons.credit_card)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: const [
+                              SymbolButton(
+                                  title: "Lend and Borrow",
+                                  icon: Icon(Icons.credit_card)),
+                              SymbolButton(
+                                  title: "Swap", icon: Icon(Icons.credit_card)),
+                              SizedBox(
+                                width: 50,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              )
             ];
           },
           body: Padding(
