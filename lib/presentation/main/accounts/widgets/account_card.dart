@@ -138,8 +138,8 @@ class CustomAccountDetailsCard extends ConsumerWidget {
                               expand: false,
                               snap: true,
                               minChildSize: 0,
-                              initialChildSize: .7,
-                              maxChildSize: .7,
+                              initialChildSize: .67,
+                              maxChildSize: .67,
                               builder: (context, scrollController) {
                                 return DefaultTextStyle(
                                   style: GoogleFonts.inter(
@@ -148,12 +148,10 @@ class CustomAccountDetailsCard extends ConsumerWidget {
                                       fontWeight: FontWeight.normal,
                                       height: 1),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 16),
+                                    padding: const EdgeInsets.all(24),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Container(
                                           height: 4,
@@ -177,6 +175,44 @@ class CustomAccountDetailsCard extends ConsumerWidget {
                                           style: GoogleFonts.inter(
                                             fontSize: 17,
                                             fontWeight: FontWeight.w200,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        InkResponse(
+                                          onTap: () {
+                                            _openSelectNetworkSheet(context);
+                                          },
+                                          child: Container(
+                                            width: 200,
+                                            height: 28,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(34),
+                                              color: const Color.fromRGBO(
+                                                  17, 16, 19, 1),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Ethereum Mainnet',
+                                                  textAlign: TextAlign.center,
+                                                  style: GoogleFonts.inter()
+                                                      .copyWith(fontSize: 13),
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Transform.rotate(
+                                                    angle: -(pi / 2),
+                                                    child: const Icon(
+                                                      Icons.arrow_back_ios,
+                                                      size: 13,
+                                                    ))
+                                              ],
+                                            ),
                                           ),
                                         ),
                                         const SizedBox(
@@ -205,11 +241,52 @@ class CustomAccountDetailsCard extends ConsumerWidget {
                                               color: Colors.white,
                                               fontSize: 15),
                                         ),
-                                        const SizedBox(
-                                          height: 24,
+                                        const Spacer(),
+                                        Row(
+                                          children: [
+                                            MaterialButton(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadiusDirectional
+                                                          .circular(100)),
+                                              color: const Color(0xFF37CBFA),
+                                              height: 36,
+                                              onPressed: () {},
+                                              child: Row(
+                                                children: [
+                                                  const Icon(Icons.money),
+                                                  const SizedBox(width: 8),
+                                                  Text(
+                                                    "Request payment",
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 10),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(width: 24),
+                                            MaterialButton(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadiusDirectional
+                                                          .circular(100)),
+                                              color: const Color(0xFF37CBFA),
+                                              height: 36,
+                                              onPressed: () {},
+                                              child: Row(
+                                                children: [
+                                                  const Icon(Icons.share),
+                                                  const SizedBox(width: 8),
+                                                  Text(
+                                                    "Share Wallet Address",
+                                                    style: GoogleFonts.inter(
+                                                        fontSize: 10),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        CustomButton(
-                                            title: "Share", onClick: () => {})
                                       ],
                                     ),
                                   ),
@@ -230,5 +307,73 @@ class CustomAccountDetailsCard extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  _openSelectNetworkSheet(BuildContext context) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        useRootNavigator: true,
+        enableDrag: true,
+        elevation: 3,
+        shape: const ContinuousRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(31), topRight: Radius.circular(31))),
+        context: context,
+        builder: (context) {
+          return DraggableScrollableSheet(
+              expand: false,
+              snap: true,
+              minChildSize: 0,
+              initialChildSize: .6,
+              maxChildSize: .6,
+              builder: (context, scrollController) {
+                return DefaultTextStyle(
+                  style: GoogleFonts.inter(
+                      color: Colors.white,
+                      letterSpacing: 0,
+                      fontWeight: FontWeight.normal,
+                      height: 1),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 24, right: 24, bottom: 24, top: 5),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 4,
+                          width: 60,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Select Network',
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.inter().copyWith(
+                                fontSize: 19, fontWeight: FontWeight.w800),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        Expanded(
+                            child: ListView.builder(
+                                itemCount: 4,
+                                itemBuilder: (context, index) {
+                                  return const ListTile(
+                                    title: Text("Ethereum Main"),
+                                    leading: CircleAvatar(
+                                      backgroundImage:
+                                          AssetImage("assets/diamond.png"),
+                                    ),
+                                  );
+                                }))
+                      ],
+                    ),
+                  ),
+                );
+              });
+        });
   }
 }
