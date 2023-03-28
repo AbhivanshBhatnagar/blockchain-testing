@@ -77,11 +77,17 @@ dependencies:
   mccounting_text: ^1.0.0
   dots_indicator: ^2.1.0
   flutter_svg: ^2.0.3
+  retrofit: ^4.0.1
+  eddsa_hmac:
+    path: ./eddsa_hmac
+  open_mail_app: ^0.4.5
 
 dev_dependencies:
   build_runner: ^2.3.3
+  retrofit_generator: '>=5.0.0 <6.0.0'
   auto_route_generator: ^5.0.3
   json_serializable: ^6.5.4
+  json_annotation: ^4.8.0
   freezed: ^2.1.0
   flutter_test:
     sdk: flutter
