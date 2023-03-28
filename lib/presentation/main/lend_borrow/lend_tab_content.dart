@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_project/presentation/lend/lend_screen.dart';
 import 'package:test_project/presentation/main/home/widgets/token_tile.dart';
+import 'package:test_project/presentation/main/lend_borrow/widgets/asset_tile.dart';
 import 'package:test_project/presentation/main/lend_borrow/widgets/custom_textfield.dart';
+import 'package:test_project/presentation/main/lend_borrow/widgets/panel_subtitle.dart';
 import 'package:test_project/presentation/main/lend_borrow/widgets/stat.dart';
 
 class LendTabContent extends ConsumerWidget {
@@ -48,11 +50,16 @@ class LendTabContent extends ConsumerWidget {
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   children: [
-                    TokenTile(),
-                    TokenTile(),
-                    TokenTile(),
-                    TokenTile(),
-                    TokenTile()
+                    const PanelSubTitleWidget(),
+                    InkResponse(
+                        onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => const LendScreen())),
+                        child: const AssetTile()),
+                    const AssetTile(),
+                    const AssetTile(),
+                    const AssetTile(),
+                    const AssetTile()
                   ],
                 ),
                 ExpansionTile(
@@ -62,15 +69,16 @@ class LendTabContent extends ConsumerWidget {
                         fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   children: [
+                    const PanelSubTitleWidget(),
                     InkResponse(
                         onTap: () => Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) => const LendScreen())),
-                        child: TokenTile()),
-                    TokenTile(),
-                    TokenTile(),
-                    TokenTile(),
-                    TokenTile()
+                        child: const AssetTile()),
+                    const AssetTile(),
+                    const AssetTile(),
+                    const AssetTile(),
+                    const AssetTile()
                   ],
                 )
               ],
