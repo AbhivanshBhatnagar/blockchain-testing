@@ -13,6 +13,6 @@ class PortfolioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MyApp();
+    return const HomePage();
   }
 }

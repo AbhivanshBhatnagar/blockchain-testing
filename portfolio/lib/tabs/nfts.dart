@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../nft_detail.dart';
 
+
 class NFTs extends ConsumerStatefulWidget {
   const NFTs({super.key});
 

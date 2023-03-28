@@ -14,7 +14,7 @@ import '../../util/show_dialog.dart';
 class MainPageHostScreen extends StatelessWidget {
   MainPageHostScreen({super.key});
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-
+  List<String> titles = ["Search", "Messages","" ,"Portfolio", "Settings"];
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
@@ -56,34 +56,34 @@ class MainPageHostScreen extends StatelessWidget {
               ),
             ),
             actions: [
-              if(tabsRouter.activeIndex==2)
-              GestureDetector(
-                onTap: () {},
-                child: Image.asset("assets/qr_code.png"),
-              ),
+              if (tabsRouter.activeIndex == 2)
+                GestureDetector(
+                  onTap: () {},
+                  child: Image.asset("assets/qr_code.png"),
+                ),
             ],
-            title:
-            (tabsRouter.activeIndex!=4)?
-             GestureDetector(
-              onTap: () => makeTranslucentDialog(context),
-              child: Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.white30,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(40.0),
-                      )),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text("Etherium MainNet",
-                            style: GoogleFonts.urbanist(fontSize: 14)),
-                        Icon(Icons.expand_more)
-                      ],
-                    ),
-                  )),
-            ):Text("Settings"),
+            title: (tabsRouter.activeIndex == 2)
+                ? GestureDetector(
+                    onTap: () => makeTranslucentDialog(context),
+                    child: Container(
+                        decoration: const BoxDecoration(
+                            color: Colors.white30,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(40.0),
+                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text("Etherium MainNet",
+                                  style: GoogleFonts.urbanist(fontSize: 14)),
+                              Icon(Icons.expand_more)
+                            ],
+                          ),
+                        )),
+                  )
+                : Text(titles[tabsRouter.activeIndex]),
             elevation: 0,
             centerTitle: true,
           );

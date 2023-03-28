@@ -72,8 +72,8 @@ class _HomePageState extends ConsumerState<HomePage>
           headerSliverBuilder: (context, value) {
             return [
               const SliverAppBar(
-                collapsedHeight: 76,
-                expandedHeight: 76,
+                collapsedHeight: 88,
+                expandedHeight: 88,
                 backgroundColor: Colors.black,
                 flexibleSpace: TopProfile(),
                 pinned: true,
@@ -84,6 +84,7 @@ class _HomePageState extends ConsumerState<HomePage>
                     physics: NeverScrollableScrollPhysics(),
                     labelPadding: EdgeInsets.symmetric(horizontal: 5),
                     dividerColor: Colors.black,
+                    unselectedLabelColor: Colors.white,
                     indicatorColor: Color(0xff338BAA),
                     indicatorPadding:
                         EdgeInsets.symmetric(horizontal: 10, vertical: 10),

@@ -23,7 +23,9 @@ class _NFTCollectionImagesState extends ConsumerState<NFTCollectionImages> {
     ChainProvider chainProvider = ref.watch(chainNotifierProvider);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: Text(widget.data['name']),
+        centerTitle: true,
       ),
       body: FutureBuilder(
         future: getNFTCollectionData(
