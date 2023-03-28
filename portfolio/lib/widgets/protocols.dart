@@ -1,24 +1,25 @@
 import 'dart:math';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '/providers/chain_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/tokens_model.dart';
 import '../utils/get_data.dart';
 
-class ProtocolsWidget extends StatefulWidget {
+class ProtocolsWidget extends ConsumerStatefulWidget {
   const ProtocolsWidget({super.key});
 
   @override
-  State<ProtocolsWidget> createState() => _ProtocolsWidgetState();
+  ConsumerState<ProtocolsWidget> createState() => _ProtocolsWidgetState();
 }
 
-class _ProtocolsWidgetState extends State<ProtocolsWidget> {
+class _ProtocolsWidgetState extends ConsumerState<ProtocolsWidget> {
   bool isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
-    ChainProvider chainProvider =
-        Provider.of<ChainProvider>(context, listen: true);
+    ChainProvider chainProvider = ref.watch(chainNotifierProvider);
 
     return Padding(
       padding: const EdgeInsets.only(right: 10),

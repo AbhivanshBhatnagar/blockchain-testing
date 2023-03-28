@@ -1,24 +1,26 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'providers/chain_provider.dart';
 import 'utils/get_data.dart';
 import 'widgets/nft_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class NFTCollectionImages extends StatefulWidget {
+class NFTCollectionImages extends ConsumerStatefulWidget {
   dynamic data;
   String chain;
   NFTCollectionImages({super.key, required this.data, required this.chain});
 
   @override
-  State<NFTCollectionImages> createState() => _NFTCollectionImagesState();
+  ConsumerState<NFTCollectionImages> createState() =>
+      _NFTCollectionImagesState();
 }
 
 // Page to show all the NFT images of a collection
-class _NFTCollectionImagesState extends State<NFTCollectionImages> {
+class _NFTCollectionImagesState extends ConsumerState<NFTCollectionImages> {
   @override
   Widget build(BuildContext context) {
-    ChainProvider chainProvider =
-        Provider.of<ChainProvider>(context, listen: true);
+    ChainProvider chainProvider = ref.watch(chainNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.data['name']),

@@ -73,10 +73,10 @@ class _NFTImageCardState extends State<NFTImageCard> {
   Widget defaultImage(context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: Image(
-        image: const AssetImage('assets/images/default.jpg'),
-        height: MediaQuery.of(context).size.width * 0.33,
-        width: MediaQuery.of(context).size.width * 0.35,
+      child: Image.network(
+        "https://firebasestorage.googleapis.com/v0/b/avex-f2cdc.appspot.com/o/default.jpg?alt=media&token=92d3da3a-93a2-44bd-a457-3277b726e21e",
+        height: MediaQuery.of(context).size.width * 0.45,
+        width: MediaQuery.of(context).size.width * 0.38,
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../providers/chain_provider.dart';
 import '../utils/constants.dart';
 import '../utils/get_data.dart';
@@ -6,14 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../nft_detail.dart';
 
-class NFTs extends StatefulWidget {
+class NFTs extends ConsumerStatefulWidget {
   const NFTs({super.key});
 
   @override
-  State<NFTs> createState() => _NFTsState();
+  ConsumerState<NFTs> createState() => _NFTsState();
 }
 
-class _NFTsState extends State<NFTs> with AutomaticKeepAliveClientMixin<NFTs> {
+class _NFTsState extends ConsumerState<NFTs>
+    with AutomaticKeepAliveClientMixin<NFTs> {
   @override
   bool get wantKeepAlive => true;
 
@@ -48,7 +51,7 @@ class _NFTsState extends State<NFTs> with AutomaticKeepAliveClientMixin<NFTs> {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    ChainProvider chainProvider = Provider.of(context, listen: true);
+    ChainProvider chainProvider = ref.watch(chainNotifierProvider);
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
       controller: scrollController,

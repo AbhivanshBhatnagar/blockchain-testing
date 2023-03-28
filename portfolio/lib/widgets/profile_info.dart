@@ -1,30 +1,28 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '/providers/chain_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends ConsumerWidget {
   const Profile({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    ChainProvider chainProvider =
-        Provider.of<ChainProvider>(context, listen: true);
+  Widget build(BuildContext context, WidgetRef ref) {
+    ChainProvider chainProvider = ref.watch(chainNotifierProvider);
     return Padding(
       padding: const EdgeInsets.only(left: 40),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(40),
-            child: const Image(
-              image: AssetImage(
-                'assets/images/profile.png',
-              ),
-              height: 65,
-              width: 65,
-            ),
-          ),
+              borderRadius: BorderRadius.circular(40),
+              child: Image.network(
+                "https://firebasestorage.googleapis.com/v0/b/avex-f2cdc.appspot.com/o/profile.png?alt=media&token=d66b2d0a-fbb9-44fe-b78c-2b23ebfa909e",
+                height: 60,
+                width: 60,
+              )),
           const SizedBox(
             width: 20,
           ),

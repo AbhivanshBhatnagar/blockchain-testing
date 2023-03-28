@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '/providers/balnace_provider.dart';
 import '/providers/chain_provider.dart';
 import 'package:flutter/material.dart';
@@ -6,35 +8,34 @@ import 'package:provider/provider.dart';
 import 'profile_info.dart';
 import 'topbar.dart';
 
-class TopProfile extends StatefulWidget {
+class TopProfile extends ConsumerStatefulWidget {
   const TopProfile({super.key});
 
   @override
-  State<TopProfile> createState() => _TopProfileState();
+  ConsumerState<TopProfile> createState() => _TopProfileState();
 }
 
-class _TopProfileState extends State<TopProfile> {
+class _TopProfileState extends ConsumerState<TopProfile> {
   @override
   Widget build(BuildContext context) {
-    BalanceProvider balanceProvider =
-        Provider.of<BalanceProvider>(context, listen: true);
+    BalanceProvider balanceProvider = ref.watch(balanceNotifierProvider);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: Column(
         children: [
           // const TopBar(),
-          const SizedBox(
-            height: 20,
-          ),
-          const Profile(),
-          const SizedBox(
-            height: 25,
-          ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+          // const Profile(),
+          // const SizedBox(
+          //   height: 25,
+          // ),
           Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment.bottomLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 40),
+              padding: const EdgeInsets.only(left: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

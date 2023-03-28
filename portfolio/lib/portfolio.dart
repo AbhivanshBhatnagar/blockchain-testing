@@ -13,12 +13,6 @@ class PortfolioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ChainProvider()),
-        ChangeNotifierProvider(create: (_) => BalanceProvider()),
-      ],
-      child: const MyApp(),
-    );
+    return const MyApp();
   }
 }

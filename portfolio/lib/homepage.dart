@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import '/providers/balnace_provider.dart';
 import '/widgets/top_profile.dart';
 import '/utils/get_data.dart';
@@ -9,25 +8,49 @@ import '/providers/chain_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/tabs/portfolio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+
+class MyDelegate extends SliverPersistentHeaderDelegate {
+  MyDelegate(this.tabBar);
+
+  final TabBar tabBar;
 
   @override
-  State<Home> createState() => _HomeState();
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return tabBar;
+  }
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
+  }
+
+  @override
+  double get maxExtent => tabBar.preferredSize.height;
+
+  @override
+  double get minExtent => tabBar.preferredSize.height;
 }
 
-// Home Page with 3 tabs (Portfolio, NFTs, History)
-class _HomeState extends State<Home> with TickerProviderStateMixin {
+class HomePage extends ConsumerStatefulWidget {
+  const HomePage({super.key});
+
   @override
-  void initState() {
-    super.initState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
+}
 
-    ChainProvider chainProvider =
-        Provider.of<ChainProvider>(context, listen: false);
+class _HomePageState extends ConsumerState<HomePage>
+    with TickerProviderStateMixin {
+  
 
-    BalanceProvider balanceProvider =
-        Provider.of<BalanceProvider>(context, listen: false);
+  @override
+  Widget build(BuildContext context) {
+    ChainProvider chainProvider =ref.watch(chainNotifierProvider);
+    // Provider.of<ChainProvider>(context, listen: false);
+
+    BalanceProvider balanceProvider =ref.watch(balanceNotifierProvider);
 
     updateUsdPrice(
       balanceProvider: balanceProvider,
@@ -39,10 +62,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         address: chainProvider.address,
       );
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+    // ref.watch
     return Scaffold(
       backgroundColor: Colors.black,
       body: DefaultTabController(
@@ -52,8 +72,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           headerSliverBuilder: (context, value) {
             return [
               const SliverAppBar(
-                collapsedHeight: 240,
-                expandedHeight: 240,
+                collapsedHeight: 76,
+                expandedHeight: 76,
                 backgroundColor: Colors.black,
                 flexibleSpace: TopProfile(),
                 pinned: true,
@@ -110,27 +130,4 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       ),
     );
   }
-}
-
-class MyDelegate extends SliverPersistentHeaderDelegate {
-  MyDelegate(this.tabBar);
-
-  final TabBar tabBar;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return tabBar;
-  }
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
-  }
-
-  @override
-  double get maxExtent => tabBar.preferredSize.height;
-
-  @override
-  double get minExtent => tabBar.preferredSize.height;
 }

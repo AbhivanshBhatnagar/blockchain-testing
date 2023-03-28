@@ -1,21 +1,23 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '/providers/balnace_provider.dart';
 import '/providers/chain_provider.dart';
 import '/utils/get_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AssestsCard extends StatefulWidget {
+class AssestsCard extends ConsumerStatefulWidget {
   final String chain;
   const AssestsCard({super.key, required this.chain});
 
   @override
-  State<AssestsCard> createState() => _AssestsCardState();
+  ConsumerState<AssestsCard> createState() => _AssestsCardState();
 }
 
-class _AssestsCardState extends State<AssestsCard>
+class _AssestsCardState extends ConsumerState<AssestsCard>
     with AutomaticKeepAliveClientMixin<AssestsCard> {
   late Future getPriceData;
 
@@ -25,16 +27,14 @@ class _AssestsCardState extends State<AssestsCard>
   @override
   void initState() {
     super.initState();
-    ChainProvider chainProvider =
-        Provider.of<ChainProvider>(context, listen: false);
+    ChainProvider chainProvider = ref.read(chainNotifierProvider);
     getPriceData =
         getUsdPrice(chain: widget.chain, address: chainProvider.address);
   }
 
   @override
   Widget build(BuildContext context) {
-    BalanceProvider balanceProvider =
-        Provider.of<BalanceProvider>(context, listen: true);
+    BalanceProvider balanceProvider = ref.watch(balanceNotifierProvider);
 
     var balance = balanceProvider.getBalance(widget.chain) *
         balanceProvider.getUsdBalance(widget.chain);

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       title: 'Crypto Portfolio',
       darkTheme: ThemeData.dark(useMaterial3: true),
       themeMode: ThemeMode.dark,
-      home: const Home(),
+      home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }

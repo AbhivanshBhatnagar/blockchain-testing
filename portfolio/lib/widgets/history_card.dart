@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '/models/history_model.dart';
 import '/providers/balnace_provider.dart';
 import 'package:flutter/services.dart';
@@ -8,14 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../utils/constants.dart';
 
-class HistoryCard extends StatelessWidget {
+class HistoryCard extends ConsumerWidget {
   final Result data;
   const HistoryCard({super.key, required this.data});
 
   @override
-  Widget build(BuildContext context) {
-    BalanceProvider balanceProvider =
-        Provider.of<BalanceProvider>(context, listen: true);
+  Widget build(BuildContext context, WidgetRef ref) {
+    BalanceProvider balanceProvider = ref.watch(balanceNotifierProvider);
     var sent = data.fromAddress == "0xbdfa4f4492dd7b7cf211209c4791af8d52bf5c50"
         ? true
         : false;

@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../models/history_model.dart';
 import '../providers/chain_provider.dart';
 import '../utils/constants.dart';
@@ -7,14 +9,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class History extends StatefulWidget {
+class History extends ConsumerStatefulWidget {
   const History({super.key});
 
   @override
-  State<History> createState() => _HistoryState();
+  ConsumerState<History> createState() => _HistoryState();
 }
 
-class _HistoryState extends State<History>
+class _HistoryState extends ConsumerState<History>
     with AutomaticKeepAliveClientMixin<History> {
   @override
   bool get wantKeepAlive => true;
@@ -34,7 +36,7 @@ class _HistoryState extends State<History>
   ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    ChainProvider chainProvider = Provider.of(context, listen: false);
+    ChainProvider chainProvider = ref.read(chainNotifierProvider);
     fetchHistory("", chainProvider.address);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -63,8 +65,7 @@ class _HistoryState extends State<History>
 
   @override
   Widget build(BuildContext context) {
-    ChainProvider chainProvider =
-        Provider.of<ChainProvider>(context, listen: true);
+    ChainProvider chainProvider =ref.watch(chainNotifierProvider);
     super.build(context);
     return SingleChildScrollView(
       controller: scrollController,

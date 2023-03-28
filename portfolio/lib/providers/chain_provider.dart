@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+final chainNotifierProvider = ChangeNotifierProvider.autoDispose<ChainProvider>((ref) {
+  return ChainProvider();
+});
 
 class ChainProvider with ChangeNotifier {
   String _chain = 'All Chains';

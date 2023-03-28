@@ -1,3 +1,5 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../providers/balnace_provider.dart';
 import '../providers/chain_provider.dart';
 import '../widgets/assests_card.dart';
@@ -7,14 +9,14 @@ import 'package:provider/provider.dart';
 import '../utils/constants.dart';
 import '../widgets/bottom.dart';
 
-class Portfolio extends StatefulWidget {
+class Portfolio extends ConsumerStatefulWidget {
   const Portfolio({super.key});
 
   @override
-  State<Portfolio> createState() => _PortfolioState();
+  ConsumerState<Portfolio> createState() => _PortfolioState();
 }
 
-class _PortfolioState extends State<Portfolio>
+class _PortfolioState extends ConsumerState<Portfolio>
     with AutomaticKeepAliveClientMixin<Portfolio> {
   String chain = 'All Chains';
   ScrollController scrollController = ScrollController();
@@ -27,11 +29,10 @@ class _PortfolioState extends State<Portfolio>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    ChainProvider chainProvider =
-        Provider.of<ChainProvider>(context, listen: true);
+    ChainProvider chainProvider = ref.watch(chainNotifierProvider);
 
-    BalanceProvider balanceProvider =
-        Provider.of<BalanceProvider>(context, listen: true);
+
+    BalanceProvider balanceProvider = ref.watch(balanceNotifierProvider);
 
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),

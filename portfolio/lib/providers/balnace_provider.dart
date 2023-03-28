@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final balanceNotifierProvider =
+    ChangeNotifierProvider.autoDispose<BalanceProvider>((ref) {
+  return BalanceProvider();
+});
 
 class BalanceProvider extends ChangeNotifier {
   Map balances = {
