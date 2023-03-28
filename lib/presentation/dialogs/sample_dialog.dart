@@ -4,7 +4,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../widget/button.dart';
 
-void makeDialog(BuildContext context) {
+void makeQRDialog(BuildContext context, String link) {
   showModalBottomSheet(
       shape: RoundedRectangleBorder(
         //the rounded corner is created here
@@ -38,13 +38,7 @@ void makeDialog(BuildContext context) {
                 height: 24,
               ),
               Container(
-                  width: 200,
-                  color: Colors.white,
-                  child: QrImage(data: "https://www.google.com")),
-              const SizedBox(
-                height: 24,
-              ),
-              Text("https://www.google.com"),
+                  width: 200, color: Colors.white, child: QrImage(data: link)),
               const SizedBox(
                 height: 24,
               ),

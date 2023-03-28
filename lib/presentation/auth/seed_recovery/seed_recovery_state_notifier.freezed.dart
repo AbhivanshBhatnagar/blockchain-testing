@@ -20,6 +20,8 @@ mixin _$SeedRecoveryStateNotifierState {
       throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   int get noOfSteps => throw _privateConstructorUsedError;
+  String get driveKey => throw _privateConstructorUsedError;
+  String get qrKey => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SeedRecoveryStateNotifierStateCopyWith<SeedRecoveryStateNotifierState>
@@ -37,7 +39,9 @@ abstract class $SeedRecoveryStateNotifierStateCopyWith<$Res> {
   $Res call(
       {SeedRecoveryStateNotifierStatus status,
       String? errorMessage,
-      int noOfSteps});
+      int noOfSteps,
+      String driveKey,
+      String qrKey});
 }
 
 /// @nodoc
@@ -57,6 +61,8 @@ class _$SeedRecoveryStateNotifierStateCopyWithImpl<$Res,
     Object? status = null,
     Object? errorMessage = freezed,
     Object? noOfSteps = null,
+    Object? driveKey = null,
+    Object? qrKey = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -71,6 +77,14 @@ class _$SeedRecoveryStateNotifierStateCopyWithImpl<$Res,
           ? _value.noOfSteps
           : noOfSteps // ignore: cast_nullable_to_non_nullable
               as int,
+      driveKey: null == driveKey
+          ? _value.driveKey
+          : driveKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      qrKey: null == qrKey
+          ? _value.qrKey
+          : qrKey // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -87,7 +101,9 @@ abstract class _$$_SeedRecoveryStateNotifierStateCopyWith<$Res>
   $Res call(
       {SeedRecoveryStateNotifierStatus status,
       String? errorMessage,
-      int noOfSteps});
+      int noOfSteps,
+      String driveKey,
+      String qrKey});
 }
 
 /// @nodoc
@@ -106,6 +122,8 @@ class __$$_SeedRecoveryStateNotifierStateCopyWithImpl<$Res>
     Object? status = null,
     Object? errorMessage = freezed,
     Object? noOfSteps = null,
+    Object? driveKey = null,
+    Object? qrKey = null,
   }) {
     return _then(_$_SeedRecoveryStateNotifierState(
       status: null == status
@@ -120,6 +138,14 @@ class __$$_SeedRecoveryStateNotifierStateCopyWithImpl<$Res>
           ? _value.noOfSteps
           : noOfSteps // ignore: cast_nullable_to_non_nullable
               as int,
+      driveKey: null == driveKey
+          ? _value.driveKey
+          : driveKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      qrKey: null == qrKey
+          ? _value.qrKey
+          : qrKey // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -131,7 +157,9 @@ class _$_SeedRecoveryStateNotifierState
   const _$_SeedRecoveryStateNotifierState(
       {this.status = SeedRecoveryStateNotifierStatus.initial,
       this.errorMessage,
-      this.noOfSteps = 0});
+      this.noOfSteps = 0,
+      this.driveKey = "",
+      this.qrKey = ""});
 
   @override
   @JsonKey()
@@ -141,10 +169,16 @@ class _$_SeedRecoveryStateNotifierState
   @override
   @JsonKey()
   final int noOfSteps;
+  @override
+  @JsonKey()
+  final String driveKey;
+  @override
+  @JsonKey()
+  final String qrKey;
 
   @override
   String toString() {
-    return 'SeedRecoveryStateNotifierState(status: $status, errorMessage: $errorMessage, noOfSteps: $noOfSteps)';
+    return 'SeedRecoveryStateNotifierState(status: $status, errorMessage: $errorMessage, noOfSteps: $noOfSteps, driveKey: $driveKey, qrKey: $qrKey)';
   }
 
   @override
@@ -156,11 +190,15 @@ class _$_SeedRecoveryStateNotifierState
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.noOfSteps, noOfSteps) ||
-                other.noOfSteps == noOfSteps));
+                other.noOfSteps == noOfSteps) &&
+            (identical(other.driveKey, driveKey) ||
+                other.driveKey == driveKey) &&
+            (identical(other.qrKey, qrKey) || other.qrKey == qrKey));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, errorMessage, noOfSteps);
+  int get hashCode => Object.hash(
+      runtimeType, status, errorMessage, noOfSteps, driveKey, qrKey);
 
   @JsonKey(ignore: true)
   @override
@@ -175,7 +213,9 @@ abstract class _SeedRecoveryStateNotifierState
   const factory _SeedRecoveryStateNotifierState(
       {final SeedRecoveryStateNotifierStatus status,
       final String? errorMessage,
-      final int noOfSteps}) = _$_SeedRecoveryStateNotifierState;
+      final int noOfSteps,
+      final String driveKey,
+      final String qrKey}) = _$_SeedRecoveryStateNotifierState;
 
   @override
   SeedRecoveryStateNotifierStatus get status;
@@ -183,6 +223,10 @@ abstract class _SeedRecoveryStateNotifierState
   String? get errorMessage;
   @override
   int get noOfSteps;
+  @override
+  String get driveKey;
+  @override
+  String get qrKey;
   @override
   @JsonKey(ignore: true)
   _$$_SeedRecoveryStateNotifierStateCopyWith<_$_SeedRecoveryStateNotifierState>

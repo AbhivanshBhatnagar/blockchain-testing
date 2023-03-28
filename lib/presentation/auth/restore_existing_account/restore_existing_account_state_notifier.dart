@@ -34,7 +34,11 @@ class RestoreExistingAccountStateNotifier
 
   void onSeedPhraseSubmitted() async {
     debugPrint(state.seedPhraseList);
-    final response = await eddsaHmac.importSeedPhrase(state.seedPhraseList);
+    final response = await eddsaHmac.importSeedPhrase(state.seedPhraseList,(key){
+      
+    },(key){
+
+    });
     if (response.status == ApiResponse.success) {
       // AutoRouter.of()
       state = state.copyWith(

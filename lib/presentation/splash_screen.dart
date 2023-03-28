@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/router.gr.dart';
 import '../dynamic_link_handler.dart';
+import '../services/local_services/encrypted_shared_pref.dart';
 import 'main/home/home_screen.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -39,11 +40,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         onAuthDynamicLink(authCode);
       }
     });
-    if (checkForAuthStatus()) {
-      onAuthSuccess();
-    } else {
-      onAuthFailure();
-    }
+    checkForAuth();
   }
 
   @override
@@ -65,6 +62,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     );
   }
 
+  void checkForAuth() async {
+    if (await checkForAuthStatus()) {
+      onAuthSuccess();
+    } else {
+      onAuthFailure();
+    }
+  }
+
   void onAuthFailure() {
     // debugPrint('my.app.category');
     if (mounted) {
@@ -83,7 +88,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           .replace(DynamicLinkProcessingRoute(authToken: authId));
   }
 
-  bool checkForAuthStatus() {
-    return false;
+  Future<bool> checkForAuthStatus() async {
+    final authCheck = await ref
+        .read(encryptedSharedPrefProvider)
+        .instance
+        .getString("isAuthCheck");
+
+    return authCheck == "true";
   }
 }
