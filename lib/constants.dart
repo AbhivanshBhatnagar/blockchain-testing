@@ -8,7 +8,7 @@ import 'package:web3dart/web3dart.dart';
 import 'dart:developer' as dev;
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:math';
-import 'package:meilisearch/meilisearch.dart';
+// import 'package:meilisearch/meilisearch.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -202,10 +202,10 @@ class Constants {
     return x;
   }
 
-  static var client = MeiliSearchClient(
-      "https://ms-decb20c2b075-2348.sgp.meilisearch.io/",
-      "0a0d19ca9a2a29d97528913d6741313e446a455aaf863b82b451c62a0b834075");
-  var index = client.index("tokens");
+  // static var client = MeiliSearchClient(
+  //     "https://ms-decb20c2b075-2348.sgp.meilisearch.io/",
+  //     "0a0d19ca9a2a29d97528913d6741313e446a455aaf863b82b451c62a0b834075");
+  // var index = client.index("tokens");
   simluate(
       {String toAddress = '',
       String fromAddress = '',

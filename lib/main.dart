@@ -5,14 +5,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_project/firebase_options.dart';
 import 'app.dart';
 import 'dynamic_link_handler.dart';
+
 // import 'package:graphql_flutter/graphql_flutter.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final PendingDynamicLinkData? initialLink =
       await FirebaseDynamicLinks.instance.getInitialLink();
-
   runApp(const ProviderScope(child: App()));
 }

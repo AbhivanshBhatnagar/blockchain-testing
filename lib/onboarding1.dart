@@ -17,7 +17,6 @@ import 'package:test_project/wallet_creation.dart';
 import 'package:web3dart/credentials.dart';
 
 import 'dynamic_link_handler.dart';
-import 'package:local_auth/local_auth.dart';
 import 'package:bip39/bip39.dart' as bip39;
 
 class OnBoarding1Screen extends StatefulWidget {
@@ -31,7 +30,6 @@ class OnBoarding1Screen extends StatefulWidget {
 }
 
 class _OnBoarding1ScreenState extends State<OnBoarding1Screen> {
-  LocalAuthentication auth = LocalAuthentication();
   WalletAddress walletAddress = WalletAddress();
   String? pubaddr;
   String? privaddr;
@@ -81,13 +79,8 @@ class _OnBoarding1ScreenState extends State<OnBoarding1Screen> {
                             creatingWallet = !creatingWallet;
                           });
                           try {
-                            final bool didAuthenticate = await auth.authenticate(
-                                options: const AuthenticationOptions(
-                                    stickyAuth: true),
-                                localizedReason:
-                                    'Please authenticate to create new Wallet');
-
-                            if (didAuthenticate) {
+                            
+                            if (true) {
                               //Creates a new Crypto Wallet
                               Constants().createWallet();
 

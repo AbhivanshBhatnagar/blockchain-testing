@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'package:test_project/constants.dart';
 import 'package:test_project/transaction.dart';
 import 'package:web3dart/web3dart.dart';
@@ -103,9 +102,6 @@ class _SendScreenState extends State<SendScreen> {
                       label: Text(
                     "Address",
                   )),
-                  validator: MultiValidator([
-                    RequiredValidator(errorText: "Address is required"),
-                  ]),
                   autovalidateMode: AutovalidateMode.onUserInteraction),
             ),
           ),
