@@ -37,52 +37,64 @@ class MainPageHostScreen extends StatelessWidget {
                 ),
               ],
             )),
-        appBarBuilder: ((context, tabsRouter) => AppBar(
-              backgroundColor: Colors.transparent,
-              leading: SizedBox(
-                height: 34,
-                width: 34,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: InkWell(
-                    onTap: () {},
-                    child: ClipOval(
-                        child: CachedNetworkImage(
-                      imageUrl:
-                          "https://avatars.githubusercontent.com/u/64317542?v=4",
-                    )),
+        appBarBuilder: ((context, tabsRouter) {
+          switch (tabsRouter.current.name) {
+            case SettingsRoute.name:
+              return AppBar(
+                leading: Container(),
+                backgroundColor: Colors.transparent,
+                title: const Text("Settings"),
+                elevation: 0,
+              );
+            default:
+              return AppBar(
+                backgroundColor: Colors.transparent,
+                leading: SizedBox(
+                  height: 34,
+                  width: 34,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: InkWell(
+                      onTap: () {},
+                      child: ClipOval(
+                          child: CachedNetworkImage(
+                        imageUrl:
+                            "https://avatars.githubusercontent.com/u/64317542?v=4",
+                      )),
+                    ),
                   ),
                 ),
-              ),
-              actions: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Image.asset("assets/qr_code.png"),
+                actions: [
+                  GestureDetector(
+                    onTap: () {},
+                    child: Image.asset("assets/qr_code.png"),
+                  ),
+                ],
+                title: GestureDetector(
+                  onTap: () => makeTranslucentDialog(context),
+                  child: Container(
+                      decoration: const BoxDecoration(
+                          color: Colors.white30,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40.0),
+                          )),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text("Etherium MainNet",
+                                style: GoogleFonts.urbanist(fontSize: 14)),
+                            Icon(Icons.expand_more)
+                          ],
+                        ),
+                      )),
                 ),
-              ],
-              title: GestureDetector(
-                onTap: () => makeTranslucentDialog(context),
-                child: Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.white30,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(40.0),
-                        )),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text("Etherium MainNet",
-                              style: GoogleFonts.urbanist(fontSize: 14)),
-                          Icon(Icons.expand_more)
-                        ],
-                      ),
-                    )),
-              ),
-              elevation: 0,
-              centerTitle: true,
-            )),
+                elevation: 0,
+                centerTitle: true,
+              );
+          }
+        }),
         routes: const [
           SearchRoute(),
           MessageRoute(),
