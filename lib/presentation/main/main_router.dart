@@ -14,7 +14,7 @@ import '../../util/show_dialog.dart';
 class MainPageHostScreen extends StatelessWidget {
   MainPageHostScreen({super.key});
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  List<String> titles = ["Search", "Messages","" ,"Portfolio", "Settings"];
+  List<String> titles = ["Search", "Messages", "", "Portfolio", "Settings"];
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
@@ -88,12 +88,12 @@ class MainPageHostScreen extends StatelessWidget {
             centerTitle: true,
           );
         }),
-        routes: const [
-          SearchRoute(),
+        routes: [
+          const SearchRoute(),
           MessageRoute(),
-          HomeRoute(),
-          PortfolioRoute(),
-          SettingsRoute()
+          const HomeRoute(),
+          const PortfolioRoute(),
+          const SettingsRoute()
         ],
         bottomNavigationBuilder: (context, tabsRouter) => BottomNavigationBar(
               onTap: (index) {

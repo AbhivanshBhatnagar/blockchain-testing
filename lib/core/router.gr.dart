@@ -101,9 +101,11 @@ class AppRouter extends _i7.RootStackRouter {
       );
     },
     MessageRoute.name: (routeData) {
+      final args = routeData.argsAs<MessageRouteArgs>(
+          orElse: () => const MessageRouteArgs());
       return _i7.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.MessageScreen(),
+        child: _i1.MessageScreen(key: args.key),
       );
     },
   };
@@ -344,12 +346,24 @@ class SettingsRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i1.MessageScreen]
-class MessageRoute extends _i7.PageRouteInfo<void> {
-  const MessageRoute()
+class MessageRoute extends _i7.PageRouteInfo<MessageRouteArgs> {
+  MessageRoute({_i8.Key? key})
       : super(
           MessageRoute.name,
           path: 'message',
+          args: MessageRouteArgs(key: key),
         );
 
   static const String name = 'MessageRoute';
+}
+
+class MessageRouteArgs {
+  const MessageRouteArgs({this.key});
+
+  final _i8.Key? key;
+
+  @override
+  String toString() {
+    return 'MessageRouteArgs{key: $key}';
+  }
 }
