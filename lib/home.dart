@@ -46,7 +46,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
                 )),
             ElevatedButton(
                 onPressed: () {
-                  bottomSheet(context);
+                  _bottomSheet(context);
                 },
                 child: Text(
                   "Recieve",
@@ -97,7 +97,7 @@ class _HomeState extends State<Home> with WidgetsBindingObserver {
     );
   }
 
-  Future<dynamic> bottomSheet(BuildContext context) {
+  Future<dynamic> _bottomSheet(BuildContext context) {
     return showModalBottomSheet(
         useSafeArea: true,
         builder: (BuildContext context) {

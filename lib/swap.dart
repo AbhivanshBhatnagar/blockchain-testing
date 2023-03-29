@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/services.dart';
+import 'package:web3dart/web3dart.dart';
 import 'dart:math' as math;
 import 'constants.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:test_project/constants.dart';
 import 'package:test_project/dummy_swap.dart';
 import 'package:test_project/getTokens.dart';
 import 'package:slide_to_confirm/slide_to_confirm.dart';
+import 'package:test_project/deepak_services/swap.service.dart' as Swap;
+import 'package:test_project/deepak_services/network.dart';
 
 class SwapScreen extends StatefulWidget {
   const SwapScreen({super.key});
@@ -22,9 +25,11 @@ class _SwapScreenState extends State<SwapScreen> with TickerProviderStateMixin {
   double _currentSliderValue = 20;
   void confirmed() {
     WalletSwap().swap(
-        token1: Constants.tokenAddressList[selectedValue1].toString(),
-        token2: Constants.tokenAddressList[selectedValue2].toString(),
-        amount: (double.parse(_token1Controller.text)));
+        fromToken: Constants.tokenAddressList["MATIC"].toString(),
+        toToken: Constants.tokenAddressList["SAND"].toString(),
+        fromAmount: ((double.parse(_token1Controller.text) * math.pow(10, 18))
+            .toInt()
+            .toString()));
   }
 
   @override
@@ -37,10 +42,12 @@ class _SwapScreenState extends State<SwapScreen> with TickerProviderStateMixin {
   GlobalKey<FormState> _token2Key = GlobalKey<FormState>();
   TextEditingController _token1Controller = TextEditingController();
   TextEditingController _token2Controller = TextEditingController();
-  String selectedValue1 = "ETH";
-  String selectedValue2 = "DAI";
+  String selectedValue1 = "MATIC";
+  String selectedValue2 = "SAND";
+  var quote;
   String exchangePrice = '';
   String slippage = '0';
+  var network = Network.polygonMatic;
   @override
   @override
   Widget build(BuildContext context) {
@@ -141,20 +148,53 @@ class _SwapScreenState extends State<SwapScreen> with TickerProviderStateMixin {
                                       if (trimmedValue.isNotEmpty &&
                                           !trimmedValue.endsWith('.') &&
                                           !trimmedValue.contains(',') &&
-                                          !trimmedValue.contains('-')) {
-                                        exchangePrice = await WalletSwap()
-                                            .qoute0x(
-                                                buytoken: Constants
-                                                    .tokenAddressList[
-                                                        selectedValue2]
-                                                    .toString(),
-                                                selltoken: Constants
-                                                    .tokenAddressList[
-                                                        selectedValue1]
-                                                    .toString(),
-                                                amount: double.parse(
-                                                    _token1Controller.text));
-                                        _token2Controller.text = exchangePrice;
+                                          !trimmedValue.contains('-') &&
+                                          trimmedValue != '0') {
+                                        try {
+                                          quote = await Swap.getQuote(
+                                              "li.quest",
+                                              network.chainId.toString(),
+                                              Constants
+                                                  .tokenAddressList["MATIC"]
+                                                  .toString(),
+                                              network.chainId.toString(),
+                                              Constants.tokenAddressList["SAND"]
+                                                  .toString(),
+                                              (double.parse(_token1Controller
+                                                          .text) *
+                                                      math.pow(10, 18))
+                                                  .toInt()
+                                                  .toString(),
+                                              Constants.address);
+                                        } catch (e) {
+                                          log(e.toString());
+                                          // TODO
+                                        }
+                                        var toAmount =
+                                            await quote?.estimate?.toAmount;
+                                        toAmount = double.parse(toAmount) /
+                                            math.pow(10, 18);
+                                        // log(toAmount.toString());
+                                        // exchangePrice = await WalletSwap()
+                                        //     .qoute0x(
+                                        //         buytoken: Constants
+                                        //             .tokenAddressList[
+                                        //                 selectedValue2]
+                                        //             .toString(),
+                                        //         selltoken: Constants
+                                        //             .tokenAddressList[
+                                        //                 selectedValue1]
+                                        //             .toString(),
+                                        //         amount: double.parse(
+                                        //             _token1Controller.text));
+                                        _token2Controller.text =
+                                            toAmount.toString();
+                                        setState(() {});
+                                      } else if (trimmedValue.isEmpty) {
+                                        _token2Controller.text = '';
+                                        setState(() {});
+                                      } else if (trimmedValue == '0') {
+                                        _token2Controller.text = '0';
                                         setState(() {});
                                       }
                                     },

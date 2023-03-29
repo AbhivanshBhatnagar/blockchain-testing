@@ -18,6 +18,7 @@ class WalletTransaction {
       log(chainID.toString());
       String transactionHash = await web3client.sendTransaction(
           chainId: chainID.toInt(), Constants.userCredentials, transactiondata);
+      Fluttertoast.showToast(msg: "Sent Succesfully");
       log(transactionHash);
     } catch (e) {
       Fluttertoast.showToast(

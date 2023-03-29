@@ -17,6 +17,10 @@ import 'package:http/http.dart' as http;
 import 'dart:developer';
 
 import 'constants.dart';
+import 'package:test_project/deepak_services/erc20.service.dart' as erc20;
+import 'package:test_project/deepak_services/evm.service.dart' as evm;
+import 'package:test_project/deepak_services/swap.service.dart' as Swap;
+import 'package:test_project/deepak_services/network.dart';
 
 class WalletSwap extends StatefulWidget {
   WalletSwap({super.key});
@@ -30,6 +34,12 @@ class WalletSwap extends StatefulWidget {
   // static String token1 = "0x6B175474E89094C44Da98b954EedeAC495271d0F";
   static String ethAddress = '0x0000000000000000000000000000000000000000';
   var swapdata;
+  static const apiUrl = "li.quest";
+  static const fromChain = "137";
+  static const toChain = "137";
+  static const fromToken = "0x0000000000000000000000000000000000000000"; //Matic
+  static const toToken = "0xbbba073c31bf03b8acf7c28ef0738decf3695683"; // Sand
+  static const fromAmount = '100000000000000000';
   // static Map<String, String> check_allowance_query_params = {
   //   // 'sellToken': '0xE68104D83e647b7c1C15a91a8D8aAD21a51B3B3E',
   //   // 'buyToken': '0x0000000000000000000000000000000000000000',
@@ -44,47 +54,78 @@ class WalletSwap extends StatefulWidget {
   // };
 
   void swap(
-      {String token1 = '', String token2 = '', double amount = 0.0}) async {
-    DeployedContract contract1 = await Constants()
-        .loadContract(contractFileName: "erc20_token", contractAddress: token1);
-    // DeployedContract ethContract = await loadContract(tokenAdress: ethAddress);
-    var decimalsfunc = contract1.function('decimals');
-    var senderAddress = Constants.ethereumAddress;
-    final getDecimals = await ethClient.call(
-        sender: senderAddress,
-        contract: contract1,
-        function: decimalsfunc,
-        params: []);
-    // log(get_decimals.first.toString());
+      {String fromToken = '',
+      String toToken = '',
+      String fromAmount = ""}) async {
+    var credentials = EthPrivateKey.fromHex("");
+    var quote = await Swap.getQuote(apiUrl, fromChain, fromToken, toChain,
+        toToken, fromAmount.toString(), credentials.address.toString());
 
-    double exchangeAmount = amount * math.pow(10, getDecimals[0].toInt());
-    log(exchangeAmount.toString());
-    // log(exchange_amount.toString());
-    var func = contract1.function("allowance");
-    final getAllowance = await ethClient.call(
-        sender: senderAddress,
-        contract: contract1,
-        function: func,
-        params: [
-          EthereumAddress.fromHex(_credentials.address.hex),
-          EthereumAddress.fromHex(token1)
-        ]);
-    int allowance = getAllowance[0].toInt();
-    if (allowance < exchangeAmount) {
-      var func = contract1.function("approve");
-      final approve = await ethClient.call(
-          sender: senderAddress,
-          contract: contract1,
-          function: func,
-          params: [
-            EthereumAddress.fromHex(_credentials.address.hex),
-            BigInt.from(allowance)
-          ]);
-      log(approve.toString());
-    }
-    WalletTransaction()
-        .sendTransaction(transactiondata: Transaction(data: swapdata));
-    // qoute0x();
+    var client = evm.getEthClient(Network.polygonMatic);
+
+    //  Check and set Allowance
+    var txRec = await erc20.checkAndSetAllowance(
+        client,
+        Network.polygonMatic,
+        credentials,
+        quote.action.fromToken.address,
+        quote.estimate!.approvalAddress,
+        fromAmount.toString());
+    log(fromAmount);
+    print("txRec: $txRec");
+
+    var transaction = Transaction(
+        to: EthereumAddress.fromHex(quote.transactionRequest!.to!),
+        data: hexToBytes(quote.transactionRequest!.data!),
+        maxGas: hexToDartInt(quote.transactionRequest!.gasLimit!),
+        gasPrice: EtherAmount.fromBigInt(
+            EtherUnit.wei, hexToInt(quote.transactionRequest!.gasPrice!)),
+        value: EtherAmount.fromBigInt(
+            EtherUnit.wei, hexToInt(quote.transactionRequest!.value!)));
+    var tx = await evm.sendTransaction(
+        client, Network.polygonMatic, credentials, transaction);
+    print("tx: $tx");
+
+    // DeployedContract contract1 = await Constants().loadContract(
+    //     contractFileName: "erc20_token", contractAddress: fromToken);
+    // // DeployedContract ethContract = await loadContract(tokenAdress: ethAddress);
+    // var decimalsfunc = contract1.function('decimals');
+    // var senderAddress = Constants.ethereumAddress;
+    // final getDecimals = await ethClient.call(
+    //     sender: senderAddress,
+    //     contract: contract1,
+    //     function: decimalsfunc,
+    //     params: []);
+    // // log(get_decimals.first.toString());
+
+    // double exchangeAmount = fromAmount * math.pow(10, getDecimals[0].toInt());
+    // log(exchangeAmount.toString());
+    // // log(exchange_amount.toString());
+    // var func = contract1.function("allowance");
+    // final getAllowance = await ethClient.call(
+    //     sender: senderAddress,
+    //     contract: contract1,
+    //     function: func,
+    //     params: [
+    //       EthereumAddress.fromHex(_credentials.address.hex),
+    //       EthereumAddress.fromHex(fromToken)
+    //     ]);
+    // int allowance = getAllowance[0].toInt();
+    // if (allowance < exchangeAmount) {
+    //   var func = contract1.function("approve");
+    //   final approve = await ethClient.call(
+    //       sender: senderAddress,
+    //       contract: contract1,
+    //       function: func,
+    //       params: [
+    //         EthereumAddress.fromHex(_credentials.address.hex),
+    //         BigInt.from(allowance)
+    //       ]);
+    //   log(approve.toString());
+    // }
+    // WalletTransaction()
+    //     .sendTransaction(transactiondata: Transaction(data: swapdata));
+    // // qoute0x();
   }
 
   // void check_allowance() async {
