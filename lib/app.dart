@@ -34,18 +34,18 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      darkTheme: ThemeData.dark(),
-      home: HomeScreen(),
-    );
-    // return MaterialApp.router(
-    //   darkTheme: ThemeData(
-    //       brightness: Brightness.dark, scaffoldBackgroundColor: Colors.black),
-
-    //   // home: SplashScreen(),
-    //   routerDelegate: _router.delegate(),
-    //   routeInformationParser: _router.defaultRouteParser(),
-    //   themeMode: ThemeMode.dark,
+    // return MaterialApp(
+    //   darkTheme: ThemeData.dark(),
+    //   home: HomeScreen(),
     // );
+    return MaterialApp.router(
+      darkTheme: ThemeData(
+          brightness: Brightness.dark, scaffoldBackgroundColor: Colors.black),
+
+      // home: SplashScreen(),
+      routerDelegate: _router.delegate(),
+      routeInformationParser: _router.defaultRouteParser(),
+      themeMode: ThemeMode.dark,
+    );
   }
 }

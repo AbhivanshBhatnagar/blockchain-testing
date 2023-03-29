@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Constants {
-  static Credentials userCredentials = EthPrivateKey.fromHex('');
+  static Credentials userCredentials = EthPrivateKey.fromHex('962f96661bfb95764c4c99539d7f8676376c13fca2fad94deb550e19aa8f8e68');
   static EthereumAddress ethereumAddress = userCredentials.address;
   static String address = userCredentials.address.hex;
   static String dummyAddress = '';
