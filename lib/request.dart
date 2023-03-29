@@ -75,21 +75,21 @@ class _RequestScreenState extends State<RequestScreen> {
                         padding: const EdgeInsets.all(30.0),
                         child: TextFormField(
                             onChanged: (value) async {
-                              if (_valueController.text.isNotEmpty) {
-                                var fetchPrice = await Constants()
-                                    .getPrice(token: selectedValue1);
-                                price = fetchPrice * double.parse(value);
-                                price = double.parse(price.toStringAsFixed(2));
+                              // if (_valueController.text.isNotEmpty) {
+                              //   var fetchPrice = await Constants()
+                              //       .getPrice(token: selectedValue1);
+                              //   price = fetchPrice * double.parse(value);
+                              //   price = double.parse(price.toStringAsFixed(2));
 
-                                setState(() {
-                                  this.price = price;
-                                });
-                                log(price.toString());
-                              } else {
-                                setState(() {
-                                  this.price = 0;
-                                });
-                              }
+                              //   setState(() {
+                              //     this.price = price;
+                              //   });
+                              //   log(price.toString());
+                              // } else {
+                              //   setState(() {
+                              //     this.price = 0;
+                              //   });
+                              // }
                             },
                             keyboardType: TextInputType.number,
                             controller: _valueController,
@@ -113,7 +113,7 @@ class _RequestScreenState extends State<RequestScreen> {
                     bottomSheet(context);
                   },
                   child: Text("Request")),
-              Text(price.toString())
+              // Text(price.toString())
             ],
           ),
         ),
@@ -126,8 +126,18 @@ class _RequestScreenState extends State<RequestScreen> {
         useSafeArea: true,
         builder: (BuildContext context) {
           return StatefulBuilder(
-              builder: (context, setState) => Column(
-                    children: [generateQR()],
+              builder: (context, setState) => Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        generateQR(),
+                        Text(
+                          requestUrl,
+                          style: TextStyle(color: Colors.blue),
+                        )
+                      ],
+                    ),
                   ));
         },
         context: context);

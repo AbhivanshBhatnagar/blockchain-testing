@@ -1,9 +1,20 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:test_project/home.dart';
 import 'package:test_project/presentation/main/home/widgets/home_tabs.dart';
 import 'package:test_project/presentation/main/home/widgets/symbol_button.dart';
+import 'package:test_project/send.dart';
+import 'package:test_project/swap.dart';
+import '../../../constants.dart';
+import '../../../request.dart';
+import '../../../swap.dart';
 import 'widgets/account_card.dart';
 import 'widgets/sliver_app_bar_delegate.dart';
 import 'widgets/token_tile.dart';
@@ -21,6 +32,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   double _sendReceivePagePosition = 0;
+  List<DropdownMenuItem<String>> networks = [
+    DropdownMenuItem(child: Text("Ethereum Mainnet"), value: "ETH"),
+    DropdownMenuItem(child: Text("Goerli Testnet"), value: "GOERLI"),
+  ];
+  String selectedValue2 = "ETH";
   @override
   void initState() {
     super.initState();
@@ -62,27 +78,47 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
+                            children: [
                               SymbolButton(
                                   title: "Add Funds",
                                   icon: Icon(Icons.credit_card)),
-                              SymbolButton(
-                                  title: "Send",
-                                  icon: Icon(Icons.arrow_outward)),
-                              SymbolButton(
-                                  title: "Receive",
-                                  icon: RotatedBox(
-                                    child: Icon(Icons.arrow_outward),
-                                    quarterTurns: 2,
-                                  )),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SendScreen(),
+                                      ));
+                                },
+                                child: SymbolButton(
+                                    title: "Send",
+                                    icon: Icon(Icons.credit_card)),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _bottomSheet(context);
+                                },
+                                child: SymbolButton(
+                                    title: "Receive",
+                                    icon: Icon(Icons.credit_card)),
+                              ),
                             ],
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              SymbolButton(
-                                  title: "Lend and Borrow",
-                                  icon: Icon(Icons.credit_card)),
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SwapScreen(),
+                                      ));
+                                },
+                                child: SymbolButton(
+                                    title: "Swap",
+                                    icon: Icon(Icons.credit_card)),
+                              ),
                               SymbolButton(
                                   title: "Swap", icon: Icon(Icons.swap_horiz)),
                               SizedBox(
@@ -150,6 +186,96 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           ),
         ),
       ),
+    );
+  }
+
+  Future<dynamic> _bottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) => Container(
+            // height: 200,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  "Recieve",
+                  style: TextStyle(fontSize: 25),
+                ),
+                DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                        value: selectedValue2,
+                        items: networks,
+                        onChanged: (String? value) {
+                          setState(() {
+                            selectedValue2 = value.toString();
+                          });
+                          log(value.toString());
+                        })),
+                QrImage(
+                  data: Constants.address,
+                  size: 150,
+                  backgroundColor: Colors.white,
+                  // foregroundColor: Colors.pinkAccent,
+                  errorStateBuilder: (cxt, err) {
+                    return const Center(
+                      child: Text(
+                        "Uh oh! Something went wrong...",
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(Constants.address),
+                    IconButton(
+                      onPressed: () {
+                        Clipboard.setData(
+                                ClipboardData(text: Constants.address))
+                            .then((_) {
+                          Fluttertoast.showToast(msg: "Copied to Clipboard");
+                        });
+                      },
+                      icon: Icon(Icons.copy),
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RequestScreen()));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(Icons.request_quote),
+                          Text("Request payment")
+                        ],
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [Icon(Icons.share), Text("Share Address")],
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

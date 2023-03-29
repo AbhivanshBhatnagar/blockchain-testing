@@ -13,15 +13,23 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Constants {
-  static Credentials userCredentials = EthPrivateKey.fromHex(
-      'e99c15b79e18f14a08fc209ac2b6a2f4c70ee878a6e421c667562a94d2aeef9f');
+  static Credentials userCredentials = EthPrivateKey.fromHex('');
   static EthereumAddress ethereumAddress = userCredentials.address;
   static String address = userCredentials.address.hex;
   static String dummyAddress = '';
   static EthereumAddress dummyethereumAddress =
       EthereumAddress.fromHex(dummyAddress);
   static String seedPhrase = '';
-  static List<String> accountsList = [];
+  static List<DropdownMenuItem<String>> accountsList = [
+    DropdownMenuItem(
+      child: Text("0x7F3BD.....2287F"),
+      value: "0x7F3BD1Fa0d241bEd9D7bb81294b78daBa182287F",
+    ),
+    DropdownMenuItem(
+      child: Text("0x8Cf6b.....babaE"),
+      value: "0x8Cf6b290F1b478bC0FEeF9E05DA498a0167babaE",
+    )
+  ];
   static List<DropdownMenuItem<String>> tokens = [
     DropdownMenuItem(
         child: Text(
@@ -34,8 +42,8 @@ class Constants {
     DropdownMenuItem(child: Text("LINK", style: h4poppinsStyle), value: "LINK"),
     DropdownMenuItem(child: Text("USDT", style: h4poppinsStyle), value: "USDT"),
     DropdownMenuItem(child: Text("UNI", style: h4poppinsStyle), value: "UNI"),
-    // DropdownMenuItem(child: Text("Wrapped BTC"), value: "WBTC"),
-    // DropdownMenuItem(child: Text("FRAX"), value: "FRAX"),
+    DropdownMenuItem(child: Text("MATIC"), value: "MATIC"),
+    DropdownMenuItem(child: Text("SAND"), value: "SAND"),
     // DropdownMenuItem(child: Text("USD Mapped Token"), value: "USDM"),
     // DropdownMenuItem(child: Text("WETH"), value: "WETH"),
     // DropdownMenuItem(child: Text("BUSD"), value: "BUSD"),
@@ -52,7 +60,9 @@ class Constants {
     "UNI": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
     "USDC": "0x07865c6e87b9f70255377e024ace6630c1eaa37f",
     "USDT": "0x56705db9f87c8a930ec87da0d458e00a657fccb0 ",
-    "LINK": "0xe9c4393a23246293a8D31BF7ab68c17d4CF90A29"
+    "LINK": "0xe9c4393a23246293a8D31BF7ab68c17d4CF90A29",
+    "MATIC": "0x0000000000000000000000000000000000000000",
+    "SAND": "0xbbba073c31bf03b8acf7c28ef0738decf3695683"
   };
   static TextStyle h1poppinsStyle = GoogleFonts.poppins(
     textStyle: const TextStyle(

@@ -5,6 +5,8 @@ import 'package:test_project/home.dart';
 import 'package:test_project/lend_borrow_screen.dart';
 import 'package:test_project/onboarding1.dart';
 import 'package:test_project/presentation/main/home/home_screen.dart';
+// import 'package:test_project/presentation/main/request/request_screen.dart';
+// import 'package:test_project/presentation/main/send/send_fund_screen.dart';
 import 'package:test_project/send.dart';
 import 'package:test_project/swap.dart';
 import 'package:test_project/test.dart';
@@ -32,14 +34,18 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      darkTheme: ThemeData(
-          brightness: Brightness.dark, scaffoldBackgroundColor: Colors.black),
-
-      // home: SplashScreen(),
-      routerDelegate: _router.delegate(),
-      routeInformationParser: _router.defaultRouteParser(),
-      themeMode: ThemeMode.dark,
+    return MaterialApp(
+      darkTheme: ThemeData.dark(),
+      home: HomeScreen(),
     );
+    // return MaterialApp.router(
+    //   darkTheme: ThemeData(
+    //       brightness: Brightness.dark, scaffoldBackgroundColor: Colors.black),
+
+    //   // home: SplashScreen(),
+    //   routerDelegate: _router.delegate(),
+    //   routeInformationParser: _router.defaultRouteParser(),
+    //   themeMode: ThemeMode.dark,
+    // );
   }
 }

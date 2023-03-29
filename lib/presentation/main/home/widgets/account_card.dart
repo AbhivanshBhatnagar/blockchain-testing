@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:portfolio/providers/balnace_provider.dart';
 
 import 'package:mccounting_text/mccounting_text.dart';
 
-class AccountCard extends StatelessWidget {
+class AccountCard extends ConsumerWidget {
   const AccountCard({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    BalanceProvider balanceProvider = ref.watch(balanceNotifierProvider);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(16.0),
       child: Column(
@@ -32,7 +36,7 @@ class AccountCard extends StatelessWidget {
                           ),
                           McCountingText(
                             begin: 0,
-                            end: 100.00,
+                            end: balanceProvider.getTotalUsdc(),
                             style: GoogleFonts.urbanist(
                                 fontWeight: FontWeight.w500, fontSize: 40),
                             duration: Duration(seconds: 1),

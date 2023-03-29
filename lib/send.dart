@@ -55,6 +55,7 @@ class _SendScreenState extends State<SendScreen> {
   static var addr = '';
   late int value;
   String selectedValue1 = "ETH";
+  String selectedAddress = "0x8Cf6b290F1b478bC0FEeF9E05DA498a0167babaE";
   @override
   void initState() {
     bool? x = widget.isRecieve;
@@ -66,11 +67,32 @@ class _SendScreenState extends State<SendScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Send")),
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Text(Constants.dummyAddress + Constants.seedPhrase),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(25, 10, 25, 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("From:"),
+                DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                        items: Constants.accountsList,
+                        value: selectedAddress,
+                        onChanged: (String? value) {
+                          setState(() {
+                            selectedAddress = value.toString();
+                          });
+                          log(value.toString());
+                        })),
+              ],
+            ),
+          ),
           Form(
             key: addressKey,
             child: Padding(
@@ -100,7 +122,7 @@ class _SendScreenState extends State<SendScreen> {
                   controller: addressController,
                   decoration: InputDecoration(
                       label: Text(
-                    "Address",
+                    "Address or ENS",
                   )),
                   autovalidateMode: AutovalidateMode.onUserInteraction),
             ),
@@ -132,7 +154,7 @@ class _SendScreenState extends State<SendScreen> {
                         controller: _valueController,
                         decoration: const InputDecoration(
                             label: Text(
-                          "value",
+                          "Value",
                         )),
                         autovalidateMode: AutovalidateMode.onUserInteraction),
                   ),
@@ -151,8 +173,8 @@ class _SendScreenState extends State<SendScreen> {
                   sendValue = sendValue * math.pow(10, 18);
                   WalletTransaction().sendTransaction(
                       transactiondata: Transaction(
-                          from: Constants.dummyethereumAddress,
-                          to: EthereumAddress.fromHex(addressController.text),
+                          from: Constants.ethereumAddress,
+                          to: EthereumAddress.fromHex(addr),
                           value: EtherAmount.fromBigInt(
                               EtherUnit.wei,
                               BigInt.from(
